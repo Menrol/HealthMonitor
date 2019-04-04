@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		186DA2F92256081500C7CE10 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 186DA2F82256081500C7CE10 /* LoginViewController.m */; };
+		186DA2FD22560D5D00C7CE10 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 186DA2FB22560D5D00C7CE10 /* LoginViewController.m */; };
 		18E4001F2255FCD60065E4B3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E4001E2255FCD60065E4B3 /* AppDelegate.m */; };
 		18E400272255FCD70065E4B3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 18E400262255FCD70065E4B3 /* Assets.xcassets */; };
 		18E4002D2255FCD70065E4B3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E4002C2255FCD70065E4B3 /* main.m */; };
@@ -37,8 +37,8 @@
 
 /* Begin PBXFileReference section */
 		09A4C129909536CE0083EDD4 /* Pods-HealthMonitor.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HealthMonitor.release.xcconfig"; path = "Pods/Target Support Files/Pods-HealthMonitor/Pods-HealthMonitor.release.xcconfig"; sourceTree = "<group>"; };
-		186DA2F72256081500C7CE10 /* LoginViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
-		186DA2F82256081500C7CE10 /* LoginViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		186DA2FB22560D5D00C7CE10 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		186DA2FC22560D5D00C7CE10 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		18E4001A2255FCD60065E4B3 /* HealthMonitor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HealthMonitor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		18E4001D2255FCD60065E4B3 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		18E4001E2255FCD60065E4B3 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -93,6 +93,7 @@
 			isa = PBXGroup;
 			children = (
 				186DA2F5225607F500C7CE10 /* Tools */,
+				186DA30022563D2B00C7CE10 /* Main */,
 				186DA2F6225607F500C7CE10 /* Login */,
 			);
 			path = Classes;
@@ -108,10 +109,25 @@
 		186DA2F6225607F500C7CE10 /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				186DA2F72256081500C7CE10 /* LoginViewController.h */,
-				186DA2F82256081500C7CE10 /* LoginViewController.m */,
+				186DA2FA22560D5D00C7CE10 /* Controller */,
 			);
 			path = Login;
+			sourceTree = "<group>";
+		};
+		186DA2FA22560D5D00C7CE10 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				186DA2FC22560D5D00C7CE10 /* LoginViewController.h */,
+				186DA2FB22560D5D00C7CE10 /* LoginViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		186DA30022563D2B00C7CE10 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Main;
 			sourceTree = "<group>";
 		};
 		18E400112255FCD50065E4B3 = {
@@ -476,7 +492,7 @@
 			files = (
 				18E4002D2255FCD70065E4B3 /* main.m in Sources */,
 				18E4001F2255FCD60065E4B3 /* AppDelegate.m in Sources */,
-				186DA2F92256081500C7CE10 /* LoginViewController.m in Sources */,
+				186DA2FD22560D5D00C7CE10 /* LoginViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
