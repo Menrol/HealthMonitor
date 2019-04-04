@@ -1,0 +1,22 @@
+# Uncomment the next line to define a global platform for your project
+# platform :ios, '9.0'
+
+target 'HealthMonitor' do
+  # Uncomment the next line if you're using Swift or would like to use dynamic frameworks
+  # use_frameworks!
+
+  # Pods for HealthMonitor
+  pod 'Masonry'
+  pod 'AFNetworking'
+
+  target 'HealthMonitorTests' do
+    inherit! :search_paths
+    # Pods for testing
+  end
+
+  target 'HealthMonitorUITests' do
+    inherit! :search_paths
+    # Pods for testing
+  end
+
+end
