@@ -8,9 +8,10 @@
 
 #import "LoginViewController.h"
 #import <Masonry/Masonry.h>
+#import "RegisterViewController.h"
 
 @interface LoginViewController ()
-@property(strong,nonatomic) UITextField *accontTextField;
+@property(strong,nonatomic) UITextField *accountTextField;
 @property(strong,nonatomic) UITextField *passwordTextField;
 
 @end
@@ -28,28 +29,35 @@
     NSLog(@"登录");
 }
 
+- (void)clickRegister {
+    NSLog(@"注册");
+    RegisterViewController *vc = [[RegisterViewController alloc] init];
+    [self presentViewController:vc animated:NO completion:nil];
+}
+
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-    [self.accontTextField resignFirstResponder];
+    [self.accountTextField resignFirstResponder];
     [self.passwordTextField resignFirstResponder];
 }
 
 - (void)setupUI {
     // 创建控件
     UIImageView *iconImageView = [[UIImageView alloc] init];
+    iconImageView.image = [UIImage imageNamed:@"icon.jpg"];
     iconImageView.tintColor = [UIColor whiteColor];
-    iconImageView.layer.cornerRadius = 5;
+    iconImageView.layer.cornerRadius = 10;
     iconImageView.layer.masksToBounds = YES;
     iconImageView.layer.borderWidth = 1;
     iconImageView.layer.borderColor = [UIColor blackColor].CGColor;
     [self.view addSubview:iconImageView];
     
-    _accontTextField = [[UITextField alloc] init];
-    _accontTextField.placeholder = @"  请输入账号";
-    _accontTextField.layer.cornerRadius = 5;
-    _accontTextField.layer.masksToBounds = YES;
-    _accontTextField.layer.borderWidth = 1;
-    _accontTextField.layer.borderColor = [UIColor blackColor].CGColor;
-    [self.view addSubview:_accontTextField];
+    _accountTextField = [[UITextField alloc] init];
+    _accountTextField.placeholder = @"  请输入账号";
+    _accountTextField.layer.cornerRadius = 5;
+    _accountTextField.layer.masksToBounds = YES;
+    _accountTextField.layer.borderWidth = 1;
+    _accountTextField.layer.borderColor = [UIColor blackColor].CGColor;
+    [self.view addSubview:_accountTextField];
     
     _passwordTextField = [[UITextField alloc] init];
     _passwordTextField.placeholder = @"  请输入密码";
@@ -80,6 +88,7 @@
     [registerButton setTitle:@"新用户注册账号" forState:UIControlStateNormal];
     [registerButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     registerButton.titleLabel.font = [UIFont boldSystemFontOfSize:16.f];
+    [registerButton addTarget:self action:@selector(clickRegister) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:registerButton];
     
     
@@ -92,7 +101,7 @@
     }];
     
     
-    [_accontTextField mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_accountTextField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(iconImageView.mas_bottom).offset(58.f);
         make.left.equalTo(self.view.mas_left).offset(30.f);
         make.right.equalTo(self.view.mas_right).offset(-30.f);
@@ -100,7 +109,7 @@
     }];
     
     [_passwordTextField mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.accontTextField.mas_bottom).offset(15.f);
+        make.top.equalTo(self.accountTextField.mas_bottom).offset(15.f);
         make.left.equalTo(self.view.mas_left).offset(30.f);
         make.right.equalTo(self.view.mas_right).offset(-30.f);
         make.height.mas_equalTo(48.f);
