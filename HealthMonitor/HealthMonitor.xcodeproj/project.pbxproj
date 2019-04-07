@@ -11,6 +11,8 @@
 		181073B2225751DA0010D844 /* OldMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 181073B1225751DA0010D844 /* OldMessageViewController.m */; };
 		181073B4225788420010D844 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 181073B3225788410010D844 /* Assets.xcassets */; };
 		186DA2FD22560D5D00C7CE10 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 186DA2FB22560D5D00C7CE10 /* LoginViewController.m */; };
+		18752B93225A1B03008EF44F /* OldBindingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18752B92225A1B03008EF44F /* OldBindingViewController.m */; };
+		18752B96225A2ADA008EF44F /* ChaperonageMViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18752B95225A2ADA008EF44F /* ChaperonageMViewController.m */; };
 		18E4001F2255FCD60065E4B3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E4001E2255FCD60065E4B3 /* AppDelegate.m */; };
 		18E4002D2255FCD70065E4B3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E4002C2255FCD70065E4B3 /* main.m */; };
 		18E400372255FCD70065E4B3 /* HealthMonitorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E400362255FCD70065E4B3 /* HealthMonitorTests.m */; };
@@ -46,6 +48,10 @@
 		181073B3225788410010D844 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		186DA2FB22560D5D00C7CE10 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		186DA2FC22560D5D00C7CE10 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		18752B91225A1B03008EF44F /* OldBindingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OldBindingViewController.h; sourceTree = "<group>"; };
+		18752B92225A1B03008EF44F /* OldBindingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OldBindingViewController.m; sourceTree = "<group>"; };
+		18752B94225A2ADA008EF44F /* ChaperonageMViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChaperonageMViewController.h; sourceTree = "<group>"; };
+		18752B95225A2ADA008EF44F /* ChaperonageMViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChaperonageMViewController.m; sourceTree = "<group>"; };
 		18E4001A2255FCD60065E4B3 /* HealthMonitor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HealthMonitor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		18E4001D2255FCD60065E4B3 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		18E4001E2255FCD60065E4B3 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -110,6 +116,10 @@
 				181073AD225735120010D844 /* RegisterViewController.m */,
 				181073B0225751DA0010D844 /* OldMessageViewController.h */,
 				181073B1225751DA0010D844 /* OldMessageViewController.m */,
+				18752B91225A1B03008EF44F /* OldBindingViewController.h */,
+				18752B92225A1B03008EF44F /* OldBindingViewController.m */,
+				18752B94225A2ADA008EF44F /* ChaperonageMViewController.h */,
+				18752B95225A2ADA008EF44F /* ChaperonageMViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -516,10 +526,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				18752B93225A1B03008EF44F /* OldBindingViewController.m in Sources */,
 				18E4002D2255FCD70065E4B3 /* main.m in Sources */,
 				18E4001F2255FCD60065E4B3 /* AppDelegate.m in Sources */,
 				186DA2FD22560D5D00C7CE10 /* LoginViewController.m in Sources */,
 				181073AF225735120010D844 /* RegisterViewController.m in Sources */,
+				18752B96225A2ADA008EF44F /* ChaperonageMViewController.m in Sources */,
 				181073B2225751DA0010D844 /* OldMessageViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

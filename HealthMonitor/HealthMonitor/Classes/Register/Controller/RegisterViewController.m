@@ -8,6 +8,7 @@
 
 #import "RegisterViewController.h"
 #import "OldMessageViewController.h"
+#import "ChaperonageMViewController.h"
 #import <Masonry/Masonry.h>
 
 #define buttonWidth [UIScreen mainScreen].bounds.size.width / 3
@@ -63,6 +64,11 @@
     NSLog(@"注册------%ld",(long)_tag);
     if (_tag == 0) {
         OldMessageViewController *vc = [[OldMessageViewController alloc] init];
+        [self presentViewController:vc animated:NO completion:nil];
+    }else if (_tag == 1) {
+        
+    }else {
+        ChaperonageMViewController *vc = [[ChaperonageMViewController alloc] init];
         [self presentViewController:vc animated:NO completion:nil];
     }
 }
