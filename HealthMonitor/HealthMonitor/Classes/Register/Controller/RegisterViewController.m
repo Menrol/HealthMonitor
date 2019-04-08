@@ -9,6 +9,7 @@
 #import "RegisterViewController.h"
 #import "OldMessageViewController.h"
 #import "ChaperonageMViewController.h"
+#import "ChildrenBindingViewController.h"
 #import <Masonry/Masonry.h>
 
 #define buttonWidth [UIScreen mainScreen].bounds.size.width / 3
@@ -66,7 +67,8 @@
         OldMessageViewController *vc = [[OldMessageViewController alloc] init];
         [self presentViewController:vc animated:NO completion:nil];
     }else if (_tag == 1) {
-        
+        ChildrenBindingViewController *vc = [[ChildrenBindingViewController alloc] init];
+        [self presentViewController:vc animated:NO completion:nil];
     }else {
         ChaperonageMViewController *vc = [[ChaperonageMViewController alloc] init];
         [self presentViewController:vc animated:NO completion:nil];

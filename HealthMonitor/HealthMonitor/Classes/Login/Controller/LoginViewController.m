@@ -9,6 +9,7 @@
 #import "LoginViewController.h"
 #import <Masonry/Masonry.h>
 #import "RegisterViewController.h"
+#import "MainViewController.h"
 
 @interface LoginViewController ()
 @property(strong,nonatomic) UITextField *accountTextField;
@@ -27,6 +28,10 @@
 
 - (void)clickLogin {
     NSLog(@"登录");
+    MainViewController *vc = [[MainViewController alloc] init];
+    // TODO: 测试数据
+    vc.userType = 0;
+    [self presentViewController:vc animated:YES completion:nil];
 }
 
 - (void)clickRegister {

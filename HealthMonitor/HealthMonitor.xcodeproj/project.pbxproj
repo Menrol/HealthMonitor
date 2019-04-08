@@ -13,6 +13,11 @@
 		186DA2FD22560D5D00C7CE10 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 186DA2FB22560D5D00C7CE10 /* LoginViewController.m */; };
 		18752B93225A1B03008EF44F /* OldBindingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18752B92225A1B03008EF44F /* OldBindingViewController.m */; };
 		18752B96225A2ADA008EF44F /* ChaperonageMViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18752B95225A2ADA008EF44F /* ChaperonageMViewController.m */; };
+		18CC4288225B2D96007C5949 /* ChildrenBindingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18CC4287225B2D96007C5949 /* ChildrenBindingViewController.m */; };
+		18CC428B225B30BC007C5949 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18CC428A225B30BC007C5949 /* MainViewController.m */; };
+		18CC4297225B3681007C5949 /* OldHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18CC4296225B3681007C5949 /* OldHomeViewController.m */; };
+		18CC429A225B3697007C5949 /* OldChapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18CC4299225B3697007C5949 /* OldChapViewController.m */; };
+		18CC429D225B36A1007C5949 /* OldMyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18CC429C225B36A1007C5949 /* OldMyViewController.m */; };
 		18E4001F2255FCD60065E4B3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E4001E2255FCD60065E4B3 /* AppDelegate.m */; };
 		18E4002D2255FCD70065E4B3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E4002C2255FCD70065E4B3 /* main.m */; };
 		18E400372255FCD70065E4B3 /* HealthMonitorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E400362255FCD70065E4B3 /* HealthMonitorTests.m */; };
@@ -52,6 +57,16 @@
 		18752B92225A1B03008EF44F /* OldBindingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OldBindingViewController.m; sourceTree = "<group>"; };
 		18752B94225A2ADA008EF44F /* ChaperonageMViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChaperonageMViewController.h; sourceTree = "<group>"; };
 		18752B95225A2ADA008EF44F /* ChaperonageMViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChaperonageMViewController.m; sourceTree = "<group>"; };
+		18CC4286225B2D96007C5949 /* ChildrenBindingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChildrenBindingViewController.h; sourceTree = "<group>"; };
+		18CC4287225B2D96007C5949 /* ChildrenBindingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChildrenBindingViewController.m; sourceTree = "<group>"; };
+		18CC4289225B30BC007C5949 /* MainViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
+		18CC428A225B30BC007C5949 /* MainViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
+		18CC4295225B3681007C5949 /* OldHomeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OldHomeViewController.h; sourceTree = "<group>"; };
+		18CC4296225B3681007C5949 /* OldHomeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OldHomeViewController.m; sourceTree = "<group>"; };
+		18CC4298225B3697007C5949 /* OldChapViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OldChapViewController.h; sourceTree = "<group>"; };
+		18CC4299225B3697007C5949 /* OldChapViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OldChapViewController.m; sourceTree = "<group>"; };
+		18CC429B225B36A1007C5949 /* OldMyViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OldMyViewController.h; sourceTree = "<group>"; };
+		18CC429C225B36A1007C5949 /* OldMyViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OldMyViewController.m; sourceTree = "<group>"; };
 		18E4001A2255FCD60065E4B3 /* HealthMonitor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HealthMonitor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		18E4001D2255FCD60065E4B3 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		18E4001E2255FCD60065E4B3 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -120,6 +135,8 @@
 				18752B92225A1B03008EF44F /* OldBindingViewController.m */,
 				18752B94225A2ADA008EF44F /* ChaperonageMViewController.h */,
 				18752B95225A2ADA008EF44F /* ChaperonageMViewController.m */,
+				18CC4286225B2D96007C5949 /* ChildrenBindingViewController.h */,
+				18CC4287225B2D96007C5949 /* ChildrenBindingViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -131,6 +148,9 @@
 				186DA2F6225607F500C7CE10 /* Login */,
 				181073A8225731E10010D844 /* Register */,
 				186DA30022563D2B00C7CE10 /* Main */,
+				18CC428C225B32CB007C5949 /* Home */,
+				18CC428D225B3307007C5949 /* Chaperonage */,
+				18CC428E225B331A007C5949 /* My */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -162,8 +182,61 @@
 		186DA30022563D2B00C7CE10 /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				18CC4289225B30BC007C5949 /* MainViewController.h */,
+				18CC428A225B30BC007C5949 /* MainViewController.m */,
 			);
 			path = Main;
+			sourceTree = "<group>";
+		};
+		18CC428C225B32CB007C5949 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				18CC4292225B361B007C5949 /* Controller */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		18CC428D225B3307007C5949 /* Chaperonage */ = {
+			isa = PBXGroup;
+			children = (
+				18CC4293225B3635007C5949 /* Controller */,
+			);
+			path = Chaperonage;
+			sourceTree = "<group>";
+		};
+		18CC428E225B331A007C5949 /* My */ = {
+			isa = PBXGroup;
+			children = (
+				18CC4294225B366C007C5949 /* Controller */,
+			);
+			path = My;
+			sourceTree = "<group>";
+		};
+		18CC4292225B361B007C5949 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				18CC4295225B3681007C5949 /* OldHomeViewController.h */,
+				18CC4296225B3681007C5949 /* OldHomeViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		18CC4293225B3635007C5949 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				18CC4298225B3697007C5949 /* OldChapViewController.h */,
+				18CC4299225B3697007C5949 /* OldChapViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		18CC4294225B366C007C5949 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				18CC429B225B36A1007C5949 /* OldMyViewController.h */,
+				18CC429C225B36A1007C5949 /* OldMyViewController.m */,
+			);
+			path = Controller;
 			sourceTree = "<group>";
 		};
 		18E400112255FCD50065E4B3 = {
@@ -510,9 +583,12 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-HealthMonitor/Pods-HealthMonitor-resources.sh",
+				"${PODS_ROOT}/AMap3DMap/MAMapKit.framework/AMap.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AMap.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -530,7 +606,12 @@
 				18E4002D2255FCD70065E4B3 /* main.m in Sources */,
 				18E4001F2255FCD60065E4B3 /* AppDelegate.m in Sources */,
 				186DA2FD22560D5D00C7CE10 /* LoginViewController.m in Sources */,
+				18CC428B225B30BC007C5949 /* MainViewController.m in Sources */,
+				18CC429A225B3697007C5949 /* OldChapViewController.m in Sources */,
 				181073AF225735120010D844 /* RegisterViewController.m in Sources */,
+				18CC4288225B2D96007C5949 /* ChildrenBindingViewController.m in Sources */,
+				18CC429D225B36A1007C5949 /* OldMyViewController.m in Sources */,
+				18CC4297225B3681007C5949 /* OldHomeViewController.m in Sources */,
 				18752B96225A2ADA008EF44F /* ChaperonageMViewController.m in Sources */,
 				181073B2225751DA0010D844 /* OldMessageViewController.m in Sources */,
 			);
@@ -688,10 +769,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 69ZWLY9ZXM;
 				INFOPLIST_FILE = HealthMonitor/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.xiyou3g.HealthMonitor;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -706,10 +784,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 69ZWLY9ZXM;
 				INFOPLIST_FILE = HealthMonitor/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.xiyou3g.HealthMonitor;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -724,11 +799,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 69ZWLY9ZXM;
 				INFOPLIST_FILE = HealthMonitorTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.xiyou3g.HealthMonitorTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -744,11 +815,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 69ZWLY9ZXM;
 				INFOPLIST_FILE = HealthMonitorTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.xiyou3g.HealthMonitorTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -763,11 +830,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 69ZWLY9ZXM;
 				INFOPLIST_FILE = HealthMonitorUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.xiyou3g.HealthMonitorUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -782,11 +845,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 69ZWLY9ZXM;
 				INFOPLIST_FILE = HealthMonitorUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.xiyou3g.HealthMonitorUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";

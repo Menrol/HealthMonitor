@@ -8,6 +8,9 @@ target 'HealthMonitor' do
   # Pods for HealthMonitor
   pod 'Masonry'
   pod 'AFNetworking'
+  pod 'AMap3DMap'
+  pod 'AMapSearch'
+  pod 'AMapLocation'
 
   target 'HealthMonitorTests' do
     inherit! :search_paths

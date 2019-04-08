@@ -40,6 +40,10 @@ const CGFloat ChaperonageTipFont = 20.f;
     [self setupUI];
 }
 
+- (void)clickSubmitButton {
+    NSLog(@"提交信息");
+}
+
 - (void)clickShowDownWithButton:(UIButton *)btn {
     if (btn.tag == 1001) {
         _sexTableView.hidden = !_sexTableView.hidden;
@@ -59,8 +63,6 @@ const CGFloat ChaperonageTipFont = 20.f;
         _workTypeTextField.text = text;
         _workTypeTableView.hidden = YES;
     }
-    
-    
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -112,6 +114,9 @@ const CGFloat ChaperonageTipFont = 20.f;
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     _sexTableView.hidden = YES;
     _workTypeTableView.hidden = YES;
+    [_nameTextField resignFirstResponder];
+    [_workTimeTextField resignFirstResponder];
+    [_workExperienceTextField resignFirstResponder];
 }
 
 - (void)setupUI {
@@ -213,13 +218,51 @@ const CGFloat ChaperonageTipFont = 20.f;
     _workTypeTableView.tag = 102;
     [self.view addSubview:_workTypeTableView];
     
+    UILabel *workTimeLabel = [[UILabel alloc] init];
+    workTimeLabel.text = @"工作时间";
+    workTimeLabel.font = [UIFont boldSystemFontOfSize:OldMessageTitleFont];
+    [self.view addSubview:workTimeLabel];
+    
+    _workTimeTextField = [[UITextField alloc] init];
+    _workTimeTextField.placeholder = @"  请输入可工作时间";
+    _workTimeTextField.layer.borderColor = [UIColor blackColor].CGColor;
+    _workTimeTextField.layer.borderWidth = 1;
+    [self.view addSubview:_workTimeTextField];
+    
+    UILabel *workExperienceLabel = [[UILabel alloc] init];
+    workExperienceLabel.text = @"工作经验";
+    workExperienceLabel.font = [UIFont boldSystemFontOfSize:OldMessageTitleFont];
+    [self.view addSubview:workExperienceLabel];
+    
+    _workExperienceTextField = [[UITextField alloc] init];
+    _workExperienceTextField.placeholder = @"  请输入工作经验";
+    _workExperienceTextField.layer.borderColor = [UIColor blackColor].CGColor;
+    _workExperienceTextField.layer.borderWidth = 1;
+    [self.view addSubview:_workExperienceTextField];
+    
+    UIButton *submitButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [submitButton setTitle:@"提交信息" forState:UIControlStateNormal];
+    [submitButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    submitButton.titleLabel.font = [UIFont boldSystemFontOfSize:16.f];
+    submitButton.layer.borderWidth = 1;
+    submitButton.layer.borderColor = [UIColor blackColor].CGColor;
+    submitButton.layer.cornerRadius = 5;
+    submitButton.layer.masksToBounds = YES;
+    [submitButton addTarget:self action:@selector(clickSubmitButton) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:submitButton];
+    
+    UILabel *affirmLabel = [[UILabel alloc] init];
+    affirmLabel.text = @"*请确认您信息的真实性，将影响到您的审核";
+    affirmLabel.font = [UIFont boldSystemFontOfSize:14.f];
+    [self.view addSubview:affirmLabel];
+    
     [self.view bringSubviewToFront:_workTypeTableView];
     [self.view bringSubviewToFront:_sexTableView];
     
     // 设置布局
     [successLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view.mas_top).offset(80.f);
-        make.left.equalTo(self.view.mas_left).offset(15.f);
+        make.top.equalTo(self.view.mas_top).offset(150.f);
+        make.left.equalTo(self.view.mas_left).offset(14.f);
         make.height.mas_equalTo(ChaperonageTipFont);
     }];
     
@@ -317,6 +360,48 @@ const CGFloat ChaperonageTipFont = 20.f;
         make.left.equalTo(self.workTypeTextField.mas_left);
         make.right.equalTo(self.workTypeButton.mas_right);
         make.height.mas_equalTo(80.f);
+    }];
+    
+    [workTimeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.workTypeTextField.mas_bottom).offset(20.f);
+        make.left.equalTo(self.view.mas_left).offset(20.f);
+        make.width.mas_equalTo(80.f);
+        make.height.mas_equalTo(OldMessageTitleFont);
+    }];
+    
+    [_workTimeTextField mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(workTimeLabel.mas_right).offset(10.f);
+        make.centerY.equalTo(workTimeLabel.mas_centerY);
+        make.right.equalTo(self.view.mas_right).offset(-20.f);
+        make.height.mas_equalTo(44.f);
+    }];
+    
+    [workExperienceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.workTimeTextField.mas_bottom).offset(20.f);
+        make.left.equalTo(self.view.mas_left).offset(20.f);
+        make.width.mas_equalTo(80.f);
+        make.height.mas_equalTo(OldMessageTitleFont);
+    }];
+    
+    [_workExperienceTextField mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(workExperienceLabel.mas_right).offset(10.f);
+        make.centerY.equalTo(workExperienceLabel.mas_centerY);
+        make.right.equalTo(self.view.mas_right).offset(-20.f);
+        make.height.mas_equalTo(44.f);
+    }];
+    
+    [submitButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.workExperienceTextField.mas_bottom).offset(15.f);
+        make.left.equalTo(self.view.mas_left).offset(15.f);
+        make.right.equalTo(self.view.mas_right).offset(-15.f);
+        make.height.mas_equalTo(53.f);
+    }];
+    
+    [affirmLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(submitButton.mas_bottom).offset(15.f);
+        make.left.equalTo(self.view.mas_left).offset(45.f);
+        make.right.equalTo(self.view.mas_right).offset(-45.f);
+        make.height.mas_equalTo(14.f);
     }];
 }
 

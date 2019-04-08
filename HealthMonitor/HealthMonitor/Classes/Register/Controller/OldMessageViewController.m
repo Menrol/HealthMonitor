@@ -206,7 +206,7 @@ const CGFloat OldMessageTitleFont = 18.f;
     
     // 设置布局
     [successLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view.mas_top).offset(80.f);
+        make.top.equalTo(self.view.mas_top).offset(150.f);
         make.left.equalTo(self.view.mas_left).offset(15.f);
         make.height.mas_equalTo(OldMessageBigFont);
     }];
