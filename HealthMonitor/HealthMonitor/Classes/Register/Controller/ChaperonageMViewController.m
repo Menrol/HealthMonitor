@@ -116,6 +116,7 @@ const CGFloat ChaperonageTipFont = 20.f;
     _workTypeTableView.hidden = YES;
     [_nameTextField resignFirstResponder];
     [_workTimeTextField resignFirstResponder];
+    [_ageTextField resignFirstResponder];
     [_workExperienceTextField resignFirstResponder];
 }
 

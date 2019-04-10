@@ -7,6 +7,7 @@
 //
 
 #import "OldHomeViewController.h"
+#import "StepView.h"
 #import <MAMapKit/MAMapKit.h>
 #import <AMapFoundationKit/AMapFoundationKit.h>
 #import <AMapSearchKit/AMapSearchKit.h>
@@ -88,6 +89,11 @@
     _addressLabel.text = @"北海区，西河路";
     [self.mapView addSubview:_addressLabel];
     
+    StepView *stepView = [[StepView alloc] init];
+    stepView.layer.borderColor = [UIColor blackColor].CGColor;
+    stepView.layer.borderWidth = 0.5;
+    [self.view addSubview:stepView];
+    
     
     // 设置布局
     [_mapView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -101,6 +107,13 @@
         make.top.equalTo(self.mapView.mas_top).offset(20.f);
         make.left.equalTo(self.mapView.mas_left).offset(10.f);
         make.height.mas_equalTo(25.f);
+    }];
+    
+    [stepView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.mapView.mas_bottom);
+        make.left.equalTo(self.view.mas_left);
+        make.right.equalTo(self.view.mas_right);
+        make.height.mas_equalTo(250.f);
     }];
 }
 

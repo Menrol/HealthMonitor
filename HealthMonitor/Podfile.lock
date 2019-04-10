@@ -30,6 +30,15 @@ DEPENDENCIES:
   - AMapSearch
   - Masonry
 
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - AFNetworking
+    - AMap3DMap
+    - AMapFoundation
+    - AMapLocation
+    - AMapSearch
+    - Masonry
+
 SPEC CHECKSUMS:
   AFNetworking: b6f891fdfaed196b46c7a83cf209e09697b94057
   AMap3DMap: 7bb992e6bfb99e34e6c7a368958dde9d743a23f1
@@ -38,6 +47,6 @@ SPEC CHECKSUMS:
   AMapSearch: def5983c8ca1a6d7430970046dc814f6e337621d
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
 
-PODFILE CHECKSUM: 6b8d12da1d74680aa50bed51d4746409675b95b3
+PODFILE CHECKSUM: d55391df5825c5cf8e761e29cec59eb316799272
 
-COCOAPODS: 1.4.0
+COCOAPODS: 1.6.1
