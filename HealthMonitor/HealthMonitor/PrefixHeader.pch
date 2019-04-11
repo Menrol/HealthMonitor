@@ -1,0 +1,13 @@
+//
+//  PrefixHeader.pch
+//  HealthMonitor
+//
+//  Created by WRQ on 2019/4/11.
+//  Copyright © 2019 WRQ. All rights reserved.
+//
+
+#define getRectNavAndStatusHeight self.navigationController.navigationBar.frame.size.height+[[UIApplication sharedApplication] statusBarFrame].size.height
+
+#define MainScreenHeight [UIScreen mainScreen].bounds.size.height
+#define MainScreenWith   [UIScreen mainScreen].bounds.size.width
+#define TabBarHeight     CGRectGetHeight(self.tabBarController.tabBar.frame)

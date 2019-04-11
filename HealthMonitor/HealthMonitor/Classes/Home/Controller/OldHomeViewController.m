@@ -8,12 +8,11 @@
 
 #import "OldHomeViewController.h"
 #import "StepView.h"
+#import "TipView.h"
 #import <MAMapKit/MAMapKit.h>
 #import <AMapFoundationKit/AMapFoundationKit.h>
 #import <AMapSearchKit/AMapSearchKit.h>
 #import <Masonry/Masonry.h>
-
-#define getRectNavAndStatusHight self.navigationController.navigationBar.frame.size.height+[[UIApplication sharedApplication] statusBarFrame].size.height
 
 @interface OldHomeViewController ()<AMapSearchDelegate>
 @property(strong,nonatomic) MAMapView       *mapView;
@@ -26,10 +25,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    // 设置地图
-    [AMapServices sharedServices].apiKey = @"7a3b0f6d93712c79f2857377d91189e8";
-    [AMapServices sharedServices].enableHTTPS = YES;
     
     [self setupUI];
     
@@ -94,10 +89,22 @@
     stepView.layer.borderWidth = 0.5;
     [self.view addSubview:stepView];
     
+    TipView *physicalTipView = [[TipView alloc] init];
+    physicalTipView.layer.borderColor = [UIColor blackColor].CGColor;
+    physicalTipView.layer.borderWidth = 0.5;
+    physicalTipView.tipLabel.text = @"良好！请继续保持";
+    [self.view addSubview:physicalTipView];
+    
+    TipView *healthTipView = [[TipView alloc] init];
+    healthTipView.layer.borderColor = [UIColor blackColor].CGColor;
+    healthTipView.layer.borderWidth = 0.5;
+    healthTipView.tipLabel.text = @"现在是中午，到您使用XXX药的时候了";
+    [self.view addSubview:healthTipView];
+    
     
     // 设置布局
     [_mapView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view.mas_top).offset(getRectNavAndStatusHight);
+        make.top.equalTo(self.view.mas_top).offset(getRectNavAndStatusHeight);
         make.left.equalTo(self.view.mas_left);
         make.right.equalTo(self.view.mas_right);
         make.height.mas_equalTo(200.f);
@@ -114,6 +121,20 @@
         make.left.equalTo(self.view.mas_left);
         make.right.equalTo(self.view.mas_right);
         make.height.mas_equalTo(250.f);
+    }];
+    
+    [physicalTipView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(stepView.mas_bottom);
+        make.left.equalTo(self.view.mas_left);
+        make.right.equalTo(self.view.mas_right);
+        make.height.equalTo(healthTipView.mas_height);
+    }];
+    
+    [healthTipView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(physicalTipView.mas_bottom);
+        make.left.equalTo(self.view.mas_left);
+        make.right.equalTo(self.view.mas_right);
+        make.bottom.equalTo(self.view.mas_bottom).offset(-TabBarHeight);
     }];
 }
 

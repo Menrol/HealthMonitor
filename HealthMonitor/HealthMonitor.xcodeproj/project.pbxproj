@@ -13,6 +13,8 @@
 		186DA2FD22560D5D00C7CE10 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 186DA2FB22560D5D00C7CE10 /* LoginViewController.m */; };
 		18752B93225A1B03008EF44F /* OldBindingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18752B92225A1B03008EF44F /* OldBindingViewController.m */; };
 		18752B96225A2ADA008EF44F /* ChaperonageMViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18752B95225A2ADA008EF44F /* ChaperonageMViewController.m */; };
+		18C8676E225F5AA7004F6A2B /* OldCurOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C8676D225F5AA7004F6A2B /* OldCurOrderViewController.m */; };
+		18C86772225F5C95004F6A2B /* OldOrderUpView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C86771225F5C95004F6A2B /* OldOrderUpView.m */; };
 		18CC4288225B2D96007C5949 /* ChildrenBindingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18CC4287225B2D96007C5949 /* ChildrenBindingViewController.m */; };
 		18CC428B225B30BC007C5949 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18CC428A225B30BC007C5949 /* MainViewController.m */; };
 		18CC4297225B3681007C5949 /* OldHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18CC4296225B3681007C5949 /* OldHomeViewController.m */; };
@@ -25,6 +27,7 @@
 		18F14C58225DE44200E75295 /* StepView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18F14C57225DE44200E75295 /* StepView.m */; };
 		18F14C5B225DF14E00E75295 /* HistogramCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18F14C5A225DF14E00E75295 /* HistogramCollectionViewCell.m */; };
 		18F84432225C718600F331B4 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18F84431225C718600F331B4 /* HealthKit.framework */; };
+		18FEAD7D225F2C33004D21F6 /* TipView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18FEAD7C225F2C33004D21F6 /* TipView.m */; };
 		3DE38DD5819688429DA554DF /* libPods-HealthMonitor.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 99E509C3F65E6A83A695EE03 /* libPods-HealthMonitor.a */; };
 		8F966647208FC1C377637EAE /* libPods-HealthMonitorTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DECDF3B2304CACB6D7ECE492 /* libPods-HealthMonitorTests.a */; };
 		B945964EDE606E268BA6F2A0 /* libPods-HealthMonitorUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A33A1ED32244437103121063 /* libPods-HealthMonitorUITests.a */; };
@@ -60,6 +63,11 @@
 		18752B92225A1B03008EF44F /* OldBindingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OldBindingViewController.m; sourceTree = "<group>"; };
 		18752B94225A2ADA008EF44F /* ChaperonageMViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChaperonageMViewController.h; sourceTree = "<group>"; };
 		18752B95225A2ADA008EF44F /* ChaperonageMViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChaperonageMViewController.m; sourceTree = "<group>"; };
+		18C8676B225F41B4004F6A2B /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
+		18C8676C225F5AA7004F6A2B /* OldCurOrderViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OldCurOrderViewController.h; sourceTree = "<group>"; };
+		18C8676D225F5AA7004F6A2B /* OldCurOrderViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OldCurOrderViewController.m; sourceTree = "<group>"; };
+		18C86770225F5C95004F6A2B /* OldOrderUpView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OldOrderUpView.h; sourceTree = "<group>"; };
+		18C86771225F5C95004F6A2B /* OldOrderUpView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OldOrderUpView.m; sourceTree = "<group>"; };
 		18CC4286225B2D96007C5949 /* ChildrenBindingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChildrenBindingViewController.h; sourceTree = "<group>"; };
 		18CC4287225B2D96007C5949 /* ChildrenBindingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChildrenBindingViewController.m; sourceTree = "<group>"; };
 		18CC4289225B30BC007C5949 /* MainViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
@@ -87,6 +95,8 @@
 		18F14C5A225DF14E00E75295 /* HistogramCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HistogramCollectionViewCell.m; sourceTree = "<group>"; };
 		18F84430225C718600F331B4 /* HealthMonitor.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HealthMonitor.entitlements; sourceTree = "<group>"; };
 		18F84431225C718600F331B4 /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
+		18FEAD7B225F2C33004D21F6 /* TipView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TipView.h; sourceTree = "<group>"; };
+		18FEAD7C225F2C33004D21F6 /* TipView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TipView.m; sourceTree = "<group>"; };
 		1FB51B45BF079AFC3E4CDAA9 /* Pods-HealthMonitor.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HealthMonitor.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HealthMonitor/Pods-HealthMonitor.debug.xcconfig"; sourceTree = "<group>"; };
 		5E855A5EC27E27AEA8C43CDC /* Pods-HealthMonitorTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HealthMonitorTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HealthMonitorTests/Pods-HealthMonitorTests.debug.xcconfig"; sourceTree = "<group>"; };
 		931703B48EF6593EC6DD8561 /* Pods-HealthMonitorUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HealthMonitorUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-HealthMonitorUITests/Pods-HealthMonitorUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -198,6 +208,15 @@
 			path = Main;
 			sourceTree = "<group>";
 		};
+		18C8676F225F5B3E004F6A2B /* View */ = {
+			isa = PBXGroup;
+			children = (
+				18C86770225F5C95004F6A2B /* OldOrderUpView.h */,
+				18C86771225F5C95004F6A2B /* OldOrderUpView.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		18CC428C225B32CB007C5949 /* Home */ = {
 			isa = PBXGroup;
 			children = (
@@ -211,6 +230,7 @@
 			isa = PBXGroup;
 			children = (
 				18CC4293225B3635007C5949 /* Controller */,
+				18C8676F225F5B3E004F6A2B /* View */,
 			);
 			path = Chaperonage;
 			sourceTree = "<group>";
@@ -237,6 +257,8 @@
 			children = (
 				18CC4298225B3697007C5949 /* OldChapViewController.h */,
 				18CC4299225B3697007C5949 /* OldChapViewController.m */,
+				18C8676C225F5AA7004F6A2B /* OldCurOrderViewController.h */,
+				18C8676D225F5AA7004F6A2B /* OldCurOrderViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -277,6 +299,7 @@
 			isa = PBXGroup;
 			children = (
 				18F84430225C718600F331B4 /* HealthMonitor.entitlements */,
+				18C8676B225F41B4004F6A2B /* PrefixHeader.pch */,
 				18E4001D2255FCD60065E4B3 /* AppDelegate.h */,
 				18E4001E2255FCD60065E4B3 /* AppDelegate.m */,
 				186DA2F4225607F500C7CE10 /* Classes */,
@@ -311,6 +334,8 @@
 				18F14C57225DE44200E75295 /* StepView.m */,
 				18F14C59225DF14E00E75295 /* HistogramCollectionViewCell.h */,
 				18F14C5A225DF14E00E75295 /* HistogramCollectionViewCell.m */,
+				18FEAD7B225F2C33004D21F6 /* TipView.h */,
+				18FEAD7C225F2C33004D21F6 /* TipView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -558,10 +583,13 @@
 				18CC428B225B30BC007C5949 /* MainViewController.m in Sources */,
 				18F14C5B225DF14E00E75295 /* HistogramCollectionViewCell.m in Sources */,
 				18CC429A225B3697007C5949 /* OldChapViewController.m in Sources */,
+				18FEAD7D225F2C33004D21F6 /* TipView.m in Sources */,
 				181073AF225735120010D844 /* RegisterViewController.m in Sources */,
 				18CC4288225B2D96007C5949 /* ChildrenBindingViewController.m in Sources */,
+				18C8676E225F5AA7004F6A2B /* OldCurOrderViewController.m in Sources */,
 				18CC429D225B36A1007C5949 /* OldMyViewController.m in Sources */,
 				18CC4297225B3681007C5949 /* OldHomeViewController.m in Sources */,
+				18C86772225F5C95004F6A2B /* OldOrderUpView.m in Sources */,
 				18752B96225A2ADA008EF44F /* ChaperonageMViewController.m in Sources */,
 				181073B2225751DA0010D844 /* OldMessageViewController.m in Sources */,
 				18F14C58225DE44200E75295 /* StepView.m in Sources */,
@@ -720,6 +748,8 @@
 				CODE_SIGN_ENTITLEMENTS = HealthMonitor/HealthMonitor.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 69ZWLY9ZXM;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = HealthMonitor/PrefixHeader.pch;
 				INFOPLIST_FILE = HealthMonitor/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -739,6 +769,8 @@
 				CODE_SIGN_ENTITLEMENTS = HealthMonitor/HealthMonitor.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 69ZWLY9ZXM;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = HealthMonitor/PrefixHeader.pch;
 				INFOPLIST_FILE = HealthMonitor/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

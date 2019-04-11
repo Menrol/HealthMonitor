@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "LoginViewController.h"
+#import <AMapFoundationKit/AMapFoundationKit.h>
 
 @interface AppDelegate ()
 
@@ -22,6 +23,10 @@
     self.window.backgroundColor = [UIColor whiteColor];
     self.window.rootViewController = [[LoginViewController alloc] init];
     [self.window makeKeyAndVisible];
+    
+    // 设置地图
+    [AMapServices sharedServices].apiKey = @"7a3b0f6d93712c79f2857377d91189e8";
+    [AMapServices sharedServices].enableHTTPS = YES;
 
     return YES;
 }
