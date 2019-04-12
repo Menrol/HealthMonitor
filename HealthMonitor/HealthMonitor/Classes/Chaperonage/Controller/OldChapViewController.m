@@ -8,6 +8,7 @@
 
 #import "OldChapViewController.h"
 #import "OldCurOrderViewController.h"
+#import "OldOrderListViewController.h"
 
 @interface OldChapViewController ()
 @property(strong,nonatomic) UIView                *chooseLineView;
@@ -30,6 +31,9 @@
     [UIView animateWithDuration:0.5 animations:^{
         self.chooseLineView.frame = CGRectMake(offsetX, getRectNavAndStatusHeight, MainScreenWith / 2, 3);
     }];
+    
+    CGFloat scrollOffsetX = (tag - 100) * MainScreenWith;
+    [_scrollView setContentOffset:CGPointMake(scrollOffsetX, 0) animated:YES];
     
 }
 
@@ -83,6 +87,11 @@
     [self addChildViewController:oldCurOrderViewController];
     oldCurOrderViewController.view.frame = CGRectMake(0, 0, CGRectGetWidth(_scrollView.frame), CGRectGetHeight(_scrollView.frame));
     [_scrollView addSubview:oldCurOrderViewController.view];
+    
+    OldOrderListViewController *oldOrderListViewController = [[OldOrderListViewController alloc] init];
+    [self addChildViewController:oldOrderListViewController];
+    oldOrderListViewController.view.frame = CGRectMake(MainScreenWith, 0, CGRectGetWidth(_scrollView.frame), CGRectGetHeight(_scrollView.frame));
+    [_scrollView addSubview:oldOrderListViewController.view];
     
     [self.view bringSubviewToFront:_chooseLineView];
 }

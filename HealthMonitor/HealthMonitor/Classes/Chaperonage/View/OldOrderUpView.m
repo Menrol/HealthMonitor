@@ -90,11 +90,11 @@
         make.top.equalTo(self.orderStatusLabel.mas_bottom).offset(15.f);
         make.left.equalTo(self.mas_left);
         make.right.equalTo(self.mas_right);
-        make.height.mas_equalTo(190.f);
+        make.height.mas_equalTo(200.f);
     }];
     
     [chapTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.mapView.mas_bottom).offset(15.f);
+        make.top.equalTo(self.mapView.mas_bottom).offset(20.f);
         make.left.equalTo(self.mas_left).offset(15.f);
         make.height.mas_equalTo(23.f);
     }];
