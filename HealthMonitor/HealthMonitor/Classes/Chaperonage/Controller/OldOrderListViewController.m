@@ -9,6 +9,7 @@
 #import "OldOrderListViewController.h"
 #import "OldOrderListTableViewCell.h"
 #import "OldOrderDetailViewController.h"
+#import "SendOrderViewController.h"
 #import <Masonry/Masonry.h>
 
 NSString * const OldOrderListTableViewCellID = @"OldOrderListTableViewCellID";
@@ -28,6 +29,8 @@ NSString * const OldOrderListTableViewCellID = @"OldOrderListTableViewCellID";
 
 - (void)clickSendButton {
     NSLog(@"发布新单");
+    SendOrderViewController *vc = [[SendOrderViewController alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (void)clickButton:(UIButton *)btn {

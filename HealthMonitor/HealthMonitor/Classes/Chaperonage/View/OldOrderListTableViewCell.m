@@ -121,8 +121,7 @@
     
     [_chapTimeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(ChapTimeTitleLabel.mas_right);
-        make.top.equalTo(ChapTimeTitleLabel.mas_top);
-        make.height.mas_equalTo(16.f);
+        make.top.equalTo(ChapTimeTitleLabel.mas_top).offset(-2.f);
         make.bottom.equalTo(self.contentView.mas_bottom).offset(-15.f);
     }];
     

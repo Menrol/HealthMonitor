@@ -10,6 +10,7 @@
 		181073AF225735120010D844 /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 181073AD225735120010D844 /* RegisterViewController.m */; };
 		181073B2225751DA0010D844 /* OldMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 181073B1225751DA0010D844 /* OldMessageViewController.m */; };
 		181073B4225788420010D844 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 181073B3225788410010D844 /* Assets.xcassets */; };
+		182E08D42261D75D003328B3 /* SendOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 182E08D32261D75D003328B3 /* SendOrderViewController.m */; };
 		186DA2FD22560D5D00C7CE10 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 186DA2FB22560D5D00C7CE10 /* LoginViewController.m */; };
 		18752B93225A1B03008EF44F /* OldBindingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18752B92225A1B03008EF44F /* OldBindingViewController.m */; };
 		18752B96225A2ADA008EF44F /* ChaperonageMViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18752B95225A2ADA008EF44F /* ChaperonageMViewController.m */; };
@@ -62,6 +63,8 @@
 		181073B0225751DA0010D844 /* OldMessageViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OldMessageViewController.h; sourceTree = "<group>"; };
 		181073B1225751DA0010D844 /* OldMessageViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OldMessageViewController.m; sourceTree = "<group>"; };
 		181073B3225788410010D844 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		182E08D22261D75D003328B3 /* SendOrderViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SendOrderViewController.h; sourceTree = "<group>"; };
+		182E08D32261D75D003328B3 /* SendOrderViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SendOrderViewController.m; sourceTree = "<group>"; };
 		186DA2FB22560D5D00C7CE10 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		186DA2FC22560D5D00C7CE10 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		18752B91225A1B03008EF44F /* OldBindingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OldBindingViewController.h; sourceTree = "<group>"; };
@@ -282,6 +285,8 @@
 				18CD500522608CA100F51410 /* OldOrderListViewController.m */,
 				18CD500A2260C55F00F51410 /* OldOrderDetailViewController.h */,
 				18CD500B2260C55F00F51410 /* OldOrderDetailViewController.m */,
+				182E08D22261D75D003328B3 /* SendOrderViewController.h */,
+				182E08D32261D75D003328B3 /* SendOrderViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -605,6 +610,7 @@
 				18E4002D2255FCD70065E4B3 /* main.m in Sources */,
 				18E4001F2255FCD60065E4B3 /* AppDelegate.m in Sources */,
 				18CD50092260AD6800F51410 /* OldOrderListTableViewCell.m in Sources */,
+				182E08D42261D75D003328B3 /* SendOrderViewController.m in Sources */,
 				186DA2FD22560D5D00C7CE10 /* LoginViewController.m in Sources */,
 				18CC428B225B30BC007C5949 /* MainViewController.m in Sources */,
 				18F14C5B225DF14E00E75295 /* HistogramCollectionViewCell.m in Sources */,
