@@ -11,6 +11,9 @@
 		181073B2225751DA0010D844 /* OldMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 181073B1225751DA0010D844 /* OldMessageViewController.m */; };
 		181073B4225788420010D844 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 181073B3225788410010D844 /* Assets.xcassets */; };
 		182E08D42261D75D003328B3 /* SendOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 182E08D32261D75D003328B3 /* SendOrderViewController.m */; };
+		184946692263223D001DDBEF /* MessageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 184946682263223D001DDBEF /* MessageView.xib */; };
+		1849466C2263272C001DDBEF /* MessageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1849466B2263272C001DDBEF /* MessageView.m */; };
+		1849466F22634907001DDBEF /* OldMyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1849466E22634907001DDBEF /* OldMyTableViewCell.m */; };
 		186DA2FD22560D5D00C7CE10 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 186DA2FB22560D5D00C7CE10 /* LoginViewController.m */; };
 		18752B93225A1B03008EF44F /* OldBindingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18752B92225A1B03008EF44F /* OldBindingViewController.m */; };
 		18752B96225A2ADA008EF44F /* ChaperonageMViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18752B95225A2ADA008EF44F /* ChaperonageMViewController.m */; };
@@ -65,6 +68,11 @@
 		181073B3225788410010D844 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		182E08D22261D75D003328B3 /* SendOrderViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SendOrderViewController.h; sourceTree = "<group>"; };
 		182E08D32261D75D003328B3 /* SendOrderViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SendOrderViewController.m; sourceTree = "<group>"; };
+		184946682263223D001DDBEF /* MessageView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageView.xib; sourceTree = "<group>"; };
+		1849466A2263272C001DDBEF /* MessageView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MessageView.h; sourceTree = "<group>"; };
+		1849466B2263272C001DDBEF /* MessageView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MessageView.m; sourceTree = "<group>"; };
+		1849466D22634907001DDBEF /* OldMyTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OldMyTableViewCell.h; sourceTree = "<group>"; };
+		1849466E22634907001DDBEF /* OldMyTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OldMyTableViewCell.m; sourceTree = "<group>"; };
 		186DA2FB22560D5D00C7CE10 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		186DA2FC22560D5D00C7CE10 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		18752B91225A1B03008EF44F /* OldBindingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OldBindingViewController.h; sourceTree = "<group>"; };
@@ -178,6 +186,18 @@
 			path = Controller;
 			sourceTree = "<group>";
 		};
+		184946672263220C001DDBEF /* View */ = {
+			isa = PBXGroup;
+			children = (
+				184946682263223D001DDBEF /* MessageView.xib */,
+				1849466A2263272C001DDBEF /* MessageView.h */,
+				1849466B2263272C001DDBEF /* MessageView.m */,
+				1849466D22634907001DDBEF /* OldMyTableViewCell.h */,
+				1849466E22634907001DDBEF /* OldMyTableViewCell.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		186DA2F4225607F500C7CE10 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
@@ -261,6 +281,7 @@
 			isa = PBXGroup;
 			children = (
 				18CC4294225B366C007C5949 /* Controller */,
+				184946672263220C001DDBEF /* View */,
 			);
 			path = My;
 			sourceTree = "<group>";
@@ -504,6 +525,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				184946692263223D001DDBEF /* MessageView.xib in Resources */,
 				181073B4225788420010D844 /* Assets.xcassets in Resources */,
 				18CD5003226072AE00F51410 /* OldOrderDownView.xib in Resources */,
 			);
@@ -610,7 +632,9 @@
 				18E4002D2255FCD70065E4B3 /* main.m in Sources */,
 				18E4001F2255FCD60065E4B3 /* AppDelegate.m in Sources */,
 				18CD50092260AD6800F51410 /* OldOrderListTableViewCell.m in Sources */,
+				1849466C2263272C001DDBEF /* MessageView.m in Sources */,
 				182E08D42261D75D003328B3 /* SendOrderViewController.m in Sources */,
+				1849466F22634907001DDBEF /* OldMyTableViewCell.m in Sources */,
 				186DA2FD22560D5D00C7CE10 /* LoginViewController.m in Sources */,
 				18CC428B225B30BC007C5949 /* MainViewController.m in Sources */,
 				18F14C5B225DF14E00E75295 /* HistogramCollectionViewCell.m in Sources */,

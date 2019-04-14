@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina5_9" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="ndU-F8-aXy" customClass="MessageView">
+            <rect key="frame" x="0.0" y="0.0" width="440" height="44"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="出生日期：" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IBM-Ps-YnS">
+                    <rect key="frame" x="15" y="12" width="82" height="20"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="20" id="eWC-zd-eUP"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Bb-ja-7BF">
+                    <rect key="frame" x="404" y="11" width="21" height="22"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="21" id="Vxd-pf-ANe"/>
+                        <constraint firstAttribute="height" constant="22" id="kTB-We-s7N"/>
+                    </constraints>
+                    <state key="normal" title="Button" image="pen"/>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ehb-9e-HK8">
+                    <rect key="frame" x="97" y="12" width="290" height="20"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="290" id="V6k-rp-TuH"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="ehb-9e-HK8" firstAttribute="top" secondItem="IBM-Ps-YnS" secondAttribute="top" id="32T-e8-b63"/>
+                <constraint firstItem="ehb-9e-HK8" firstAttribute="height" secondItem="IBM-Ps-YnS" secondAttribute="height" id="3dO-qx-Oxc"/>
+                <constraint firstItem="IBM-Ps-YnS" firstAttribute="leading" secondItem="ndU-F8-aXy" secondAttribute="leading" constant="15" id="9oR-82-MWv"/>
+                <constraint firstItem="ehb-9e-HK8" firstAttribute="leading" secondItem="IBM-Ps-YnS" secondAttribute="trailing" id="fVK-m8-vGG"/>
+                <constraint firstAttribute="trailing" secondItem="3Bb-ja-7BF" secondAttribute="trailing" constant="15" id="rXb-HE-Tpa"/>
+                <constraint firstItem="3Bb-ja-7BF" firstAttribute="centerY" secondItem="ndU-F8-aXy" secondAttribute="centerY" id="soC-mF-sgY"/>
+                <constraint firstItem="IBM-Ps-YnS" firstAttribute="centerY" secondItem="ndU-F8-aXy" secondAttribute="centerY" id="xzx-l4-RfY"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="editButton" destination="3Bb-ja-7BF" id="b5a-tG-a2g"/>
+                <outlet property="textLabel" destination="ehb-9e-HK8" id="OFe-Lq-O1m"/>
+                <outlet property="titleLabel" destination="IBM-Ps-YnS" id="q5D-4A-f8g"/>
+            </connections>
+            <point key="canvasLocation" x="387.19999999999999" y="-645.81280788177344"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="pen" width="12" height="12"/>
+    </resources>
+</document>
