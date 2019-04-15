@@ -38,7 +38,6 @@
 }
 
 - (void)setupUI {
-    // 创建控件
     UIView *titleView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, MainScreenWith - 20, 45)];
     self.navigationItem.titleView = titleView;
     

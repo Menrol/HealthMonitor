@@ -128,7 +128,7 @@ NSString * const OldMyTableViewCellId = @"OldMyTableViewCellId";
     _medicineView.layer.borderColor = [UIColor blackColor].CGColor;
     _medicineView.layer.borderWidth = 0.5;
     [_medicineView.editButton addTarget:self action:@selector(clickEditButton:) forControlEvents:UIControlEventTouchUpInside];
-    _medicineView.editButton.tag = 103;
+    _medicineView.editButton.tag = 104;
     // TODO: 测试数据
     _medicineView.textLabel.text = @"无需服药";
     [self.view addSubview:_medicineView];
