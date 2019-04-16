@@ -25,6 +25,10 @@
     [self setupUI];
 }
 
+- (void)clickChangeButton {
+    NSLog(@"变更状态");
+}
+
 - (void)setupUI {
     // 创建控件
     _upView = [[ChapOrderUpView alloc] init];
@@ -35,19 +39,37 @@
     _downView = [ChapOrderDownView chapOrderDownView];
     [self.view addSubview:_downView];
     
+    UIButton *changeButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [changeButton setTitle:@"变更状态" forState:UIControlStateNormal];
+    [changeButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    changeButton.titleLabel.font = [UIFont boldSystemFontOfSize:16.f];
+    changeButton.layer.borderWidth = 1;
+    changeButton.layer.borderColor = [UIColor blackColor].CGColor;
+    changeButton.layer.cornerRadius = 5;
+    changeButton.layer.masksToBounds = YES;
+    [changeButton addTarget:self action:@selector(clickChangeButton) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:changeButton];
+    
     // 添加布局
     [_upView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.view.mas_top);
         make.left.equalTo(self.view.mas_left);
         make.right.equalTo(self.view.mas_right);
-        make.height.mas_equalTo(280.f);
+        make.height.mas_equalTo(230.f);
     }];
     
     [_downView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.upView.mas_bottom);
         make.left.equalTo(self.view.mas_left);
         make.right.equalTo(self.view.mas_right);
-        make.bottom.equalTo(self.view.mas_bottom);
+        make.height.mas_equalTo(335.f);
+    }];
+    
+    [changeButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.downView.mas_bottom).offset(15.f);
+        make.left.equalTo(self.view.mas_left).offset(15.f);
+        make.right.equalTo(self.view.mas_right).offset(-15.f);
+        make.bottom.equalTo(self.view.mas_bottom).offset(-15.f);
     }];
 }
 

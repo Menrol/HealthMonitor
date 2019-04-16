@@ -8,6 +8,8 @@
 
 #import "ChapChapViewController.h"
 #import "ChapCurOrderViewController.h"
+#import "RecieveOrderViewController.h"
+#import "ChapOrderListViewController.h"
 
 @interface ChapChapViewController ()
 @property(strong,nonatomic) UIView                *chooseLineView;
@@ -31,8 +33,8 @@
         self.chooseLineView.frame = CGRectMake(offsetX, getRectNavAndStatusHeight, MainScreenWith / 3, 3);
     }];
     
-//    CGFloat scrollOffsetX = (tag - 100) * MainScreenWith;
-//    [_scrollView setContentOffset:CGPointMake(scrollOffsetX, 0) animated:YES];
+    CGFloat scrollOffsetX = (tag - 100) * MainScreenWith;
+    [_scrollView setContentOffset:CGPointMake(scrollOffsetX, 0) animated:YES];
     
 }
 
@@ -100,6 +102,16 @@
     [self addChildViewController:chapCurOrderViewController];
     chapCurOrderViewController.view.frame = CGRectMake(0, 0, CGRectGetWidth(_scrollView.frame), CGRectGetHeight(_scrollView.frame));
     [_scrollView addSubview:chapCurOrderViewController.view];
+    
+    RecieveOrderViewController *recieveOrderViewController = [[RecieveOrderViewController alloc] init];
+    [self addChildViewController:recieveOrderViewController];
+    recieveOrderViewController.view.frame = CGRectMake(MainScreenWith, 0, CGRectGetWidth(_scrollView.frame), CGRectGetHeight(_scrollView.frame));
+    [_scrollView addSubview:recieveOrderViewController.view];
+    
+    ChapOrderListViewController *chapOrderListViewController = [[ChapOrderListViewController alloc] init];
+    [self addChildViewController:chapOrderListViewController];
+    chapOrderListViewController.view.frame = CGRectMake(MainScreenWith * 2, 0, CGRectGetWidth(_scrollView.frame), CGRectGetHeight(_scrollView.frame));
+    [_scrollView addSubview:chapOrderListViewController.view];
 }
 
 @end

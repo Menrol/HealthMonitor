@@ -62,7 +62,7 @@
         make.top.equalTo(self.orderStatusLabel.mas_bottom).offset(15.f);
         make.left.equalTo(self.mas_left);
         make.right.equalTo(self.mas_right);
-        make.height.mas_equalTo(200.f);
+        make.height.mas_equalTo(160.f);
     }];
 }
 
