@@ -7,6 +7,7 @@
 //
 
 #import "OldOrderDetailViewController.h"
+#import "ChapDetailViewController.h"
 #import "OldOrderUpView.h"
 #import "OldOrderDownView.h"
 #import <Masonry/Masonry.h>
@@ -29,6 +30,10 @@
 
 - (void)didClickDetailButton {
     NSLog(@"查看详情");
+    
+    ChapDetailViewController *vc = [[ChapDetailViewController alloc] init];
+    vc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (void)clickReturn {

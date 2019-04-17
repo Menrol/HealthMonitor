@@ -20,6 +20,7 @@
 		188DA5F92265D16200B74074 /* ChapOrderListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 188DA5F82265D16200B74074 /* ChapOrderListViewController.m */; };
 		188DA5FC2265D93C00B74074 /* OrderListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 188DA5FA2265D93B00B74074 /* OrderListTableViewCell.m */; };
 		188DA5FF2265DA4400B74074 /* ChapOrDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 188DA5FE2265DA4400B74074 /* ChapOrDetailViewController.m */; };
+		18B5B66F226719AB008117BD /* ChapDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18B5B66E226719AB008117BD /* ChapDetailViewController.m */; };
 		18BB9D6A2264904400FDF08C /* OldHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BB9D692264904400FDF08C /* OldHomeViewController.m */; };
 		18BB9D6F2264905F00FDF08C /* ChapHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BB9D6C2264905F00FDF08C /* ChapHomeViewController.m */; };
 		18BB9D752264908F00FDF08C /* ChapHomeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BB9D732264908F00FDF08C /* ChapHomeTableViewCell.m */; };
@@ -97,6 +98,8 @@
 		188DA5FB2265D93C00B74074 /* OrderListTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderListTableViewCell.h; sourceTree = "<group>"; };
 		188DA5FD2265DA4400B74074 /* ChapOrDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChapOrDetailViewController.h; sourceTree = "<group>"; };
 		188DA5FE2265DA4400B74074 /* ChapOrDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChapOrDetailViewController.m; sourceTree = "<group>"; };
+		18B5B66D226719AB008117BD /* ChapDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChapDetailViewController.h; sourceTree = "<group>"; };
+		18B5B66E226719AB008117BD /* ChapDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChapDetailViewController.m; sourceTree = "<group>"; };
 		18BB9D682264904400FDF08C /* OldHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OldHomeViewController.h; sourceTree = "<group>"; };
 		18BB9D692264904400FDF08C /* OldHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OldHomeViewController.m; sourceTree = "<group>"; };
 		18BB9D6C2264905F00FDF08C /* ChapHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChapHomeViewController.m; sourceTree = "<group>"; };
@@ -503,6 +506,8 @@
 		18CC4293225B3635007C5949 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				18B5B66D226719AB008117BD /* ChapDetailViewController.h */,
+				18B5B66E226719AB008117BD /* ChapDetailViewController.m */,
 				18BB9D7C226490AE00FDF08C /* Old */,
 				18BB9D76226490AE00FDF08C /* Chaperonage */,
 				18BB9D7B226490AE00FDF08C /* Children */,
@@ -849,6 +854,7 @@
 				18BB9D89226490AF00FDF08C /* OldChapViewController.m in Sources */,
 				18BB9D9E226490D200FDF08C /* ChapOrderUpView.m in Sources */,
 				18F14C5B225DF14E00E75295 /* HistogramCollectionViewCell.m in Sources */,
+				18B5B66F226719AB008117BD /* ChapDetailViewController.m in Sources */,
 				18FEAD7D225F2C33004D21F6 /* TipView.m in Sources */,
 				18BB9DAD2264912D00FDF08C /* OldMyTableViewCell.m in Sources */,
 				18BB9D752264908F00FDF08C /* ChapHomeTableViewCell.m in Sources */,

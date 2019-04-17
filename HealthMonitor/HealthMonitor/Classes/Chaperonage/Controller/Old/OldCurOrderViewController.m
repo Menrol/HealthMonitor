@@ -9,6 +9,7 @@
 #import "OldCurOrderViewController.h"
 #import "OldOrderUpView.h"
 #import "OldOrderDownView.h"
+#import "ChapDetailViewController.h"
 #import <Masonry/Masonry.h>
 
 @interface OldCurOrderViewController ()<OldOrderUpViewDelegate>
@@ -27,6 +28,10 @@
 
 - (void)didClickDetailButton {
     NSLog(@"查看详情");
+    
+    ChapDetailViewController *vc = [[ChapDetailViewController alloc] init];
+    vc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (void)setupUI {

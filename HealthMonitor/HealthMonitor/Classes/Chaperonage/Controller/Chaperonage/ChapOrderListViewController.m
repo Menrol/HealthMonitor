@@ -13,7 +13,9 @@
 
 NSString * const ChapOrderListTableViewCellId = @"ChapOrderListTableViewCellId";
 
-@interface ChapOrderListViewController ()<UITableViewDelegate, UITableViewDataSource>
+@interface ChapOrderListViewController ()<UITableViewDelegate, UITableViewDataSource> {
+    UIButton       *_preButton;
+}
 @property(strong,nonatomic) UITableView       *tableView;
 
 @end
@@ -27,10 +29,26 @@ NSString * const ChapOrderListTableViewCellId = @"ChapOrderListTableViewCellId";
 }
 
 - (void)clickButton:(UIButton *)btn {
-    if (btn.tag == 100) {
-        NSLog(@"进行中");
+    
+    if (_preButton != btn) {
+        _preButton.selected = NO;
+        _preButton.layer.borderColor = [UIColor blackColor].CGColor;
+    }
+    
+    if (btn.selected) {
+        btn.selected = NO;
+        btn.layer.borderColor = [UIColor blackColor].CGColor;
+        NSLog(@"显示全部订单");
     }else {
-        NSLog(@"已完成");
+        _preButton = btn;
+        btn.selected = YES;
+        btn.layer.borderColor = [UIColor colorWithRed:0.41 green:0.77 blue:0.84 alpha:1.00].CGColor;
+        
+        if (btn.tag == 100) {
+            NSLog(@"进行中");
+        }else {
+            NSLog(@"已完成");
+        }
     }
 }
 
@@ -72,9 +90,10 @@ NSString * const ChapOrderListTableViewCellId = @"ChapOrderListTableViewCellId";
 
 - (void)setupUI {
     // 添加控件
-    UIButton *underwayButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    UIButton *underwayButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [underwayButton setTitle:@"进行中" forState:UIControlStateNormal];
     [underwayButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [underwayButton setTitleColor:[UIColor colorWithRed:0.41 green:0.77 blue:0.84 alpha:1.00] forState:UIControlStateSelected];
     underwayButton.titleLabel.font = [UIFont boldSystemFontOfSize:16.f];
     underwayButton.layer.borderWidth = 1;
     underwayButton.layer.borderColor = [UIColor blackColor].CGColor;
@@ -84,9 +103,10 @@ NSString * const ChapOrderListTableViewCellId = @"ChapOrderListTableViewCellId";
     [underwayButton addTarget:self action:@selector(clickButton:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:underwayButton];
     
-    UIButton *completeButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    UIButton *completeButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [completeButton setTitle:@"已完成" forState:UIControlStateNormal];
     [completeButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [completeButton setTitleColor:[UIColor colorWithRed:0.41 green:0.77 blue:0.84 alpha:1.00] forState:UIControlStateSelected];
     completeButton.titleLabel.font = [UIFont boldSystemFontOfSize:16.f];
     completeButton.layer.borderWidth = 1;
     completeButton.layer.borderColor = [UIColor blackColor].CGColor;

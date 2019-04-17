@@ -14,7 +14,9 @@
 
 NSString * const OldOrderListTableViewCellID = @"OldOrderListTableViewCellID";
 
-@interface OldOrderListViewController ()<UITableViewDelegate, UITableViewDataSource>
+@interface OldOrderListViewController ()<UITableViewDelegate, UITableViewDataSource> {
+    UIButton       *_preButton;
+}
 @property(strong,nonatomic) UITableView       *tableView;
 
 @end
@@ -34,12 +36,27 @@ NSString * const OldOrderListTableViewCellID = @"OldOrderListTableViewCellID";
 }
 
 - (void)clickButton:(UIButton *)btn {
-    if (btn.tag == 100) {
-        NSLog(@"进行中");
-    }else if (btn.tag == 101) {
-        NSLog(@"已完成");
+    if (_preButton != btn) {
+        _preButton.selected = NO;
+        _preButton.layer.borderColor = [UIColor blackColor].CGColor;
+    }
+    
+    if (btn.selected) {
+        btn.selected = NO;
+        btn.layer.borderColor = [UIColor blackColor].CGColor;
+        NSLog(@"显示全部订单");
     }else {
-        NSLog(@"待接单");
+        _preButton = btn;
+        btn.selected = YES;
+        btn.layer.borderColor = [UIColor colorWithRed:0.41 green:0.77 blue:0.84 alpha:1.00].CGColor;
+        
+        if (btn.tag == 100) {
+            NSLog(@"进行中");
+        }else if (btn.tag == 101) {
+            NSLog(@"已完成");
+        }else {
+            NSLog(@"待接单");
+        }
     }
 }
 
@@ -71,9 +88,10 @@ NSString * const OldOrderListTableViewCellID = @"OldOrderListTableViewCellID";
 
 - (void)setupUI {
     // 添加控件
-    UIButton *underwayButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    UIButton *underwayButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [underwayButton setTitle:@"进行中" forState:UIControlStateNormal];
     [underwayButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [underwayButton setTitleColor:[UIColor colorWithRed:0.41 green:0.77 blue:0.84 alpha:1.00] forState:UIControlStateSelected];
     underwayButton.titleLabel.font = [UIFont boldSystemFontOfSize:16.f];
     underwayButton.layer.borderWidth = 1;
     underwayButton.layer.borderColor = [UIColor blackColor].CGColor;
@@ -83,9 +101,10 @@ NSString * const OldOrderListTableViewCellID = @"OldOrderListTableViewCellID";
     [underwayButton addTarget:self action:@selector(clickButton:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:underwayButton];
     
-    UIButton *completeButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    UIButton *completeButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [completeButton setTitle:@"已完成" forState:UIControlStateNormal];
     [completeButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [completeButton setTitleColor:[UIColor colorWithRed:0.41 green:0.77 blue:0.84 alpha:1.00] forState:UIControlStateSelected];
     completeButton.titleLabel.font = [UIFont boldSystemFontOfSize:16.f];
     completeButton.layer.borderWidth = 1;
     completeButton.layer.borderColor = [UIColor blackColor].CGColor;
@@ -95,9 +114,10 @@ NSString * const OldOrderListTableViewCellID = @"OldOrderListTableViewCellID";
     [completeButton addTarget:self action:@selector(clickButton:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:completeButton];
     
-    UIButton *waitButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    UIButton *waitButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [waitButton setTitle:@"待接单" forState:UIControlStateNormal];
     [waitButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [waitButton setTitleColor:[UIColor colorWithRed:0.41 green:0.77 blue:0.84 alpha:1.00] forState:UIControlStateSelected];
     waitButton.titleLabel.font = [UIFont boldSystemFontOfSize:16.f];
     waitButton.layer.borderWidth = 1;
     waitButton.layer.borderColor = [UIColor blackColor].CGColor;
