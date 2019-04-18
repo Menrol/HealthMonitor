@@ -1,32 +1,30 @@
 //
-//  OldOrderDetailViewController.m
+//  ChildCurOrderViewController.m
 //  HealthMonitor
 //
-//  Created by WRQ on 2019/4/12.
+//  Created by WRQ on 2019/4/18.
 //  Copyright © 2019 WRQ. All rights reserved.
 //
 
-#import "OldOrderDetailViewController.h"
-#import "ChapDetailViewController.h"
+#import "ChildCurOrderViewController.h"
 #import "CurOrderUpView.h"
 #import "CurOrderDownView.h"
+#import "ChapDetailViewController.h"
 #import <Masonry/Masonry.h>
 
-@interface OldOrderDetailViewController ()<CurOrderUpViewDelegate>
+@interface ChildCurOrderViewController ()<CurOrderUpViewDelegate>
 @property(strong,nonatomic) CurOrderUpView    *upView;
 @property(strong,nonatomic) CurOrderDownView  *downView;
 
 @end
 
-@implementation OldOrderDetailViewController
+@implementation ChildCurOrderViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     [self setupUI];
 }
-
-
 
 - (void)didClickDetailButton {
     NSLog(@"查看详情");
@@ -36,17 +34,7 @@
     [self.navigationController pushViewController:vc animated:YES];
 }
 
-- (void)clickReturn {
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
 - (void)setupUI {
-    self.title = @"订单详情";
-    self.view.backgroundColor = [UIColor whiteColor];
-    self.navigationController.navigationBar.tintColor = [UIColor blackColor];
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"arrows_left"] style:UIBarButtonItemStylePlain target:self action:@selector(clickReturn)];
-    
-    
     // 创建控件
     _upView = [[CurOrderUpView alloc] init];
     _upView.layer.borderColor = [UIColor blackColor].CGColor;
@@ -64,7 +52,7 @@
     
     // 添加布局
     [_upView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view.mas_top).offset(getRectNavAndStatusHeight);
+        make.top.equalTo(self.view.mas_top);
         make.left.equalTo(self.view.mas_left);
         make.right.equalTo(self.view.mas_right);
         make.height.mas_equalTo(340.f);

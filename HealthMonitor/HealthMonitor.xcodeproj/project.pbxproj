@@ -20,24 +20,31 @@
 		188DA5F92265D16200B74074 /* ChapOrderListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 188DA5F82265D16200B74074 /* ChapOrderListViewController.m */; };
 		188DA5FC2265D93C00B74074 /* OrderListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 188DA5FA2265D93B00B74074 /* OrderListTableViewCell.m */; };
 		188DA5FF2265DA4400B74074 /* ChapOrDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 188DA5FE2265DA4400B74074 /* ChapOrDetailViewController.m */; };
+		189D2CED22685E7300DF14ED /* ChildHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 189D2CEC22685E7300DF14ED /* ChildHomeViewController.m */; };
+		189D2CF022685E8A00DF14ED /* ChildChapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 189D2CEF22685E8A00DF14ED /* ChildChapViewController.m */; };
+		189D2CF322685EA000DF14ED /* ChildMyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 189D2CF222685EA000DF14ED /* ChildMyViewController.m */; };
+		189D2CF62268661900DF14ED /* ChildCurOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 189D2CF52268661900DF14ED /* ChildCurOrderViewController.m */; };
+		189D2CF92268662700DF14ED /* ChildOrderListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 189D2CF82268662700DF14ED /* ChildOrderListViewController.m */; };
+		189D2CFC2268663A00DF14ED /* ChildOrderDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 189D2CFB2268663A00DF14ED /* ChildOrderDetailViewController.m */; };
+		189D2CFF2268665100DF14ED /* ChildSendOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 189D2CFE2268665100DF14ED /* ChildSendOrderViewController.m */; };
 		18B5B66F226719AB008117BD /* ChapDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18B5B66E226719AB008117BD /* ChapDetailViewController.m */; };
 		18BB9D6A2264904400FDF08C /* OldHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BB9D692264904400FDF08C /* OldHomeViewController.m */; };
 		18BB9D6F2264905F00FDF08C /* ChapHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BB9D6C2264905F00FDF08C /* ChapHomeViewController.m */; };
-		18BB9D752264908F00FDF08C /* ChapHomeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BB9D732264908F00FDF08C /* ChapHomeTableViewCell.m */; };
+		18BB9D752264908F00FDF08C /* ChanageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BB9D732264908F00FDF08C /* ChanageTableViewCell.m */; };
 		18BB9D87226490AF00FDF08C /* ChapCurOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BB9D78226490AE00FDF08C /* ChapCurOrderViewController.m */; };
 		18BB9D88226490AF00FDF08C /* ChapChapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BB9D79226490AE00FDF08C /* ChapChapViewController.m */; };
 		18BB9D89226490AF00FDF08C /* OldChapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BB9D7D226490AE00FDF08C /* OldChapViewController.m */; };
 		18BB9D8A226490AF00FDF08C /* OldOrderDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BB9D80226490AE00FDF08C /* OldOrderDetailViewController.m */; };
 		18BB9D8B226490AF00FDF08C /* OldOrderListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BB9D83226490AE00FDF08C /* OldOrderListViewController.m */; };
-		18BB9D8C226490AF00FDF08C /* SendOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BB9D84226490AE00FDF08C /* SendOrderViewController.m */; };
+		18BB9D8C226490AF00FDF08C /* OldSendOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BB9D84226490AE00FDF08C /* OldSendOrderViewController.m */; };
 		18BB9D8D226490AF00FDF08C /* OldCurOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BB9D85226490AE00FDF08C /* OldCurOrderViewController.m */; };
-		18BB9D9B226490D200FDF08C /* OldOrderDownView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18BB9D91226490D200FDF08C /* OldOrderDownView.xib */; };
-		18BB9D9C226490D200FDF08C /* OldOrderDownView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BB9D94226490D200FDF08C /* OldOrderDownView.m */; };
-		18BB9D9D226490D200FDF08C /* OldOrderUpView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BB9D95226490D200FDF08C /* OldOrderUpView.m */; };
+		18BB9D9B226490D200FDF08C /* CurOrderDownView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18BB9D91226490D200FDF08C /* CurOrderDownView.xib */; };
+		18BB9D9C226490D200FDF08C /* CurOrderDownView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BB9D94226490D200FDF08C /* CurOrderDownView.m */; };
+		18BB9D9D226490D200FDF08C /* CurOrderUpView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BB9D95226490D200FDF08C /* CurOrderUpView.m */; };
 		18BB9D9E226490D200FDF08C /* ChapOrderUpView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BB9D97226490D200FDF08C /* ChapOrderUpView.m */; };
 		18BB9DA62264911300FDF08C /* ChapMyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BB9DA12264911300FDF08C /* ChapMyViewController.m */; };
 		18BB9DA72264911300FDF08C /* OldMyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BB9DA52264911300FDF08C /* OldMyViewController.m */; };
-		18BB9DAD2264912D00FDF08C /* OldMyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BB9DAC2264912D00FDF08C /* OldMyTableViewCell.m */; };
+		18BB9DAD2264912D00FDF08C /* MyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BB9DAC2264912D00FDF08C /* MyTableViewCell.m */; };
 		18BB9DB02264B45000FDF08C /* ChapOrderDownView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BB9DAF2264B45000FDF08C /* ChapOrderDownView.m */; };
 		18BB9DB22264B46C00FDF08C /* ChapOrderDownView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18BB9DB12264B46B00FDF08C /* ChapOrderDownView.xib */; };
 		18CC4288225B2D96007C5949 /* ChildrenBindingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18CC4287225B2D96007C5949 /* ChildrenBindingViewController.m */; };
@@ -98,41 +105,55 @@
 		188DA5FB2265D93C00B74074 /* OrderListTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderListTableViewCell.h; sourceTree = "<group>"; };
 		188DA5FD2265DA4400B74074 /* ChapOrDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChapOrDetailViewController.h; sourceTree = "<group>"; };
 		188DA5FE2265DA4400B74074 /* ChapOrDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChapOrDetailViewController.m; sourceTree = "<group>"; };
+		189D2CEB22685E7300DF14ED /* ChildHomeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChildHomeViewController.h; sourceTree = "<group>"; };
+		189D2CEC22685E7300DF14ED /* ChildHomeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChildHomeViewController.m; sourceTree = "<group>"; };
+		189D2CEE22685E8A00DF14ED /* ChildChapViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChildChapViewController.h; sourceTree = "<group>"; };
+		189D2CEF22685E8A00DF14ED /* ChildChapViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChildChapViewController.m; sourceTree = "<group>"; };
+		189D2CF122685EA000DF14ED /* ChildMyViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChildMyViewController.h; sourceTree = "<group>"; };
+		189D2CF222685EA000DF14ED /* ChildMyViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChildMyViewController.m; sourceTree = "<group>"; };
+		189D2CF42268661900DF14ED /* ChildCurOrderViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChildCurOrderViewController.h; sourceTree = "<group>"; };
+		189D2CF52268661900DF14ED /* ChildCurOrderViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChildCurOrderViewController.m; sourceTree = "<group>"; };
+		189D2CF72268662700DF14ED /* ChildOrderListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChildOrderListViewController.h; sourceTree = "<group>"; };
+		189D2CF82268662700DF14ED /* ChildOrderListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChildOrderListViewController.m; sourceTree = "<group>"; };
+		189D2CFA2268663A00DF14ED /* ChildOrderDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChildOrderDetailViewController.h; sourceTree = "<group>"; };
+		189D2CFB2268663A00DF14ED /* ChildOrderDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChildOrderDetailViewController.m; sourceTree = "<group>"; };
+		189D2CFD2268665100DF14ED /* ChildSendOrderViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChildSendOrderViewController.h; sourceTree = "<group>"; };
+		189D2CFE2268665100DF14ED /* ChildSendOrderViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChildSendOrderViewController.m; sourceTree = "<group>"; };
 		18B5B66D226719AB008117BD /* ChapDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChapDetailViewController.h; sourceTree = "<group>"; };
 		18B5B66E226719AB008117BD /* ChapDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChapDetailViewController.m; sourceTree = "<group>"; };
 		18BB9D682264904400FDF08C /* OldHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OldHomeViewController.h; sourceTree = "<group>"; };
 		18BB9D692264904400FDF08C /* OldHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OldHomeViewController.m; sourceTree = "<group>"; };
 		18BB9D6C2264905F00FDF08C /* ChapHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChapHomeViewController.m; sourceTree = "<group>"; };
 		18BB9D6D2264905F00FDF08C /* ChapHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChapHomeViewController.h; sourceTree = "<group>"; };
-		18BB9D722264908F00FDF08C /* ChapHomeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChapHomeTableViewCell.h; sourceTree = "<group>"; };
-		18BB9D732264908F00FDF08C /* ChapHomeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChapHomeTableViewCell.m; sourceTree = "<group>"; };
+		18BB9D722264908F00FDF08C /* ChanageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChanageTableViewCell.h; sourceTree = "<group>"; };
+		18BB9D732264908F00FDF08C /* ChanageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChanageTableViewCell.m; sourceTree = "<group>"; };
 		18BB9D77226490AE00FDF08C /* ChapChapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChapChapViewController.h; sourceTree = "<group>"; };
 		18BB9D78226490AE00FDF08C /* ChapCurOrderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChapCurOrderViewController.m; sourceTree = "<group>"; };
 		18BB9D79226490AE00FDF08C /* ChapChapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChapChapViewController.m; sourceTree = "<group>"; };
 		18BB9D7A226490AE00FDF08C /* ChapCurOrderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChapCurOrderViewController.h; sourceTree = "<group>"; };
 		18BB9D7D226490AE00FDF08C /* OldChapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OldChapViewController.m; sourceTree = "<group>"; };
-		18BB9D7E226490AE00FDF08C /* SendOrderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendOrderViewController.h; sourceTree = "<group>"; };
+		18BB9D7E226490AE00FDF08C /* OldSendOrderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OldSendOrderViewController.h; sourceTree = "<group>"; };
 		18BB9D7F226490AE00FDF08C /* OldOrderListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OldOrderListViewController.h; sourceTree = "<group>"; };
 		18BB9D80226490AE00FDF08C /* OldOrderDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OldOrderDetailViewController.m; sourceTree = "<group>"; };
 		18BB9D81226490AE00FDF08C /* OldCurOrderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OldCurOrderViewController.h; sourceTree = "<group>"; };
 		18BB9D82226490AE00FDF08C /* OldChapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OldChapViewController.h; sourceTree = "<group>"; };
 		18BB9D83226490AE00FDF08C /* OldOrderListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OldOrderListViewController.m; sourceTree = "<group>"; };
-		18BB9D84226490AE00FDF08C /* SendOrderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SendOrderViewController.m; sourceTree = "<group>"; };
+		18BB9D84226490AE00FDF08C /* OldSendOrderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OldSendOrderViewController.m; sourceTree = "<group>"; };
 		18BB9D85226490AE00FDF08C /* OldCurOrderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OldCurOrderViewController.m; sourceTree = "<group>"; };
 		18BB9D86226490AE00FDF08C /* OldOrderDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OldOrderDetailViewController.h; sourceTree = "<group>"; };
-		18BB9D90226490D200FDF08C /* OldOrderDownView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OldOrderDownView.h; sourceTree = "<group>"; };
-		18BB9D91226490D200FDF08C /* OldOrderDownView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OldOrderDownView.xib; sourceTree = "<group>"; };
-		18BB9D92226490D200FDF08C /* OldOrderUpView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OldOrderUpView.h; sourceTree = "<group>"; };
-		18BB9D94226490D200FDF08C /* OldOrderDownView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OldOrderDownView.m; sourceTree = "<group>"; };
-		18BB9D95226490D200FDF08C /* OldOrderUpView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OldOrderUpView.m; sourceTree = "<group>"; };
+		18BB9D90226490D200FDF08C /* CurOrderDownView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurOrderDownView.h; sourceTree = "<group>"; };
+		18BB9D91226490D200FDF08C /* CurOrderDownView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CurOrderDownView.xib; sourceTree = "<group>"; };
+		18BB9D92226490D200FDF08C /* CurOrderUpView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurOrderUpView.h; sourceTree = "<group>"; };
+		18BB9D94226490D200FDF08C /* CurOrderDownView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurOrderDownView.m; sourceTree = "<group>"; };
+		18BB9D95226490D200FDF08C /* CurOrderUpView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurOrderUpView.m; sourceTree = "<group>"; };
 		18BB9D97226490D200FDF08C /* ChapOrderUpView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChapOrderUpView.m; sourceTree = "<group>"; };
 		18BB9D98226490D200FDF08C /* ChapOrderUpView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChapOrderUpView.h; sourceTree = "<group>"; };
 		18BB9DA02264911300FDF08C /* ChapMyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChapMyViewController.h; sourceTree = "<group>"; };
 		18BB9DA12264911300FDF08C /* ChapMyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChapMyViewController.m; sourceTree = "<group>"; };
 		18BB9DA42264911300FDF08C /* OldMyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OldMyViewController.h; sourceTree = "<group>"; };
 		18BB9DA52264911300FDF08C /* OldMyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OldMyViewController.m; sourceTree = "<group>"; };
-		18BB9DAB2264912D00FDF08C /* OldMyTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OldMyTableViewCell.h; sourceTree = "<group>"; };
-		18BB9DAC2264912D00FDF08C /* OldMyTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OldMyTableViewCell.m; sourceTree = "<group>"; };
+		18BB9DAB2264912D00FDF08C /* MyTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyTableViewCell.h; sourceTree = "<group>"; };
+		18BB9DAC2264912D00FDF08C /* MyTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyTableViewCell.m; sourceTree = "<group>"; };
 		18BB9DAE2264B45000FDF08C /* ChapOrderDownView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChapOrderDownView.h; sourceTree = "<group>"; };
 		18BB9DAF2264B45000FDF08C /* ChapOrderDownView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChapOrderDownView.m; sourceTree = "<group>"; };
 		18BB9DB12264B46B00FDF08C /* ChapOrderDownView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChapOrderDownView.xib; sourceTree = "<group>"; };
@@ -227,9 +248,8 @@
 		184946672263220C001DDBEF /* View */ = {
 			isa = PBXGroup;
 			children = (
-				18BB9DAA2264912D00FDF08C /* Old */,
-				18BB9DA92264912D00FDF08C /* Chaperonage */,
-				18BB9DA82264912D00FDF08C /* Children */,
+				18BB9DAB2264912D00FDF08C /* MyTableViewCell.h */,
+				18BB9DAC2264912D00FDF08C /* MyTableViewCell.m */,
 				184946682263223D001DDBEF /* MessageView.xib */,
 				1849466A2263272C001DDBEF /* MessageView.h */,
 				1849466B2263272C001DDBEF /* MessageView.m */,
@@ -305,31 +325,10 @@
 		18BB9D6E2264905F00FDF08C /* Children */ = {
 			isa = PBXGroup;
 			children = (
+				189D2CEB22685E7300DF14ED /* ChildHomeViewController.h */,
+				189D2CEC22685E7300DF14ED /* ChildHomeViewController.m */,
 			);
 			path = Children;
-			sourceTree = "<group>";
-		};
-		18BB9D702264908F00FDF08C /* Children */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Children;
-			sourceTree = "<group>";
-		};
-		18BB9D712264908F00FDF08C /* Chaperonage */ = {
-			isa = PBXGroup;
-			children = (
-				18BB9D722264908F00FDF08C /* ChapHomeTableViewCell.h */,
-				18BB9D732264908F00FDF08C /* ChapHomeTableViewCell.m */,
-			);
-			path = Chaperonage;
-			sourceTree = "<group>";
-		};
-		18BB9D742264908F00FDF08C /* Old */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Old;
 			sourceTree = "<group>";
 		};
 		18BB9D76226490AE00FDF08C /* Chaperonage */ = {
@@ -352,6 +351,16 @@
 		18BB9D7B226490AE00FDF08C /* Children */ = {
 			isa = PBXGroup;
 			children = (
+				189D2CEE22685E8A00DF14ED /* ChildChapViewController.h */,
+				189D2CEF22685E8A00DF14ED /* ChildChapViewController.m */,
+				189D2CF42268661900DF14ED /* ChildCurOrderViewController.h */,
+				189D2CF52268661900DF14ED /* ChildCurOrderViewController.m */,
+				189D2CF72268662700DF14ED /* ChildOrderListViewController.h */,
+				189D2CF82268662700DF14ED /* ChildOrderListViewController.m */,
+				189D2CFA2268663A00DF14ED /* ChildOrderDetailViewController.h */,
+				189D2CFB2268663A00DF14ED /* ChildOrderDetailViewController.m */,
+				189D2CFD2268665100DF14ED /* ChildSendOrderViewController.h */,
+				189D2CFE2268665100DF14ED /* ChildSendOrderViewController.m */,
 			);
 			path = Children;
 			sourceTree = "<group>";
@@ -367,20 +376,8 @@
 				18BB9D83226490AE00FDF08C /* OldOrderListViewController.m */,
 				18BB9D86226490AE00FDF08C /* OldOrderDetailViewController.h */,
 				18BB9D80226490AE00FDF08C /* OldOrderDetailViewController.m */,
-				18BB9D7E226490AE00FDF08C /* SendOrderViewController.h */,
-				18BB9D84226490AE00FDF08C /* SendOrderViewController.m */,
-			);
-			path = Old;
-			sourceTree = "<group>";
-		};
-		18BB9D8E226490D200FDF08C /* Old */ = {
-			isa = PBXGroup;
-			children = (
-				18BB9D90226490D200FDF08C /* OldOrderDownView.h */,
-				18BB9D94226490D200FDF08C /* OldOrderDownView.m */,
-				18BB9D92226490D200FDF08C /* OldOrderUpView.h */,
-				18BB9D95226490D200FDF08C /* OldOrderUpView.m */,
-				18BB9D91226490D200FDF08C /* OldOrderDownView.xib */,
+				18BB9D7E226490AE00FDF08C /* OldSendOrderViewController.h */,
+				18BB9D84226490AE00FDF08C /* OldSendOrderViewController.m */,
 			);
 			path = Old;
 			sourceTree = "<group>";
@@ -399,13 +396,6 @@
 			path = Chaperonage;
 			sourceTree = "<group>";
 		};
-		18BB9D99226490D200FDF08C /* Children */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Children;
-			sourceTree = "<group>";
-		};
 		18BB9D9F2264911300FDF08C /* Chaperonage */ = {
 			isa = PBXGroup;
 			children = (
@@ -418,6 +408,8 @@
 		18BB9DA22264911300FDF08C /* Children */ = {
 			isa = PBXGroup;
 			children = (
+				189D2CF122685EA000DF14ED /* ChildMyViewController.h */,
+				189D2CF222685EA000DF14ED /* ChildMyViewController.m */,
 			);
 			path = Children;
 			sourceTree = "<group>";
@@ -431,36 +423,16 @@
 			path = Old;
 			sourceTree = "<group>";
 		};
-		18BB9DA82264912D00FDF08C /* Children */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Children;
-			sourceTree = "<group>";
-		};
-		18BB9DA92264912D00FDF08C /* Chaperonage */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Chaperonage;
-			sourceTree = "<group>";
-		};
-		18BB9DAA2264912D00FDF08C /* Old */ = {
-			isa = PBXGroup;
-			children = (
-				18BB9DAB2264912D00FDF08C /* OldMyTableViewCell.h */,
-				18BB9DAC2264912D00FDF08C /* OldMyTableViewCell.m */,
-			);
-			path = Old;
-			sourceTree = "<group>";
-		};
 		18C8676F225F5B3E004F6A2B /* View */ = {
 			isa = PBXGroup;
 			children = (
 				188DA5FB2265D93C00B74074 /* OrderListTableViewCell.h */,
 				188DA5FA2265D93B00B74074 /* OrderListTableViewCell.m */,
-				18BB9D8E226490D200FDF08C /* Old */,
-				18BB9D99226490D200FDF08C /* Children */,
+				18BB9D90226490D200FDF08C /* CurOrderDownView.h */,
+				18BB9D94226490D200FDF08C /* CurOrderDownView.m */,
+				18BB9D92226490D200FDF08C /* CurOrderUpView.h */,
+				18BB9D95226490D200FDF08C /* CurOrderUpView.m */,
+				18BB9D91226490D200FDF08C /* CurOrderDownView.xib */,
 				18BB9D96226490D200FDF08C /* Chaperonage */,
 			);
 			path = View;
@@ -583,15 +555,14 @@
 		18F14C55225DE42000E75295 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				18BB9D742264908F00FDF08C /* Old */,
-				18BB9D712264908F00FDF08C /* Chaperonage */,
-				18BB9D702264908F00FDF08C /* Children */,
 				18F14C56225DE44200E75295 /* StepView.h */,
 				18F14C57225DE44200E75295 /* StepView.m */,
 				18F14C59225DF14E00E75295 /* HistogramCollectionViewCell.h */,
 				18F14C5A225DF14E00E75295 /* HistogramCollectionViewCell.m */,
 				18FEAD7B225F2C33004D21F6 /* TipView.h */,
 				18FEAD7C225F2C33004D21F6 /* TipView.m */,
+				18BB9D722264908F00FDF08C /* ChanageTableViewCell.h */,
+				18BB9D732264908F00FDF08C /* ChanageTableViewCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -734,7 +705,7 @@
 			files = (
 				184946692263223D001DDBEF /* MessageView.xib in Resources */,
 				18BB9DB22264B46C00FDF08C /* ChapOrderDownView.xib in Resources */,
-				18BB9D9B226490D200FDF08C /* OldOrderDownView.xib in Resources */,
+				18BB9D9B226490D200FDF08C /* CurOrderDownView.xib in Resources */,
 				181073B4225788420010D844 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -836,28 +807,34 @@
 			buildActionMask = 2147483647;
 			files = (
 				188DA5FC2265D93C00B74074 /* OrderListTableViewCell.m in Sources */,
+				189D2CED22685E7300DF14ED /* ChildHomeViewController.m in Sources */,
 				18BB9D6F2264905F00FDF08C /* ChapHomeViewController.m in Sources */,
+				189D2CF92268662700DF14ED /* ChildOrderListViewController.m in Sources */,
 				188DA5F92265D16200B74074 /* ChapOrderListViewController.m in Sources */,
 				18752B93225A1B03008EF44F /* OldBindingViewController.m in Sources */,
+				189D2CFC2268663A00DF14ED /* ChildOrderDetailViewController.m in Sources */,
 				18BB9DA72264911300FDF08C /* OldMyViewController.m in Sources */,
 				18BB9D8A226490AF00FDF08C /* OldOrderDetailViewController.m in Sources */,
 				18BB9D6A2264904400FDF08C /* OldHomeViewController.m in Sources */,
-				18BB9D9C226490D200FDF08C /* OldOrderDownView.m in Sources */,
+				18BB9D9C226490D200FDF08C /* CurOrderDownView.m in Sources */,
 				18BB9D87226490AF00FDF08C /* ChapCurOrderViewController.m in Sources */,
-				18BB9D8C226490AF00FDF08C /* SendOrderViewController.m in Sources */,
+				189D2CF322685EA000DF14ED /* ChildMyViewController.m in Sources */,
+				18BB9D8C226490AF00FDF08C /* OldSendOrderViewController.m in Sources */,
 				18E4002D2255FCD70065E4B3 /* main.m in Sources */,
 				18E4001F2255FCD60065E4B3 /* AppDelegate.m in Sources */,
 				18BB9DA62264911300FDF08C /* ChapMyViewController.m in Sources */,
 				1849466C2263272C001DDBEF /* MessageView.m in Sources */,
 				186DA2FD22560D5D00C7CE10 /* LoginViewController.m in Sources */,
+				189D2CF62268661900DF14ED /* ChildCurOrderViewController.m in Sources */,
 				18CC428B225B30BC007C5949 /* MainViewController.m in Sources */,
 				18BB9D89226490AF00FDF08C /* OldChapViewController.m in Sources */,
+				189D2CFF2268665100DF14ED /* ChildSendOrderViewController.m in Sources */,
 				18BB9D9E226490D200FDF08C /* ChapOrderUpView.m in Sources */,
 				18F14C5B225DF14E00E75295 /* HistogramCollectionViewCell.m in Sources */,
 				18B5B66F226719AB008117BD /* ChapDetailViewController.m in Sources */,
 				18FEAD7D225F2C33004D21F6 /* TipView.m in Sources */,
-				18BB9DAD2264912D00FDF08C /* OldMyTableViewCell.m in Sources */,
-				18BB9D752264908F00FDF08C /* ChapHomeTableViewCell.m in Sources */,
+				18BB9DAD2264912D00FDF08C /* MyTableViewCell.m in Sources */,
+				18BB9D752264908F00FDF08C /* ChanageTableViewCell.m in Sources */,
 				188DA5F62265C87800B74074 /* RecieveOrderTableViewCell.m in Sources */,
 				188DA5F32265C70D00B74074 /* RecieveOrderViewController.m in Sources */,
 				18BB9D8D226490AF00FDF08C /* OldCurOrderViewController.m in Sources */,
@@ -869,7 +846,8 @@
 				18752B96225A2ADA008EF44F /* ChaperonageMViewController.m in Sources */,
 				181073B2225751DA0010D844 /* OldMessageViewController.m in Sources */,
 				18BB9D88226490AF00FDF08C /* ChapChapViewController.m in Sources */,
-				18BB9D9D226490D200FDF08C /* OldOrderUpView.m in Sources */,
+				189D2CF022685E8A00DF14ED /* ChildChapViewController.m in Sources */,
+				18BB9D9D226490D200FDF08C /* CurOrderUpView.m in Sources */,
 				18F14C58225DE44200E75295 /* StepView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

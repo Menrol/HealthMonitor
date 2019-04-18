@@ -1,32 +1,30 @@
 //
-//  OldOrderDetailViewController.m
+//  ChildOrderDetailViewController.m
 //  HealthMonitor
 //
-//  Created by WRQ on 2019/4/12.
+//  Created by WRQ on 2019/4/18.
 //  Copyright © 2019 WRQ. All rights reserved.
 //
 
-#import "OldOrderDetailViewController.h"
+#import "ChildOrderDetailViewController.h"
 #import "ChapDetailViewController.h"
 #import "CurOrderUpView.h"
 #import "CurOrderDownView.h"
 #import <Masonry/Masonry.h>
 
-@interface OldOrderDetailViewController ()<CurOrderUpViewDelegate>
+@interface ChildOrderDetailViewController ()<CurOrderUpViewDelegate>
 @property(strong,nonatomic) CurOrderUpView    *upView;
 @property(strong,nonatomic) CurOrderDownView  *downView;
 
 @end
 
-@implementation OldOrderDetailViewController
+@implementation ChildOrderDetailViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     [self setupUI];
 }
-
-
 
 - (void)didClickDetailButton {
     NSLog(@"查看详情");

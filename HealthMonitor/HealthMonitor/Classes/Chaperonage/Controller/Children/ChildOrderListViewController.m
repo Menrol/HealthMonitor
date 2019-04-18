@@ -1,27 +1,27 @@
 //
-//  OldOrderListViewController.m
+//  ChildOrderListViewController.m
 //  HealthMonitor
 //
-//  Created by WRQ on 2019/4/12.
+//  Created by WRQ on 2019/4/18.
 //  Copyright © 2019 WRQ. All rights reserved.
 //
 
-#import "OldOrderListViewController.h"
+#import "ChildOrderListViewController.h"
 #import "OrderListTableViewCell.h"
-#import "OldOrderDetailViewController.h"
-#import "OldSendOrderViewController.h"
+#import "ChildOrderDetailViewController.h"
+#import "ChildSendOrderViewController.h"
 #import <Masonry/Masonry.h>
 
-NSString * const OldOrderListTableViewCellID = @"OldOrderListTableViewCellID";
+NSString * const ChildOrderListTableViewCellID = @"ChildOrderListTableViewCellID";
 
-@interface OldOrderListViewController ()<UITableViewDelegate, UITableViewDataSource> {
+@interface ChildOrderListViewController ()<UITableViewDelegate, UITableViewDataSource> {
     UIButton       *_preButton;
 }
 @property(strong,nonatomic) UITableView       *tableView;
 
 @end
 
-@implementation OldOrderListViewController
+@implementation ChildOrderListViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -31,7 +31,8 @@ NSString * const OldOrderListTableViewCellID = @"OldOrderListTableViewCellID";
 
 - (void)clickSendButton {
     NSLog(@"发布新单");
-    OldSendOrderViewController *vc = [[OldSendOrderViewController alloc] init];
+    
+    ChildSendOrderViewController *vc = [[ChildSendOrderViewController alloc] init];
     [self.navigationController pushViewController:vc animated:YES];
 }
 
@@ -63,7 +64,7 @@ NSString * const OldOrderListTableViewCellID = @"OldOrderListTableViewCellID";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
     
-    OldOrderDetailViewController *vc = [[OldOrderDetailViewController alloc] init];
+    ChildOrderDetailViewController *vc = [[ChildOrderDetailViewController alloc] init];
     [self.navigationController pushViewController:vc animated:YES];
 }
 
@@ -73,7 +74,7 @@ NSString * const OldOrderListTableViewCellID = @"OldOrderListTableViewCellID";
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    OrderListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:OldOrderListTableViewCellID forIndexPath:indexPath];
+    OrderListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ChildOrderListTableViewCellID forIndexPath:indexPath];
     // TODO: 测试数据
     cell.orderNumLabel.text = @"PT190228184832015";
     cell.orderTypeLabel.text = @"待接单";
@@ -128,7 +129,7 @@ NSString * const OldOrderListTableViewCellID = @"OldOrderListTableViewCellID";
     [self.view addSubview:waitButton];
     
     _tableView = [[UITableView alloc] init];
-    [_tableView registerClass:[OrderListTableViewCell class] forCellReuseIdentifier:OldOrderListTableViewCellID];
+    [_tableView registerClass:[OrderListTableViewCell class] forCellReuseIdentifier:ChildOrderListTableViewCellID];
     _tableView.dataSource = self;
     _tableView.delegate = self;
     _tableView.layer.borderColor = [UIColor blackColor].CGColor;

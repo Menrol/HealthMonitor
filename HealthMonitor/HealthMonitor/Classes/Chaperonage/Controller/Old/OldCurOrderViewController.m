@@ -7,14 +7,14 @@
 //
 
 #import "OldCurOrderViewController.h"
-#import "OldOrderUpView.h"
-#import "OldOrderDownView.h"
+#import "CurOrderUpView.h"
+#import "CurOrderDownView.h"
 #import "ChapDetailViewController.h"
 #import <Masonry/Masonry.h>
 
-@interface OldCurOrderViewController ()<OldOrderUpViewDelegate>
-@property(strong,nonatomic) OldOrderUpView    *upView;
-@property(strong,nonatomic) OldOrderDownView  *downView;
+@interface OldCurOrderViewController ()<CurOrderUpViewDelegate>
+@property(strong,nonatomic) CurOrderUpView    *upView;
+@property(strong,nonatomic) CurOrderDownView  *downView;
 
 @end
 
@@ -36,7 +36,7 @@
 
 - (void)setupUI {
     // 创建控件
-    _upView = [[OldOrderUpView alloc] init];
+    _upView = [[CurOrderUpView alloc] init];
     _upView.layer.borderColor = [UIColor blackColor].CGColor;
     _upView.layer.borderWidth = 0.5;
     _upView.delegate = self;
@@ -45,7 +45,7 @@
     _upView.chaperonageLabel.text = @"王悦";
     [self.view addSubview:_upView];
     
-    _downView = [OldOrderDownView oldOrderDownView];
+    _downView = [CurOrderDownView oldOrderDownView];
     _downView.layer.borderColor = [UIColor blackColor].CGColor;
     _downView.layer.borderWidth = 0.5;
     [self.view addSubview:_downView];

@@ -1,12 +1,12 @@
 //
-//  ChapHomeViewController.m
+//  ChildHomeViewController.m
 //  HealthMonitor
 //
-//  Created by WRQ on 2019/4/15.
+//  Created by WRQ on 2019/4/18.
 //  Copyright © 2019 WRQ. All rights reserved.
 //
 
-#import "ChapHomeViewController.h"
+#import "ChildHomeViewController.h"
 #import "StepView.h"
 #import "TipView.h"
 #import "ChanageTableViewCell.h"
@@ -15,9 +15,9 @@
 #import <AMapSearchKit/AMapSearchKit.h>
 #import <Masonry/Masonry.h>
 
-NSString * const ChapHomeTableViewCellID = @"ChapHomeTableViewCellID";
+NSString * const ChildHomeTableViewCellID = @"ChildHomeTableViewCellID";
 
-@interface ChapHomeViewController ()<AMapSearchDelegate, UITableViewDataSource, ChangeTableViewCellDelegate>
+@interface ChildHomeViewController ()<AMapSearchDelegate, UITableViewDataSource, ChangeTableViewCellDelegate>
 @property(strong,nonatomic) MAMapView       *mapView;
 @property(strong,nonatomic) UILabel         *nameLabel;
 @property(strong,nonatomic) UILabel         *addressLabel;
@@ -27,7 +27,7 @@ NSString * const ChapHomeTableViewCellID = @"ChapHomeTableViewCellID";
 
 @end
 
-@implementation ChapHomeViewController
+@implementation ChildHomeViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -80,7 +80,7 @@ NSString * const ChapHomeTableViewCellID = @"ChapHomeTableViewCellID";
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    ChanageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ChapHomeTableViewCellID forIndexPath:indexPath];
+    ChanageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ChildHomeTableViewCellID forIndexPath:indexPath];
     cell.delegate = self;
     
     // TODO: 测试数据
@@ -157,7 +157,7 @@ NSString * const ChapHomeTableViewCellID = @"ChapHomeTableViewCellID";
     
     _changeTableView = [[UITableView alloc] init];
     _changeTableView.dataSource = self;
-    [_changeTableView registerClass:[ChanageTableViewCell class] forCellReuseIdentifier:ChapHomeTableViewCellID];
+    [_changeTableView registerClass:[ChanageTableViewCell class] forCellReuseIdentifier:ChildHomeTableViewCellID];
     _changeTableView.tableFooterView = [[UIView alloc] init];
     [_changeView addSubview:_changeTableView];
     

@@ -13,6 +13,9 @@
 #import "ChapHomeViewController.h"
 #import "ChapChapViewController.h"
 #import "ChapMyViewController.h"
+#import "ChildHomeViewController.h"
+#import "ChildChapViewController.h"
+#import "ChildMyViewController.h"
 
 @interface MainViewController ()
 
@@ -38,7 +41,9 @@
         [self addchildViewController:[[OldChapViewController alloc] init] WithImageName:@"pen" title:@"陪护"];
         [self addchildViewController:[[OldMyViewController alloc] init] WithImageName:@"user" title:@"我的"];
     }else if (self.userType == 1) {
-        
+        [self addchildViewController:[[ChildHomeViewController alloc] init] WithImageName:@"home" title:@"首页"];
+        [self addchildViewController:[[ChildChapViewController alloc] init] WithImageName:@"pen" title:@"陪护"];
+        [self addchildViewController:[[ChildMyViewController alloc] init] WithImageName:@"user" title:@"我的"];
     }else {
         [self addchildViewController:[[ChapHomeViewController alloc] init] WithImageName:@"home" title:@"首页"];
         [self addchildViewController:[[ChapChapViewController alloc] init] WithImageName:@"pen" title:@"陪护"];

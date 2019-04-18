@@ -7,13 +7,13 @@
 //
 
 #import "OldMyViewController.h"
-#import "OldMyTableViewCell.h"
+#import "MyTableViewCell.h"
 #import "MessageView.h"
 #import <Masonry/Masonry.h>
 
 NSString * const OldMyTableViewCellId = @"OldMyTableViewCellId";
 
-@interface OldMyViewController ()<UITableViewDataSource, OldMyTableViewCellDelegate>
+@interface OldMyViewController ()<UITableViewDataSource, MyTableViewCellDelegate>
 @property(strong,nonatomic) UIImageView      *iconImageView;
 @property(strong,nonatomic) UILabel          *nameLabel;
 @property(strong,nonatomic) MessageView      *sexView;
@@ -40,11 +40,11 @@ NSString * const OldMyTableViewCellId = @"OldMyTableViewCellId";
     NSLog(@"编辑");
 }
 
-- (void)clickDeleteButtonWithCell:(OldMyTableViewCell *)cell {
+- (void)clickDeleteButtonWithCell:(MyTableViewCell *)cell {
     NSLog(@"删除Cell");
 }
 
-- (void)clickAddButtonWithCell:(OldMyTableViewCell *)cell {
+- (void)clickAddButtonWithCell:(MyTableViewCell *)cell {
     NSLog(@"添加Cell");
 }
 
@@ -54,7 +54,7 @@ NSString * const OldMyTableViewCellId = @"OldMyTableViewCellId";
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    OldMyTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:OldMyTableViewCellId forIndexPath:indexPath];
+    MyTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:OldMyTableViewCellId forIndexPath:indexPath];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.delegate = self;
     
@@ -157,8 +157,12 @@ NSString * const OldMyTableViewCellId = @"OldMyTableViewCellId";
     
     _bindingTableView = [[UITableView alloc] init];
     _bindingTableView.dataSource = self;
-    [_bindingTableView registerClass:[OldMyTableViewCell class] forCellReuseIdentifier:OldMyTableViewCellId];
+    [_bindingTableView registerClass:[MyTableViewCell class] forCellReuseIdentifier:OldMyTableViewCellId];
     _bindingTableView.tableFooterView = [[UIView alloc] init];
+    _bindingTableView.separatorColor = [UIColor blackColor];
+    UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, MainScreenWith - 30, 0.5)];
+    lineView.backgroundColor = [UIColor blackColor];
+    _bindingTableView.tableHeaderView = lineView;
     [bindingView addSubview:_bindingTableView];
     
     // 设置布局
