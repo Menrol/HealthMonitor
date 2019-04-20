@@ -30,7 +30,7 @@
     NSLog(@"登录");
     MainViewController *vc = [[MainViewController alloc] init];
     // TODO: 测试数据
-    vc.userType = 1;
+    vc.userType = 2;
     [self presentViewController:vc animated:YES completion:nil];
 }
 

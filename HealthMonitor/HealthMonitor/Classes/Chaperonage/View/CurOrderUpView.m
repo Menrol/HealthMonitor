@@ -8,11 +8,8 @@
 
 #import "CurOrderUpView.h"
 #import <Masonry/Masonry.h>
-#import <MAMapKit/MAMapKit.h>
-#import <AMapFoundationKit/AMapFoundationKit.h>
 
-@interface CurOrderUpView()
-@property(strong,nonatomic) MAMapView      *mapView;
+@interface CurOrderUpView()<MAMapViewDelegate>
 
 @end
 
@@ -33,6 +30,28 @@
     [_delegate didClickDetailButton];
 }
 
+- (void)mapView:(MAMapView *)mapView didUpdateUserLocation:(MAUserLocation *)userLocation updatingLocation:(BOOL)updatingLocation {
+    [_delegate didUpdateUserLocation:userLocation updatingLocation:updatingLocation];
+}
+
+- (MAAnnotationView *)mapView:(MAMapView *)mapView viewForAnnotation:(id<MAAnnotation>)annotation {
+    if ([annotation isKindOfClass:[MAUserLocation class]]) {
+        return nil;
+    }else if ([annotation isKindOfClass:[MAPointAnnotation class]]) {
+        static NSString *reuseIndetifier = @"chapPointReuseIndetifier";
+        MAAnnotationView *annotationView = (MAAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:reuseIndetifier];
+        if (annotationView == nil) {
+            annotationView = [[MAAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:reuseIndetifier];
+        }
+        
+        annotationView.image = [UIImage imageNamed:@"person"];
+        
+        return annotationView;
+    }
+    
+    return nil;
+}
+
 - (void)setupUI {
     // 创建控件
     _orderStatusLabel = [[UILabel alloc] init];
@@ -47,6 +66,7 @@
     _mapView.showsCompass = NO;
     _mapView.showsScale = NO;
     _mapView.userTrackingMode = MAUserTrackingModeFollow;
+    _mapView.delegate = self;
     [self addSubview:_mapView];
     
     // 自定义定位点

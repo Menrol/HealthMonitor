@@ -8,7 +8,7 @@
 
 #import "RecieveOrderViewController.h"
 #import "RecieveOrderTableViewCell.h"
-#import "ChapOrDetailViewController.h"
+#import "ReOrderDetailViewController.h"
 #import <Masonry/Masonry.h>
 
 NSString * const RecieveOrderTableViewCellID = @"RecieveOrderTableViewCellID";
@@ -29,8 +29,7 @@ NSString * const RecieveOrderTableViewCellID = @"RecieveOrderTableViewCellID";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
     
-    ChapOrDetailViewController *vc = [[ChapOrDetailViewController alloc] init];
-    vc.controllerType = 0;
+    ReOrderDetailViewController *vc = [[ReOrderDetailViewController alloc] init];
     [self.navigationController pushViewController:vc animated:YES];
 }
 

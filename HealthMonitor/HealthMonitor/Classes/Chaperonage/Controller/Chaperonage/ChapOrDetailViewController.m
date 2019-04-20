@@ -11,10 +11,11 @@
 #import "ChapOrderDownView.h"
 #import <Masonry/Masonry.h>
 
-@interface ChapOrDetailViewController ()
+@interface ChapOrDetailViewController ()<ChapOrderUpViewDelegate> {
+    CLLocationCoordinate2D     _chapCoordinate;
+}
 @property(strong,nonatomic) ChapOrderUpView     *upView;
 @property(strong,nonatomic) ChapOrderDownView   *downView;
-@property(strong,nonatomic) UIButton            *recieveButton;
 
 @end
 
@@ -24,20 +25,30 @@
     [super viewDidLoad];
     
     [self setupUI];
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    if (self.controllerType == 1) {
-        self.recieveButton.hidden = YES;
-    }
-}
-
-- (void)clickRecieveButton {
-    NSLog(@"接单");
+    
+    // TODO: 测试数据
+    _chapCoordinate = CLLocationCoordinate2DMake(22.52, 113.92);
+    MAPointAnnotation *pointAnnotation = [[MAPointAnnotation alloc] init];
+    pointAnnotation.coordinate = _chapCoordinate;
+    [_upView.mapView addAnnotation:pointAnnotation];
 }
 
 - (void)clickReturn {
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)didUpdateUserLocation:(MAUserLocation *)userLocation updatingLocation:(BOOL)updatingLocation {
+    
+    if (_chapCoordinate.latitude == 0 && _chapCoordinate.longitude == 0) {
+        return;
+    }
+    
+    CLLocationCoordinate2D userCoordinate = userLocation.location.coordinate;
+    CLLocationCoordinate2D center = CLLocationCoordinate2DMake((userCoordinate.latitude + _chapCoordinate.latitude) / 2, (userCoordinate.longitude + _chapCoordinate.longitude) / 2);
+    MACoordinateSpan span = MACoordinateSpanMake(ABS(userCoordinate.latitude - _chapCoordinate.latitude) + 0.3, ABS(userCoordinate.longitude - _chapCoordinate.longitude) + 0.3);
+    MACoordinateRegion region = MACoordinateRegionMake(center, span);
+    
+    [_upView.mapView setRegion:region animated:YES];
 }
 
 - (void)setupUI {
@@ -50,21 +61,11 @@
     _upView = [[ChapOrderUpView alloc] init];
     // TODO: 测试数据
     _upView.orderStatusLabel.text = @"请尽快赶往地点";
+    _upView.delegate = self;
     [self.view addSubview:_upView];
     
     _downView = [ChapOrderDownView chapOrderDownView];
     [self.view addSubview:_downView];
-    
-    _recieveButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [_recieveButton setTitle:@"接单" forState:UIControlStateNormal];
-    [_recieveButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    _recieveButton.titleLabel.font = [UIFont boldSystemFontOfSize:16.f];
-    _recieveButton.layer.borderWidth = 1;
-    _recieveButton.layer.borderColor = [UIColor blackColor].CGColor;
-    _recieveButton.layer.cornerRadius = 5;
-    _recieveButton.layer.masksToBounds = YES;
-    [_recieveButton addTarget:self action:@selector(clickRecieveButton) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:_recieveButton];
     
     // 添加布局
     [_upView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -79,13 +80,6 @@
         make.left.equalTo(self.view.mas_left);
         make.right.equalTo(self.view.mas_right);
         make.height.mas_equalTo(335.f);
-    }];
-    
-    [_recieveButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.downView.mas_bottom).offset(15.f);
-        make.left.equalTo(self.view.mas_left).offset(15.f);
-        make.right.equalTo(self.view.mas_right).offset(-15.f);
-        make.bottom.equalTo(self.view.mas_bottom).offset(-TabBarHeight - 15);
     }];
 }
 

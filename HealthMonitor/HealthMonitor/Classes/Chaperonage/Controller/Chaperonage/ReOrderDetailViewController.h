@@ -1,8 +1,8 @@
 //
-//  ChapOrDetailViewController.h
+//  ReOrderDetailViewController.h
 //  HealthMonitor
 //
-//  Created by WRQ on 2019/4/16.
+//  Created by WRQ on 2019/4/20.
 //  Copyright © 2019 WRQ. All rights reserved.
 //
 
@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ChapOrDetailViewController : UIViewController
+@interface ReOrderDetailViewController : UIViewController
 
 @end
 

@@ -56,7 +56,6 @@ NSString * const ChapOrderListTableViewCellId = @"ChapOrderListTableViewCellId";
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
     
     ChapOrDetailViewController *vc = [[ChapOrDetailViewController alloc] init];
-    vc.controllerType = 1;
     [self.navigationController pushViewController:vc animated:YES];
 }
 

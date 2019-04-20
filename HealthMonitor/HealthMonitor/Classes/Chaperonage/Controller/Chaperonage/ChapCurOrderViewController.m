@@ -11,7 +11,9 @@
 #import "ChapOrderDownView.h"
 #import <Masonry/Masonry.h>
 
-@interface ChapCurOrderViewController ()
+@interface ChapCurOrderViewController ()<ChapOrderUpViewDelegate> {
+    CLLocationCoordinate2D     _chapCoordinate;
+}
 @property(strong,nonatomic) ChapOrderUpView     *upView;
 @property(strong,nonatomic) ChapOrderDownView   *downView;
 
@@ -23,10 +25,30 @@
     [super viewDidLoad];
     
     [self setupUI];
+    
+    // TODO: 测试数据
+    _chapCoordinate = CLLocationCoordinate2DMake(22.52, 113.92);
+    MAPointAnnotation *pointAnnotation = [[MAPointAnnotation alloc] init];
+    pointAnnotation.coordinate = _chapCoordinate;
+    [_upView.mapView addAnnotation:pointAnnotation];
 }
 
 - (void)clickChangeButton {
     NSLog(@"变更状态");
+}
+
+- (void)didUpdateUserLocation:(MAUserLocation *)userLocation updatingLocation:(BOOL)updatingLocation {
+    
+    if (_chapCoordinate.latitude == 0 && _chapCoordinate.longitude == 0) {
+        return;
+    }
+    
+    CLLocationCoordinate2D userCoordinate = userLocation.location.coordinate;
+    CLLocationCoordinate2D center = CLLocationCoordinate2DMake((userCoordinate.latitude + _chapCoordinate.latitude) / 2, (userCoordinate.longitude + _chapCoordinate.longitude) / 2);
+    MACoordinateSpan span = MACoordinateSpanMake(ABS(userCoordinate.latitude - _chapCoordinate.latitude) + 0.3, ABS(userCoordinate.longitude - _chapCoordinate.longitude) + 0.3);
+    MACoordinateRegion region = MACoordinateRegionMake(center, span);
+
+    [_upView.mapView setRegion:region animated:YES];
 }
 
 - (void)setupUI {
@@ -34,6 +56,7 @@
     _upView = [[ChapOrderUpView alloc] init];
     // TODO: 测试数据
     _upView.orderStatusLabel.text = @"请尽快赶往地点";
+    _upView.delegate = self;
     [self.view addSubview:_upView];
     
     _downView = [ChapOrderDownView chapOrderDownView];

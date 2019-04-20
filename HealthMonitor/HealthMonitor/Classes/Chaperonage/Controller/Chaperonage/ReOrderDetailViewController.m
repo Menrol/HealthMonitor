@@ -1,26 +1,26 @@
 //
-//  OldOrderDetailViewController.m
+//  ReOrderDetailViewController.m
 //  HealthMonitor
 //
-//  Created by WRQ on 2019/4/12.
+//  Created by WRQ on 2019/4/20.
 //  Copyright © 2019 WRQ. All rights reserved.
 //
 
-#import "OldOrderDetailViewController.h"
-#import "ChapDetailViewController.h"
-#import "CurOrderUpView.h"
-#import "CurOrderDownView.h"
+#import "ReOrderDetailViewController.h"
+#import "ChapOrderUpView.h"
+#import "ChapOrderDownView.h"
 #import <Masonry/Masonry.h>
 
-@interface OldOrderDetailViewController ()<CurOrderUpViewDelegate> {
+@interface ReOrderDetailViewController ()<ChapOrderUpViewDelegate> {
     CLLocationCoordinate2D     _chapCoordinate;
 }
-@property(strong,nonatomic) CurOrderUpView    *upView;
-@property(strong,nonatomic) CurOrderDownView  *downView;
+@property(strong,nonatomic) ChapOrderUpView     *upView;
+@property(strong,nonatomic) ChapOrderDownView   *downView;
+@property(strong,nonatomic) UIButton            *recieveButton;
 
 @end
 
-@implementation OldOrderDetailViewController
+@implementation ReOrderDetailViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -34,12 +34,8 @@
     [_upView.mapView addAnnotation:pointAnnotation];
 }
 
-- (void)didClickDetailButton {
-    NSLog(@"查看详情");
-    
-    ChapDetailViewController *vc = [[ChapDetailViewController alloc] init];
-    vc.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:vc animated:YES];
+- (void)clickRecieveButton {
+    NSLog(@"接单");
 }
 
 - (void)clickReturn {
@@ -66,35 +62,54 @@
     self.navigationController.navigationBar.tintColor = [UIColor blackColor];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"arrows_left"] style:UIBarButtonItemStylePlain target:self action:@selector(clickReturn)];
     
-    
     // 创建控件
-    _upView = [[CurOrderUpView alloc] init];
-    _upView.layer.borderColor = [UIColor blackColor].CGColor;
-    _upView.layer.borderWidth = 0.5;
+    _upView = [[ChapOrderUpView alloc] init];
+    _upView.orderStatusLabel.hidden = YES;
     _upView.delegate = self;
-    // TODO: 测试数据
-    _upView.orderStatusLabel.text = @"陪护员已接单";
-    _upView.chaperonageLabel.text = @"王悦";
     [self.view addSubview:_upView];
     
-    _downView = [CurOrderDownView oldOrderDownView];
-    _downView.layer.borderColor = [UIColor blackColor].CGColor;
-    _downView.layer.borderWidth = 0.5;
+    _downView = [ChapOrderDownView chapOrderDownView];
     [self.view addSubview:_downView];
+    
+    _recieveButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [_recieveButton setTitle:@"接单" forState:UIControlStateNormal];
+    [_recieveButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    _recieveButton.titleLabel.font = [UIFont boldSystemFontOfSize:16.f];
+    _recieveButton.layer.borderWidth = 1;
+    _recieveButton.layer.borderColor = [UIColor blackColor].CGColor;
+    _recieveButton.layer.cornerRadius = 5;
+    _recieveButton.layer.masksToBounds = YES;
+    [_recieveButton addTarget:self action:@selector(clickRecieveButton) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_recieveButton];
     
     // 添加布局
     [_upView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.view.mas_top).offset(getRectNavAndStatusHeight);
         make.left.equalTo(self.view.mas_left);
         make.right.equalTo(self.view.mas_right);
-        make.height.mas_equalTo(340.f);
+        make.height.mas_equalTo(160.f);
+    }];
+    
+    [_upView.orderStatusLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
+        
+    }];
+    
+    [_upView.mapView mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.upView.mas_top);
     }];
     
     [_downView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.upView.mas_bottom);
         make.left.equalTo(self.view.mas_left);
         make.right.equalTo(self.view.mas_right);
-        make.bottom.equalTo(self.view.mas_bottom);
+        make.height.mas_equalTo(335.f);
+    }];
+    
+    [_recieveButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.downView.mas_bottom).offset(15.f);
+        make.left.equalTo(self.view.mas_left).offset(15.f);
+        make.right.equalTo(self.view.mas_right).offset(-15.f);
+        make.height.mas_equalTo(45.f);
     }];
 }
 

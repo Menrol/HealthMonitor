@@ -17,7 +17,7 @@
 
 NSString * const ChildHomeTableViewCellID = @"ChildHomeTableViewCellID";
 
-@interface ChildHomeViewController ()<AMapSearchDelegate, UITableViewDataSource, ChangeTableViewCellDelegate>
+@interface ChildHomeViewController ()<AMapSearchDelegate, UITableViewDataSource, ChangeTableViewCellDelegate, MAMapViewDelegate>
 @property(strong,nonatomic) MAMapView       *mapView;
 @property(strong,nonatomic) UILabel         *nameLabel;
 @property(strong,nonatomic) UILabel         *addressLabel;
@@ -33,8 +33,6 @@ NSString * const ChildHomeTableViewCellID = @"ChildHomeTableViewCellID";
     [super viewDidLoad];
     
     [self setupUI];
-    
-    [self getAddress];
 }
 
 - (void)clickChangeButton {
@@ -42,15 +40,13 @@ NSString * const ChildHomeTableViewCellID = @"ChildHomeTableViewCellID";
     self.changeView.hidden = NO;
 }
 
-- (void)getAddress {
-    _search = [[AMapSearchAPI alloc] init];
-    _search.delegate = self;
+- (void)mapView:(MAMapView *)mapView didUpdateUserLocation:(MAUserLocation *)userLocation updatingLocation:(BOOL)updatingLocation {
     
     AMapReGeocodeSearchRequest *rego = [[AMapReGeocodeSearchRequest alloc] init];
-    rego.location = [AMapGeoPoint locationWithLatitude:self.mapView.userLocation.location.coordinate.latitude longitude:self.mapView.userLocation.location.coordinate.longitude];
+    rego.location = [AMapGeoPoint locationWithLatitude:userLocation.location.coordinate.latitude longitude:userLocation.location.coordinate.longitude];
     rego.requireExtension = YES;
     
-    [_search AMapReGoecodeSearch:rego];
+    [self.search AMapReGoecodeSearch:rego];
 }
 
 - (void)onReGeocodeSearchDone:(AMapReGeocodeSearchRequest *)request response:(AMapReGeocodeSearchResponse *)response {
@@ -97,6 +93,15 @@ NSString * const ChildHomeTableViewCellID = @"ChildHomeTableViewCellID";
     return cell;
 }
 
+- (AMapSearchAPI *)search {
+    if (!_search) {
+        _search = [[AMapSearchAPI alloc] init];
+        _search.delegate = self;
+    }
+    
+    return _search;
+}
+
 - (void)setupUI {
     // 创建控件
     _mapView = [[MAMapView alloc] init];
@@ -106,6 +111,7 @@ NSString * const ChildHomeTableViewCellID = @"ChildHomeTableViewCellID";
     _mapView.showsCompass = NO;
     _mapView.showsScale = NO;
     _mapView.userTrackingMode = MAUserTrackingModeFollow;
+    _mapView.delegate = self;
     [self.view addSubview:_mapView];
     
     // 自定义定位点
@@ -171,7 +177,7 @@ NSString * const ChildHomeTableViewCellID = @"ChildHomeTableViewCellID";
     TipView *healthTipView = [[TipView alloc] init];
     healthTipView.layer.borderColor = [UIColor blackColor].CGColor;
     healthTipView.layer.borderWidth = 0.5;
-    healthTipView.tipLabel.text = @"现在是中午，到您使用XXX药的时候了";
+    healthTipView.tipLabel.text = @"现在是中午，到老人使用XXX药的时候了";
     [self.view addSubview:healthTipView];
     
     

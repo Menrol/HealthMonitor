@@ -12,7 +12,7 @@
 #import <AMapSearchKit/AMapSearchKit.h>
 #import <Masonry/Masonry.h>
 
-@interface ChildSendOrderViewController ()<AMapSearchDelegate, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate> {
+@interface ChildSendOrderViewController ()<AMapSearchDelegate, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, MAMapViewDelegate> {
     NSArray            *_healthDataArray;
     NSArray            *_chapTypeArray;
 }
@@ -50,8 +50,6 @@
     [_beChapArray addObject:@"李欣"];
     
     [self setupUI];
-    
-    [self getAddress];
 }
 
 - (void)clickSendButton {
@@ -77,15 +75,13 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void)getAddress {
-    _search = [[AMapSearchAPI alloc] init];
-    _search.delegate = self;
+- (void)mapView:(MAMapView *)mapView didUpdateUserLocation:(MAUserLocation *)userLocation updatingLocation:(BOOL)updatingLocation {
     
     AMapReGeocodeSearchRequest *rego = [[AMapReGeocodeSearchRequest alloc] init];
-    rego.location = [AMapGeoPoint locationWithLatitude:self.mapView.userLocation.location.coordinate.latitude longitude:self.mapView.userLocation.location.coordinate.longitude];
+    rego.location = [AMapGeoPoint locationWithLatitude:userLocation.location.coordinate.latitude longitude:userLocation.location.coordinate.longitude];
     rego.requireExtension = YES;
     
-    [_search AMapReGoecodeSearch:rego];
+    [self.search AMapReGoecodeSearch:rego];
 }
 
 - (void)onReGeocodeSearchDone:(AMapReGeocodeSearchRequest *)request response:(AMapReGeocodeSearchResponse *)response {
@@ -180,6 +176,14 @@
     [_remarkTextView resignFirstResponder];
 }
 
+- (AMapSearchAPI *)search {
+    if (!_search) {
+        _search = [[AMapSearchAPI alloc] init];
+        _search.delegate = self;
+    }
+    
+    return _search;
+}
 
 - (void)setupUI {
     self.title = @"发布新单";
@@ -200,6 +204,7 @@
     _mapView.showsCompass = NO;
     _mapView.showsScale = NO;
     _mapView.userTrackingMode = MAUserTrackingModeFollow;
+    _mapView.delegate = self;
     [upView addSubview:_mapView];
     
     // 自定义定位点
