@@ -7,6 +7,7 @@
 //
 
 #import "OldSendOrderViewController.h"
+#import "ChangeAddressViewController.h"
 #import <MAMapKit/MAMapKit.h>
 #import <AMapFoundationKit/AMapFoundationKit.h>
 #import <AMapSearchKit/AMapSearchKit.h>
@@ -15,6 +16,7 @@
 @interface OldSendOrderViewController ()<AMapSearchDelegate, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, MAMapViewDelegate> {
     NSArray            *_healthDataArray;
     NSArray            *_chapTypeArray;
+    NSString           *_city;
 }
 @property(strong,nonatomic) MAMapView       *mapView;
 @property(strong,nonatomic) UILabel         *addressLabel;
@@ -59,6 +61,11 @@
 
 - (void)clickChangeAddressButton {
     NSLog(@"修改地址");
+    ChangeAddressViewController *vc = [[ChangeAddressViewController alloc] init];
+    vc.hidesBottomBarWhenPushed = YES;
+    vc.userCoordinate = _mapView.userLocation.location.coordinate;
+    vc.city = _city;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (void)clickReturn {
@@ -78,6 +85,7 @@
     if (response.regeocode != nil) {
         AMapReGeocode *r = response.regeocode;
         _addressLabel.text = r.formattedAddress;
+        _city = r.addressComponent.city;
     }else {
         NSLog(@"获取不到地址");
     }

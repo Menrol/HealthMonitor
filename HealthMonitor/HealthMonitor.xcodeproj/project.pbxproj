@@ -12,6 +12,9 @@
 		181073B4225788420010D844 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 181073B3225788410010D844 /* Assets.xcassets */; };
 		184946692263223D001DDBEF /* MessageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 184946682263223D001DDBEF /* MessageView.xib */; };
 		1849466C2263272C001DDBEF /* MessageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1849466B2263272C001DDBEF /* MessageView.m */; };
+		1869B496226C62F900A9ED1B /* ChangeAddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1869B495226C62F900A9ED1B /* ChangeAddressViewController.m */; };
+		1869B499226C712600A9ED1B /* ChangeAddressTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1869B498226C712600A9ED1B /* ChangeAddressTableViewCell.m */; };
+		1869B49C226C83B900A9ED1B /* SearchAddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1869B49B226C83B900A9ED1B /* SearchAddressViewController.m */; };
 		186DA2FD22560D5D00C7CE10 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 186DA2FB22560D5D00C7CE10 /* LoginViewController.m */; };
 		18752B93225A1B03008EF44F /* OldBindingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18752B92225A1B03008EF44F /* OldBindingViewController.m */; };
 		18752B96225A2ADA008EF44F /* ChaperonageMViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18752B95225A2ADA008EF44F /* ChaperonageMViewController.m */; };
@@ -90,6 +93,12 @@
 		184946682263223D001DDBEF /* MessageView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageView.xib; sourceTree = "<group>"; };
 		1849466A2263272C001DDBEF /* MessageView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MessageView.h; sourceTree = "<group>"; };
 		1849466B2263272C001DDBEF /* MessageView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MessageView.m; sourceTree = "<group>"; };
+		1869B494226C62F900A9ED1B /* ChangeAddressViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChangeAddressViewController.h; sourceTree = "<group>"; };
+		1869B495226C62F900A9ED1B /* ChangeAddressViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChangeAddressViewController.m; sourceTree = "<group>"; };
+		1869B497226C712600A9ED1B /* ChangeAddressTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChangeAddressTableViewCell.h; sourceTree = "<group>"; };
+		1869B498226C712600A9ED1B /* ChangeAddressTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChangeAddressTableViewCell.m; sourceTree = "<group>"; };
+		1869B49A226C83B900A9ED1B /* SearchAddressViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchAddressViewController.h; sourceTree = "<group>"; };
+		1869B49B226C83B900A9ED1B /* SearchAddressViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchAddressViewController.m; sourceTree = "<group>"; };
 		186DA2FB22560D5D00C7CE10 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		186DA2FC22560D5D00C7CE10 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		18752B91225A1B03008EF44F /* OldBindingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OldBindingViewController.h; sourceTree = "<group>"; };
@@ -438,6 +447,8 @@
 				18BB9D92226490D200FDF08C /* CurOrderUpView.h */,
 				18BB9D95226490D200FDF08C /* CurOrderUpView.m */,
 				18BB9D91226490D200FDF08C /* CurOrderDownView.xib */,
+				1869B497226C712600A9ED1B /* ChangeAddressTableViewCell.h */,
+				1869B498226C712600A9ED1B /* ChangeAddressTableViewCell.m */,
 				18BB9D96226490D200FDF08C /* Chaperonage */,
 			);
 			path = View;
@@ -485,6 +496,10 @@
 			children = (
 				18B5B66D226719AB008117BD /* ChapDetailViewController.h */,
 				18B5B66E226719AB008117BD /* ChapDetailViewController.m */,
+				1869B494226C62F900A9ED1B /* ChangeAddressViewController.h */,
+				1869B495226C62F900A9ED1B /* ChangeAddressViewController.m */,
+				1869B49A226C83B900A9ED1B /* SearchAddressViewController.h */,
+				1869B49B226C83B900A9ED1B /* SearchAddressViewController.m */,
 				18BB9D7C226490AE00FDF08C /* Old */,
 				18BB9D76226490AE00FDF08C /* Chaperonage */,
 				18BB9D7B226490AE00FDF08C /* Children */,
@@ -822,6 +837,7 @@
 				18BB9D8A226490AF00FDF08C /* OldOrderDetailViewController.m in Sources */,
 				18BB9D6A2264904400FDF08C /* OldHomeViewController.m in Sources */,
 				18BB9D9C226490D200FDF08C /* CurOrderDownView.m in Sources */,
+				1869B49C226C83B900A9ED1B /* SearchAddressViewController.m in Sources */,
 				18BB9D87226490AF00FDF08C /* ChapCurOrderViewController.m in Sources */,
 				189D2CF322685EA000DF14ED /* ChildMyViewController.m in Sources */,
 				18BB9D8C226490AF00FDF08C /* OldSendOrderViewController.m in Sources */,
@@ -833,6 +849,7 @@
 				189D2CF62268661900DF14ED /* ChildCurOrderViewController.m in Sources */,
 				18CC428B225B30BC007C5949 /* MainViewController.m in Sources */,
 				18BB9D89226490AF00FDF08C /* OldChapViewController.m in Sources */,
+				1869B496226C62F900A9ED1B /* ChangeAddressViewController.m in Sources */,
 				189D2CFF2268665100DF14ED /* ChildSendOrderViewController.m in Sources */,
 				18BB9D9E226490D200FDF08C /* ChapOrderUpView.m in Sources */,
 				18F14C5B225DF14E00E75295 /* HistogramCollectionViewCell.m in Sources */,
@@ -848,6 +865,7 @@
 				181073AF225735120010D844 /* RegisterViewController.m in Sources */,
 				18CC4288225B2D96007C5949 /* ChildrenBindingViewController.m in Sources */,
 				18BB9D8B226490AF00FDF08C /* OldOrderListViewController.m in Sources */,
+				1869B499226C712600A9ED1B /* ChangeAddressTableViewCell.m in Sources */,
 				18BB9DB02264B45000FDF08C /* ChapOrderDownView.m in Sources */,
 				18752B96225A2ADA008EF44F /* ChaperonageMViewController.m in Sources */,
 				181073B2225751DA0010D844 /* OldMessageViewController.m in Sources */,
