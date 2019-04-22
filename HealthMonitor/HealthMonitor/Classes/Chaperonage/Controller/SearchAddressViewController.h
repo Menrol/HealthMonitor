@@ -11,6 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SearchAddressViewController : UIViewController
+@property(strong,nonatomic) NSString     *city;
 
 @end
 

@@ -14,18 +14,18 @@
 
 NSString * const ChangeAddressTableViewCellId = @"ChangeAddressTableViewCellId";
 
-@interface ChangeAddressViewController ()<MAMapViewDelegate , UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource, AMapSearchDelegate> {
+@interface ChangeAddressViewController ()<MAMapViewDelegate , UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource, AMapSearchDelegate, UISearchControllerDelegate> {
     NSIndexPath          *_preIndexPath;
-    NSInteger            _preLength;
 }
-@property(strong,nonatomic) UISearchBar                 *searchBar;
+@property(strong,nonatomic) UISearchController          *searchController;
+@property(strong,nonatomic) UITableView                 *topTableView;
 @property(strong,nonatomic) MAMapView                   *mapView;
 @property(strong,nonatomic) UITableView                 *tableView;
 @property(strong,nonatomic) AMapSearchAPI               *search;
 @property(strong,nonatomic) NSMutableArray<AMapPOI *>   *poiArray;
-@property(strong,nonatomic) UIBarButtonItem             *returnButton;
-@property(strong,nonatomic) UIBarButtonItem             *chooseButton;
-@property(strong,nonatomic) UIView                      *titleView;
+//@property(strong,nonatomic) UIBarButtonItem             *returnButton;
+//@property(strong,nonatomic) UIBarButtonItem             *chooseButton;
+//@property(strong,nonatomic) UIView                      *titleView;
 
 @end
 
@@ -55,6 +55,9 @@ NSString * const ChangeAddressTableViewCellId = @"ChangeAddressTableViewCellId";
     request.requireExtension = YES;
     
     [self.search AMapPOIAroundSearch:request];
+    
+    SearchAddressViewController *vc = (SearchAddressViewController *) _searchController.searchResultsController;
+    vc.city = _city;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -70,9 +73,9 @@ NSString * const ChangeAddressTableViewCellId = @"ChangeAddressTableViewCellId";
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-    [_searchBar resignFirstResponder];
-}
+//- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+//    [_searchBar resignFirstResponder];
+//}
 
 - (void)onPOISearchDone:(AMapPOISearchBaseRequest *)request response:(AMapPOISearchResponse *)response {
     
@@ -126,61 +129,72 @@ NSString * const ChangeAddressTableViewCellId = @"ChangeAddressTableViewCellId";
     [_mapView setCenterCoordinate:annotation.coordinate animated:YES];
 }
 
-- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
-    if (searchBar.text.length == 0 || (_preLength != 0 && _preLength > searchBar.text.length)) {
-        [_delegate didCleanText];
-    }
-    
-    _preLength = searchBar.text.length;
+//- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
+//    if (searchBar.text.length == 0 || (_preLength != 0 && _preLength > searchBar.text.length)) {
+//        [_delegate didCleanText];
+//    }
+//
+//    _preLength = searchBar.text.length;
+//}
+
+//- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+//    _searchBar.showsCancelButton = NO;
+//    _searchBar.text = @"";
+//    self.childViewControllers[0].view.hidden = YES;
+//    [_delegate didClickCancelButton];
+//    self.navigationItem.leftBarButtonItem = _returnButton;
+//    self.navigationItem.rightBarButtonItem = _chooseButton;
+////    [_titleView removeFromSuperview];
+//    _titleView.hidden = YES;
+//    [_searchBar removeFromSuperview];
+//    [self.view addSubview:_searchBar];
+//
+//    [_searchBar mas_updateConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(self.view.mas_top).offset(getRectNavAndStatusHeight);
+//        make.left.equalTo(self.view.mas_left);
+//        make.right.equalTo(self.view.mas_right);
+//        make.height.mas_equalTo(44.f);
+//    }];
+//
+////    [_searchBar resignFirstResponder];
+//}
+
+- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
+    _searchController.searchBar.showsCancelButton = YES;
+    UIButton *btn = [_searchController.searchBar valueForKey:@"cancelButton"];
+    [btn setTitle:@"取消" forState:UIControlStateNormal];
 }
 
-- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
-    _searchBar.showsCancelButton = NO;
-    _searchBar.text = @"";
-    self.childViewControllers[0].view.hidden = YES;
-    [_delegate didClickCancelButton];
-    self.navigationItem.leftBarButtonItem = _returnButton;
-    self.navigationItem.rightBarButtonItem = _chooseButton;
-    [_titleView removeFromSuperview];
-    [_searchBar removeFromSuperview];
-    [self.view addSubview:_searchBar];
-    
-    [_searchBar mas_updateConstraints:^(MASConstraintMaker *make) {
+//- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+//    [_delegate didClickSearchWithAddress:searchBar.text City:_city];
+//
+//    [_searchBar resignFirstResponder];
+//}
+
+- (void)willPresentSearchController:(UISearchController *)searchController {
+    [_mapView mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.view.mas_top).offset(getRectNavAndStatusHeight);
         make.left.equalTo(self.view.mas_left);
         make.right.equalTo(self.view.mas_right);
-        make.height.mas_equalTo(44.f);
+        make.height.mas_equalTo(300.f);
     }];
     
-    [_searchBar resignFirstResponder];
+    [UIView animateWithDuration:0.4 animations:^{
+        [self.view layoutIfNeeded];
+    }];
 }
 
-- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
-    _searchBar.showsCancelButton = YES;
-    UIButton *btn = [_searchBar valueForKey:@"cancelButton"];
-    [btn setTitle:@"取消" forState:UIControlStateNormal];
-    
-    self.childViewControllers[0].view.hidden = NO;
-    
-    [_searchBar removeFromSuperview];
-    [self.navigationController.navigationBar addSubview:_titleView];
-    [_titleView addSubview:_searchBar];
-    _titleView.hidden = NO;
-    self.navigationItem.rightBarButtonItem = nil;
-    self.navigationItem.leftBarButtonItem = nil;
-    
-    
-    [_searchBar mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(self.titleView);
+- (void)willDismissSearchController:(UISearchController *)searchController {
+    [_mapView mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.view.mas_top).offset(getRectNavAndStatusHeight + CGRectGetHeight(self.searchController.searchBar.frame));
+        make.left.equalTo(self.view.mas_left);
+        make.right.equalTo(self.view.mas_right);
+        make.height.mas_equalTo(300.f);
     }];
     
-    [_searchBar becomeFirstResponder];
-}
-
-- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
-    [_delegate didClickSearchWithAddress:searchBar.text City:_city];
-    
-    [_searchBar resignFirstResponder];
+    [UIView animateWithDuration:0.4 animations:^{
+        [self.view layoutIfNeeded];
+    }];
 }
 
 - (MAAnnotationView *)mapView:(MAMapView *)mapView viewForAnnotation:(id<MAAnnotation>)annotation {
@@ -212,23 +226,34 @@ NSString * const ChangeAddressTableViewCellId = @"ChangeAddressTableViewCellId";
     self.view.backgroundColor = [UIColor whiteColor];
     self.title = @"修改地址";
     self.navigationController.navigationBar.tintColor = [UIColor blackColor];
-    _returnButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"arrows_left"] style:UIBarButtonItemStylePlain target:self action:@selector(clickReturn)];
-    self.navigationItem.leftBarButtonItem = _returnButton;
-    _chooseButton = [[UIBarButtonItem alloc] initWithTitle:@"确定" style:UIBarButtonItemStylePlain target:self action:@selector(clickChoose)];
-    self.navigationItem.rightBarButtonItem = _chooseButton;
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"arrows_left"] style:UIBarButtonItemStylePlain target:self action:@selector(clickReturn)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"确定" style:UIBarButtonItemStylePlain target:self action:@selector(clickChoose)];
     
     // 创建控件
-    _searchBar = [[UISearchBar alloc] init];
-    _searchBar.placeholder = @"搜索地点";
-    _searchBar.delegate = self;
-    _searchBar.backgroundImage = [UIImage imageNamed:@"background"];
-    _searchBar.barStyle = UISearchBarStyleDefault;
-    _searchBar.tintColor = [UIColor blackColor];
-    [self.view addSubview:_searchBar];
+//    _searchBar = [[UISearchBar alloc] init];
+//    _searchBar.placeholder = @"搜索地点";
+//    _searchBar.delegate = self;
+//    _searchBar.backgroundImage = [UIImage imageNamed:@"background"];
+//    _searchBar.barStyle = UISearchBarStyleDefault;
+//    _searchBar.tintColor = [UIColor blackColor];
+//    [self.view addSubview:_searchBar];
     
-    _titleView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, MainScreenWith, 44)];
-    _titleView.userInteractionEnabled = YES;
-    [self.navigationController.navigationBar addSubview:_titleView];
+    SearchAddressViewController *vc = [[SearchAddressViewController alloc] init];
+    _searchController = [[UISearchController alloc] initWithSearchResultsController:vc];
+    _searchController.searchResultsUpdater = (id<UISearchResultsUpdating>)vc;
+    _searchController.delegate = self;
+    [self.view addSubview:_searchController.searchBar];
+    
+    _searchController.searchBar.backgroundImage = [UIImage imageNamed:@"background"];
+    _searchController.searchBar.tintColor = [UIColor blackColor];
+    _searchController.searchBar.placeholder = @"搜索地点";
+    _searchController.searchBar.delegate = self;
+    
+    _topTableView = [[UITableView alloc] init];
+    _topTableView.scrollEnabled = NO;
+    _topTableView.tableFooterView = [[UIView alloc] init];
+    _topTableView.tableHeaderView = _searchController.searchBar;
+    [self.view addSubview:_topTableView];
     
     _mapView = [[MAMapView alloc] init];
     _mapView.showsCompass = NO;
@@ -245,22 +270,22 @@ NSString * const ChangeAddressTableViewCellId = @"ChangeAddressTableViewCellId";
     _tableView.tableFooterView = [[UIView alloc] init];
     [self.view addSubview:_tableView];
     
-    SearchAddressViewController *vc = [[SearchAddressViewController alloc] init];
-    [self addChildViewController:vc];
-    self.delegate = (id<ChangeAddressViewControllerDelegate>)vc;
-    vc.view.hidden = YES;
-    [self.view addSubview:vc.view];
+//    SearchAddressViewController *vc = [[SearchAddressViewController alloc] init];
+//    [self addChildViewController:vc];
+//    self.delegate = (id<ChangeAddressViewControllerDelegate>)vc;
+//    vc.view.hidden = YES;
+//    [self.view addSubview:vc.view];
     
     // 添加布局
-    [_searchBar mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_topTableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.view.mas_top).offset(getRectNavAndStatusHeight);
         make.left.equalTo(self.view.mas_left);
         make.right.equalTo(self.view.mas_right);
-        make.height.mas_equalTo(44.f);
+        make.height.mas_equalTo(CGRectGetHeight(self.searchController.searchBar.frame));
     }];
     
     [_mapView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view.mas_top).offset(getRectNavAndStatusHeight + 44);
+        make.top.equalTo(self.topTableView.mas_bottom);
         make.left.equalTo(self.view.mas_left);
         make.right.equalTo(self.view.mas_right);
         make.height.mas_equalTo(300.f);
@@ -273,12 +298,9 @@ NSString * const ChangeAddressTableViewCellId = @"ChangeAddressTableViewCellId";
         make.bottom.equalTo(self.view.mas_bottom);
     }];
     
-    [vc.view mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view.mas_top).offset(getRectNavAndStatusHeight);
-        make.left.equalTo(self.view.mas_left);
-        make.right.equalTo(self.view.mas_right);
-        make.bottom.equalTo(self.view.mas_bottom);
-    }];
+//    [_searchController.searchResultsController.view mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.edges.equalTo(self.searchController.view);
+//    }];
 }
 
 @end

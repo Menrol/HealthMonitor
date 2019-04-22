@@ -14,7 +14,9 @@
 
 NSString * const SearchAddressTableViewCellId = @"SearchAddressTableViewCellId";
 
-@interface SearchAddressViewController ()<UITableViewDelegate, UITableViewDataSource, AMapSearchDelegate, ChangeAddressViewControllerDelegate>
+@interface SearchAddressViewController ()<UITableViewDelegate, UITableViewDataSource, AMapSearchDelegate, UISearchResultsUpdating> {
+    NSInteger          _preLength;
+}
 @property(strong,nonatomic) UITableView                   *tableView;
 @property(strong,nonatomic) NSMutableArray<AMapPOI *>     *poiArray;
 @property(strong,nonatomic) AMapSearchAPI                 *search;
@@ -29,8 +31,18 @@ NSString * const SearchAddressTableViewCellId = @"SearchAddressTableViewCellId";
     
     [self setupUI];
     
+    if (@available(iOS 11.0, *)) {
+        _tableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+    } else {
+        self.automaticallyAdjustsScrollViewInsets = NO;
+    }
+    
     _poiArray = [[NSMutableArray alloc] init];
 }
+
+//- (void)viewWillAppear:(BOOL)animated {
+//    NSLog(@"%f  %f",self.navigationController.navigationBar.frame.size.height,[[UIApplication sharedApplication] statusBarFrame].size.height);
+//}
 
 - (void)removeData {
     [_poiArray removeAllObjects];
@@ -38,26 +50,46 @@ NSString * const SearchAddressTableViewCellId = @"SearchAddressTableViewCellId";
     _noResultLabel.hidden = YES;
 }
 
-- (void)didCleanText {
-    [self removeData];
-}
+//- (void)didCleanText {
+//    [self removeData];
+//}
+//
+//- (void)didClickCancelButton {
+//   [self removeData];
+//}
 
-- (void)didClickCancelButton {
-   [self removeData];
-}
-
-- (void)didClickSearchWithAddress:(NSString *)address City:(nonnull NSString *)city{
+- (void)updateSearchResultsForSearchController:(nonnull UISearchController *)searchController {
+    
     [self removeData];
     
+    if (searchController.searchBar.text.length == 0 || _preLength > searchController.searchBar.text.length) {
+        return;
+    }
+    
+    _preLength = searchController.searchBar.text.length;
+    
     AMapPOIKeywordsSearchRequest *request = [[AMapPOIKeywordsSearchRequest alloc] init];
-    request.keywords = address;
-    request.city = city;
+    request.keywords = searchController.searchBar.text;
+    request.city = _city;
     request.requireExtension = YES;
     request.cityLimit = YES;
     request.requireSubPOIs = YES;
     
     [self.search AMapPOIKeywordsSearch:request];
 }
+
+//- (void)didClickSearchWithAddress:(NSString *)address City:(nonnull NSString *)city{
+//    [self removeData];
+//
+//    AMapPOIKeywordsSearchRequest *request = [[AMapPOIKeywordsSearchRequest alloc] init];
+//    request.keywords = address;
+//    request.city = city;
+//    request.requireExtension = YES;
+//    request.cityLimit = YES;
+//    request.requireSubPOIs = YES;
+//
+//    [self.search AMapPOIKeywordsSearch:request];
+//}
 
 - (void)onPOISearchDone:(AMapPOISearchBaseRequest *)request response:(AMapPOISearchResponse *)response {
     if (response.pois.count == 0) {
@@ -124,11 +156,14 @@ NSString * const SearchAddressTableViewCellId = @"SearchAddressTableViewCellId";
     
     // 添加布局
     [_tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(self.view);
+        make.top.equalTo(self.view.mas_top).offset(-[[UIApplication sharedApplication] statusBarFrame].size.height);
+        make.left.equalTo(self.view.mas_left);
+        make.right.equalTo(self.view.mas_right);
+        make.bottom.equalTo(self.view.mas_bottom);
     }];
     
     [_noResultLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view.mas_top).offset(20.f);
+        make.top.equalTo(self.view.mas_top).offset(getRectNavAndStatusHeight + 20 + [[UIApplication sharedApplication] statusBarFrame].size.height);
         make.centerX.equalTo(self.view.mas_centerX);
         make.size.mas_equalTo(CGSizeMake(140, 20));
     }];
