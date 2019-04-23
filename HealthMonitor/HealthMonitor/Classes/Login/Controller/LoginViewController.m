@@ -30,7 +30,7 @@
     NSLog(@"登录");
     MainViewController *vc = [[MainViewController alloc] init];
     // TODO: 测试数据
-    vc.userType = 0;
+    vc.userType = 1;
     [self presentViewController:vc animated:YES completion:nil];
 }
 
@@ -46,6 +46,8 @@
 }
 
 - (void)setupUI {
+    self.view.backgroundColor = [UIColor whiteColor];
+    
     // 创建控件
     UIImageView *iconImageView = [[UIImageView alloc] init];
     iconImageView.image = [UIImage imageNamed:@"icon.jpg"];

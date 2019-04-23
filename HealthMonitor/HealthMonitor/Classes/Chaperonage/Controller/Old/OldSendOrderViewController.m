@@ -13,10 +13,11 @@
 #import <AMapSearchKit/AMapSearchKit.h>
 #import <Masonry/Masonry.h>
 
-@interface OldSendOrderViewController ()<AMapSearchDelegate, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, MAMapViewDelegate> {
-    NSArray            *_healthDataArray;
-    NSArray            *_chapTypeArray;
-    NSString           *_city;
+@interface OldSendOrderViewController ()<AMapSearchDelegate, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, MAMapViewDelegate, ChangeAddressViewControllerDelegate> {
+    NSArray                       *_healthDataArray;
+    NSArray                       *_chapTypeArray;
+    NSString                      *_city;
+    CLLocationCoordinate2D        _curCoordinate;
 }
 @property(strong,nonatomic) MAMapView       *mapView;
 @property(strong,nonatomic) UILabel         *addressLabel;
@@ -63,8 +64,9 @@
     NSLog(@"修改地址");
     ChangeAddressViewController *vc = [[ChangeAddressViewController alloc] init];
     vc.hidesBottomBarWhenPushed = YES;
-    vc.userCoordinate = _mapView.userLocation.location.coordinate;
+    vc.userCoordinate = _curCoordinate;
     vc.city = _city;
+    vc.delegate = self;
     [self.navigationController pushViewController:vc animated:YES];
 }
 
@@ -72,7 +74,43 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+- (void)changeAddressControllerDidClickChooseWithAddress:(NSString *)address coordinate:(CLLocationCoordinate2D)coordinate {
+    
+    _curCoordinate = coordinate;
+    
+    _mapView.showsUserLocation = NO;
+    _mapView.userTrackingMode = MAUserTrackingModeNone;
+    
+    [_mapView removeAnnotations:_mapView.annotations];
+    MAPointAnnotation *annotation = [[MAPointAnnotation alloc] init];
+    annotation.coordinate = coordinate;
+    [_mapView addAnnotation:annotation];
+    
+    [_mapView setCenterCoordinate:coordinate];
+    
+    _addressLabel.text = address;
+}
+
+- (MAAnnotationView *)mapView:(MAMapView *)mapView viewForAnnotation:(id<MAAnnotation>)annotation {
+    if ([annotation isKindOfClass:[MAUserLocation class]]) {
+        return nil;
+    }else if ([annotation isKindOfClass:[MAPointAnnotation class]]) {
+        static NSString *reuseIndetifier = @"userPointReuseIndetifier";
+        MAAnnotationView *annotationView = (MAAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:reuseIndetifier];
+        if (annotationView == nil) {
+            annotationView = [[MAAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:reuseIndetifier];
+        }
+        
+        annotationView.image = [UIImage imageNamed:@"location"];
+        
+        return annotationView;
+    }
+    
+    return nil;
+}
+
 - (void)mapView:(MAMapView *)mapView didUpdateUserLocation:(MAUserLocation *)userLocation updatingLocation:(BOOL)updatingLocation {
+    _curCoordinate = userLocation.location.coordinate;
     
     AMapReGeocodeSearchRequest *rego = [[AMapReGeocodeSearchRequest alloc] init];
     rego.location = [AMapGeoPoint locationWithLatitude:userLocation.location.coordinate.latitude longitude:userLocation.location.coordinate.longitude];
@@ -192,6 +230,7 @@
     _mapView.showsScale = NO;
     _mapView.userTrackingMode = MAUserTrackingModeFollow;
     _mapView.delegate = self;
+    [_mapView setZoomLevel:15.f];
     [upView addSubview:_mapView];
     
     // 自定义定位点
@@ -367,7 +406,7 @@
     [addressTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.mapView.mas_bottom).offset(15.f);
         make.left.equalTo(upView.mas_left).offset(15.f);
-        make.height.mas_equalTo(16.f);
+        make.size.mas_equalTo(CGSizeMake(49.f, 16.f));
     }];
     
     [_addressLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -478,7 +517,7 @@
     [chapStartLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(healthLabel.mas_bottom).offset(45.f);
         make.left.equalTo(downView.mas_left).offset(10.f);
-        make.height.mas_equalTo(16.f);
+        make.size.mas_equalTo(CGSizeMake(114.33, 16.f));
     }];
     
     [_chapStartTextField mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -491,7 +530,7 @@
     [chapEndLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(chapStartLabel.mas_bottom).offset(35.f);
         make.left.equalTo(downView.mas_left).offset(10.f);
-        make.height.mas_equalTo(16.f);
+        make.size.mas_equalTo(CGSizeMake(114.33, 16.f));
     }];
     
     [_chapEndTextField mas_makeConstraints:^(MASConstraintMaker *make) {

@@ -7,6 +7,7 @@
 //
 
 #import "ChaperonageMViewController.h"
+#import "LoginViewController.h"
 #import <Masonry/Masonry.h>
 
 extern CGFloat OldMessageTitleFont;
@@ -42,6 +43,9 @@ const CGFloat ChaperonageTipFont = 20.f;
 
 - (void)clickSubmitButton {
     NSLog(@"提交信息");
+    
+    LoginViewController *vc = [[LoginViewController alloc] init];
+    [self presentViewController:vc animated:YES completion:nil];
 }
 
 - (void)clickShowDownWithButton:(UIButton *)btn {

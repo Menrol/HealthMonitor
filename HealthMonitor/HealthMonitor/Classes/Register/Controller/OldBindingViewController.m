@@ -7,6 +7,7 @@
 //
 
 #import "OldBindingViewController.h"
+#import "LoginViewController.h"
 #import <Masonry/Masonry.h>
 
 extern CGFloat OldMessageBigFont;
@@ -28,6 +29,9 @@ extern CGFloat OldMessageTitleFont;
 
 - (void)clickSkipButton {
     NSLog(@"跳过绑定");
+    
+    LoginViewController *vc = [[LoginViewController alloc] init];
+    [self presentViewController:vc animated:YES completion:nil];
 }
 
 - (void)clickBindingButton {

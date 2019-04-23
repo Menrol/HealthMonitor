@@ -14,9 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol ChangeAddressViewControllerDelegate <NSObject>
 
-- (void)didClickSearchWithAddress:(NSString *)address City:(NSString *)city;
-- (void)didClickCancelButton;
-- (void)didCleanText;
+- (void)changeAddressControllerDidClickChooseWithAddress:(NSString *)address coordinate:( CLLocationCoordinate2D)coordinate;
 
 @end
 

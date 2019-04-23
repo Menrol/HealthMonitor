@@ -112,6 +112,7 @@ NSString * const ChildHomeTableViewCellID = @"ChildHomeTableViewCellID";
     _mapView.showsScale = NO;
     _mapView.userTrackingMode = MAUserTrackingModeFollow;
     _mapView.delegate = self;
+    [_mapView setZoomLevel:15.f];
     [self.view addSubview:_mapView];
     
     // 自定义定位点
