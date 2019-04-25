@@ -54,8 +54,8 @@ NSString * const ChildMyTableViewCellId = @"ChildMyTableViewCellId";
     cell.delegate = self;
     
     if (indexPath.row == 0) {
-        cell.nameLabel.text = @"张明";
-        cell.relationLabel.text = @"儿子";
+        cell.nameLabel.text = @"张三";
+        cell.relationLabel.text = @"父亲";
     }else {
         cell.nameLabel.hidden = YES;
         cell.relationLabel.hidden = YES;
@@ -95,7 +95,7 @@ NSString * const ChildMyTableViewCellId = @"ChildMyTableViewCellId";
     [self.view addSubview:bindingView];
     
     UILabel *childrenTitleLabel = [[UILabel alloc] init];
-    childrenTitleLabel.text = @"子女绑定：";
+    childrenTitleLabel.text = @"老年人绑定：";
     childrenTitleLabel.font = [UIFont boldSystemFontOfSize:16.f];
     [bindingView addSubview:childrenTitleLabel];
     

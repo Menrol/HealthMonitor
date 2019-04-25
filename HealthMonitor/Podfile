@@ -11,6 +11,7 @@ target 'HealthMonitor' do
   pod 'AMap3DMap'
   pod 'AMapSearch'
   pod 'AMapLocation'
+  pod 'SVProgressHUD'
 
   target 'HealthMonitorTests' do
     inherit! :search_paths

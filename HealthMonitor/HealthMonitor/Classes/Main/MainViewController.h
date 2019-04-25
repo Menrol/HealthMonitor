@@ -11,7 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface MainViewController : UITabBarController
-@property(assign,nonatomic) int userType;
+@property(assign,nonatomic) NSInteger userType;
 
 @end
 

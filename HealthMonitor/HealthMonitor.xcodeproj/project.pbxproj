@@ -31,6 +31,7 @@
 		189D2CF92268662700DF14ED /* ChildOrderListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 189D2CF82268662700DF14ED /* ChildOrderListViewController.m */; };
 		189D2CFC2268663A00DF14ED /* ChildOrderDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 189D2CFB2268663A00DF14ED /* ChildOrderDetailViewController.m */; };
 		189D2CFF2268665100DF14ED /* ChildSendOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 189D2CFE2268665100DF14ED /* ChildSendOrderViewController.m */; };
+		18B0CDA22271AFB1000B039B /* NetworkTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 18B0CDA12271AFB1000B039B /* NetworkTool.m */; };
 		18B5B66F226719AB008117BD /* ChapDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18B5B66E226719AB008117BD /* ChapDetailViewController.m */; };
 		18BB9D6A2264904400FDF08C /* OldHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BB9D692264904400FDF08C /* OldHomeViewController.m */; };
 		18BB9D6F2264905F00FDF08C /* ChapHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BB9D6C2264905F00FDF08C /* ChapHomeViewController.m */; };
@@ -131,6 +132,8 @@
 		189D2CFB2268663A00DF14ED /* ChildOrderDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChildOrderDetailViewController.m; sourceTree = "<group>"; };
 		189D2CFD2268665100DF14ED /* ChildSendOrderViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChildSendOrderViewController.h; sourceTree = "<group>"; };
 		189D2CFE2268665100DF14ED /* ChildSendOrderViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChildSendOrderViewController.m; sourceTree = "<group>"; };
+		18B0CDA02271AFB1000B039B /* NetworkTool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NetworkTool.h; sourceTree = "<group>"; };
+		18B0CDA12271AFB1000B039B /* NetworkTool.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NetworkTool.m; sourceTree = "<group>"; };
 		18B5B66D226719AB008117BD /* ChapDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChapDetailViewController.h; sourceTree = "<group>"; };
 		18B5B66E226719AB008117BD /* ChapDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChapDetailViewController.m; sourceTree = "<group>"; };
 		18BB9D682264904400FDF08C /* OldHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OldHomeViewController.h; sourceTree = "<group>"; };
@@ -286,6 +289,8 @@
 		186DA2F5225607F500C7CE10 /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				18B0CDA02271AFB1000B039B /* NetworkTool.h */,
+				18B0CDA12271AFB1000B039B /* NetworkTool.m */,
 			);
 			path = Tools;
 			sourceTree = "<group>";
@@ -809,10 +814,12 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-HealthMonitor/Pods-HealthMonitor-resources.sh",
 				"${PODS_ROOT}/AMap3DMap/MAMapKit.framework/AMap.bundle",
+				"${PODS_ROOT}/SVProgressHUD/SVProgressHUD/SVProgressHUD.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AMap.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/SVProgressHUD.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -858,6 +865,7 @@
 				18BB9DAD2264912D00FDF08C /* MyTableViewCell.m in Sources */,
 				18BB9D752264908F00FDF08C /* ChanageTableViewCell.m in Sources */,
 				188DA5F62265C87800B74074 /* RecieveOrderTableViewCell.m in Sources */,
+				18B0CDA22271AFB1000B039B /* NetworkTool.m in Sources */,
 				188DA5F32265C70D00B74074 /* RecieveOrderViewController.m in Sources */,
 				18BB9D8D226490AF00FDF08C /* OldCurOrderViewController.m in Sources */,
 				188DA5FF2265DA4400B74074 /* ChapOrDetailViewController.m in Sources */,

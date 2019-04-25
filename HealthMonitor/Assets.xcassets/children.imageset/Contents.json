@@ -2,12 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "子女图标.png",
+      "filename" : "子女信息.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "子女图标-1.png",
       "scale" : "2x"
     },
     {

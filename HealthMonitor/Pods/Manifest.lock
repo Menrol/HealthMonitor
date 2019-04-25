@@ -22,6 +22,7 @@ PODS:
   - AMapSearch (6.6.0):
     - AMapFoundation (~> 1.4)
   - Masonry (1.1.0)
+  - SVProgressHUD (2.2.5)
 
 DEPENDENCIES:
   - AFNetworking
@@ -29,6 +30,7 @@ DEPENDENCIES:
   - AMapLocation
   - AMapSearch
   - Masonry
+  - SVProgressHUD
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -38,6 +40,7 @@ SPEC REPOS:
     - AMapLocation
     - AMapSearch
     - Masonry
+    - SVProgressHUD
 
 SPEC CHECKSUMS:
   AFNetworking: b6f891fdfaed196b46c7a83cf209e09697b94057
@@ -46,7 +49,8 @@ SPEC CHECKSUMS:
   AMapLocation: cf024b53dc03663efb4ea4bcce27d4cce58bb97a
   AMapSearch: def5983c8ca1a6d7430970046dc814f6e337621d
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
+  SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
 
-PODFILE CHECKSUM: d55391df5825c5cf8e761e29cec59eb316799272
+PODFILE CHECKSUM: 5847cc3a933415a8bfbfe166807dd8303fe5c2dc
 
 COCOAPODS: 1.6.1
