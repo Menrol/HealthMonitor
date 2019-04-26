@@ -22,6 +22,8 @@ typedef void (^FinishedCallBack) (id _Nullable result, NSError * _Nullable error
 
 + (instancetype)sharedTool;
 
+- (void)parentRegisterWithParameters:(id)paremeters finished:(FinishedCallBack)finished;
+
 @end
 
 NS_ASSUME_NONNULL_END

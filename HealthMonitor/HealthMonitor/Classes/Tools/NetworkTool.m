@@ -8,8 +8,6 @@
 
 #import "NetworkTool.h"
 
-static NetworkTool *instance;
-
 @protocol NetworkToolProxy <NSObject>
 
 @optional
@@ -23,43 +21,41 @@ static NetworkTool *instance;
 
 @end
 
-@interface NetworkTool()<NSCopying, NSMutableCopying, NetworkToolProxy>
+@interface NetworkTool()<NetworkToolProxy>
 
 @end
 
 @implementation NetworkTool
 
 + (instancetype)sharedTool {
-    NSURL *baseURL = [NSURL URLWithString:@"/escort"];
+    static NetworkTool *tool;
     
-    return [[self alloc] initWithBaseURL:baseURL];
-}
-
-+ (instancetype)allocWithZone:(struct _NSZone *)zone {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        instance = [super allocWithZone:zone];
+        NSURL *baseURL = [NSURL URLWithString:@"http://182.254.208.159:8080/escort/"];
+        
+        tool = [[self alloc] initWithBaseURL:baseURL];
+        
+        tool.requestSerializer = [AFJSONRequestSerializer serializer];
     });
     
-    return instance;
+    return tool;
 }
 
-- (id)copyWithZone:(NSZone *)zone {
-    return instance;
-}
-
-- (id)mutableCopyWithZone:(NSZone *)zone {
-    return instance;
+- (void)parentRegisterWithParameters:(id)parameters finished:(FinishedCallBack)finished {
+    NSString *url = @"parent/register";
+    
+    [self requestWithHTTPMethod:POST URLString:url paramters:parameters finished:finished];
 }
 
 - (void)requestWithHTTPMethod:(HTTPMethod)method  URLString:(NSString *)URLString paramters:(nullable id)parameters finished:(FinishedCallBack)finished {
     NSString *methodStr = (method == GET) ? @"GET" : @"POST";
     
-    [self dataTaskWithHTTPMethod:methodStr URLString:URLString parameters:parameters uploadProgress:nil downloadProgress:nil success:^(NSURLSessionDataTask *task, id result) {
+    [[self dataTaskWithHTTPMethod:methodStr URLString:URLString parameters:parameters uploadProgress:nil downloadProgress:nil success:^(NSURLSessionDataTask *task, id result) {
         finished(result, nil);
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         finished(nil, error);
-    }];
+    }] resume];
 }
 
 

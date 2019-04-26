@@ -63,8 +63,13 @@
 
 - (void)clickRegister {
     NSLog(@"注册------%ld",(long)_tag);
+        
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+    [dic addEntriesFromDictionary:@{@"nickname": _accountTextField.text, @"password": _passwordTextField.text}];
+    
     if (_tag == 0) {
         OldMessageViewController *vc = [[OldMessageViewController alloc] init];
+        vc.parameters = dic;
         [self presentViewController:vc animated:NO completion:nil];
     }else if (_tag == 1) {
         ChildrenBindingViewController *vc = [[ChildrenBindingViewController alloc] init];

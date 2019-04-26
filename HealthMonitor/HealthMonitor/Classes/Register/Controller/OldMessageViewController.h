@@ -11,6 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface OldMessageViewController : UIViewController
+@property(strong,nonatomic) NSMutableDictionary      *parameters;
 
 @end
 

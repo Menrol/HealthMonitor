@@ -8,6 +8,7 @@
 
 #import "OldMessageViewController.h"
 #import "OldBindingViewController.h"
+#import "NetworkTool.h"
 #import <Masonry/Masonry.h>
 
 @interface OldMessageViewController ()<UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate> {
@@ -39,8 +40,21 @@ const CGFloat OldMessageTitleFont = 18.f;
 
 - (void)clickNextButton {
     NSLog(@"下一步");
-    OldBindingViewController *vc = [[OldBindingViewController alloc] init];
-    [self presentViewController:vc animated:NO completion:nil];
+    
+    NSString *sexStr = [_sexTextField.text componentsSeparatedByString:@"  "][1];
+    NSString *birthdayStr = [_birthdayTextField.text componentsSeparatedByString:@"  "][1];
+    [_parameters addEntriesFromDictionary:@{@"name": _nameTextField.text, @"birthday": birthdayStr, @"gender": sexStr, @"healthStatus": _physicalTextField.text, @"medicine": _medicineTextField.text}];
+    
+    [[NetworkTool sharedTool] parentRegisterWithParameters:@{@"parentForm": _parameters} finished:^(id  _Nullable result, NSError * _Nullable error) {
+        if (error) {
+            NSLog(@"%@",error);
+        }else {
+            NSLog(@"%@",result);
+
+            OldBindingViewController *vc = [[OldBindingViewController alloc] init];
+            [self presentViewController:vc animated:NO completion:nil];
+        }
+    }];
 }
 
 - (void)clickShowDownButton {
