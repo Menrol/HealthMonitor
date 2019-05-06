@@ -10,7 +10,9 @@
 #import "OldMessageViewController.h"
 #import "ChaperonageMViewController.h"
 #import "ChildrenBindingViewController.h"
+#import "NetworkTool.h"
 #import <Masonry/Masonry.h>
+#import <SVProgressHUD/SVProgressHUD.h>
 
 #define buttonWidth [UIScreen mainScreen].bounds.size.width / 3
 
@@ -63,21 +65,37 @@
 
 - (void)clickRegister {
     NSLog(@"注册------%ld",(long)_tag);
-        
-    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
-    [dic addEntriesFromDictionary:@{@"nickname": _accountTextField.text, @"password": _passwordTextField.text}];
     
-    if (_tag == 0) {
-        OldMessageViewController *vc = [[OldMessageViewController alloc] init];
-        vc.parameters = dic;
-        [self presentViewController:vc animated:NO completion:nil];
-    }else if (_tag == 1) {
-        ChildrenBindingViewController *vc = [[ChildrenBindingViewController alloc] init];
-        [self presentViewController:vc animated:NO completion:nil];
-    }else {
-        ChaperonageMViewController *vc = [[ChaperonageMViewController alloc] init];
-        [self presentViewController:vc animated:NO completion:nil];
+    if (![_passwordTextField.text isEqualToString:_confirmTextField.text]) {
+        [SVProgressHUD showInfoWithStatus:@"两次输入的密码不一致"];
+        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
+        [SVProgressHUD dismissWithDelay:1.f];
+        
+        return;
     }
+    
+    __weak typeof(self) weakSelf = self;
+    [[NetworkTool sharedTool] parentCheckWithNickname:_accountTextField.text finished:^(id  _Nullable result, NSError * _Nullable error) {
+        if (error) {
+            NSLog(@"%@",error);
+            return;
+        }
+        
+        NSLog(@"%@",result);
+        __strong typeof(self) strongSelf = weakSelf;
+        if (strongSelf->_tag == 0) {
+            OldMessageViewController *vc = [[OldMessageViewController alloc] init];
+            vc.nickname = strongSelf.accountTextField.text;
+            vc.password = strongSelf.passwordTextField.text;
+            [self presentViewController:vc animated:NO completion:nil];
+        }else if (strongSelf->_tag == 1) {
+            ChildrenBindingViewController *vc = [[ChildrenBindingViewController alloc] init];
+            [self presentViewController:vc animated:NO completion:nil];
+        }else {
+            ChaperonageMViewController *vc = [[ChaperonageMViewController alloc] init];
+            [self presentViewController:vc animated:NO completion:nil];
+        }
+    }];
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
@@ -134,6 +152,7 @@
     _passwordTextField.layer.masksToBounds = YES;
     _passwordTextField.layer.borderWidth = 1;
     _passwordTextField.layer.borderColor = [UIColor blackColor].CGColor;
+    _passwordTextField.secureTextEntry = YES;
     [self.view addSubview:_passwordTextField];
     
     _confirmTextField = [[UITextField alloc] init];
@@ -142,6 +161,7 @@
     _confirmTextField.layer.masksToBounds = YES;
     _confirmTextField.layer.borderWidth = 1;
     _confirmTextField.layer.borderColor = [UIColor blackColor].CGColor;
+    _confirmTextField.secureTextEntry = YES;
     [self.view addSubview:_confirmTextField];
     
     UIButton *registerButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];

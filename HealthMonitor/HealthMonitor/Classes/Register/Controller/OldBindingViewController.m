@@ -27,6 +27,10 @@ extern CGFloat OldMessageTitleFont;
     [self setupUI];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    self.numberLabel.text = _userID;
+}
+
 - (void)clickSkipButton {
     NSLog(@"跳过绑定");
     

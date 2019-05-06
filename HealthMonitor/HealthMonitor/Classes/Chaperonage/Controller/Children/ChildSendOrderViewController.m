@@ -215,7 +215,7 @@
     _healthTableView.hidden = YES;
     _chapTypeTableView.hidden = YES;
     _beChapTableView.hidden = YES;
-    [_healthTableView resignFirstResponder];
+    [_healthTextField resignFirstResponder];
     [_chapTypeTextField resignFirstResponder];
     [_chapStartTextField resignFirstResponder];
     [_chapEndTextField resignFirstResponder];

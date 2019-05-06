@@ -10,6 +10,10 @@
 #import <Masonry/Masonry.h>
 #import "RegisterViewController.h"
 #import "MainViewController.h"
+#import "NetworkTool.h"
+#import "ParentModel.h"
+#import <SVProgressHUD/SVProgressHUD.h>
+#import <YYModel/YYModel.h>
 
 #define buttonWidth [UIScreen mainScreen].bounds.size.width / 3
 
@@ -32,11 +36,52 @@
     [self setupUI];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    _accountTextField.text = @"";
+    _passwordTextField.text = @"";
+}
+
 - (void)clickLogin {
     NSLog(@"登录");
-    MainViewController *vc = [[MainViewController alloc] init];
-    vc.userType = _tag;
-    [self presentViewController:vc animated:YES completion:nil];
+    
+    [self.accountTextField resignFirstResponder];
+    [self.passwordTextField resignFirstResponder];
+    
+    if (_accountTextField.text.length == 0 || _passwordTextField.text.length == 0) {
+        [SVProgressHUD showInfoWithStatus:@"用户名或密码不能为空"];
+        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
+        [SVProgressHUD dismissWithDelay:1.f];
+        
+        return;
+    }
+    
+    [SVProgressHUD show];
+    [SVProgressHUD setDefaultStyle:SVProgressHUDStyleDark];
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
+    
+    __weak typeof(self) weakSelf = self;
+    [[NetworkTool sharedTool] parentLoginWithNickname:_accountTextField.text password:_passwordTextField.text finished:^(id  _Nullable result, NSError * _Nullable error) {
+        
+        __strong typeof(self) strongSelf = weakSelf;
+        
+        [SVProgressHUD dismiss];
+        
+        if (error) {
+            NSLog(@"%@",error);
+            
+            return;
+        }
+       
+        NSLog(@"%@",result);
+        
+        NSDictionary *dataDic = result[@"data"];
+        ParentModel *model = [ParentModel yy_modelWithDictionary:dataDic];
+        
+        MainViewController *vc = [[MainViewController alloc] init];
+        vc.userType = strongSelf->_tag;
+        vc.model = model;
+        [self presentViewController:vc animated:YES completion:nil];
+    }];
 }
 
 - (void)clickRegister {
@@ -131,6 +176,7 @@
     _passwordTextField.layer.masksToBounds = YES;
     _passwordTextField.layer.borderWidth = 1;
     _passwordTextField.layer.borderColor = [UIColor blackColor].CGColor;
+    _passwordTextField.secureTextEntry = YES;
     [self.view addSubview:_passwordTextField];
     
     UIButton *loginButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];

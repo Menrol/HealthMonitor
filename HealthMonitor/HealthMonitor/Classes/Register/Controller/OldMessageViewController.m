@@ -12,15 +12,23 @@
 #import <Masonry/Masonry.h>
 
 @interface OldMessageViewController ()<UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate> {
-    NSArray      *_dataArray;
+    NSArray      *_sexArray;
+    NSArray      *_healthArray;
+    NSArray      *_medicineArray;
+    NSInteger    _healthStatus;
+    NSInteger    _medicine;
 }
 @property(strong,nonatomic) UITextField    *nameTextField;
 @property(strong,nonatomic) UITextField    *sexTextField;
-@property(strong,nonatomic) UITextField    *birthdayTextField;
-@property(strong,nonatomic) UITextField    *physicalTextField;
-@property(strong,nonatomic) UITextField    *medicineTextField;
 @property(strong,nonatomic) UIButton       *sexButton;
-@property(strong,nonatomic) UITableView    *dropDownTableView;
+@property(strong,nonatomic) UITableView    *sexTableView;
+@property(strong,nonatomic) UITextField    *birthdayTextField;
+@property(strong,nonatomic) UITextField    *healthTextField;
+@property(strong,nonatomic) UIButton       *healthButton;
+@property(strong,nonatomic) UITableView    *healthTableView;
+@property(strong,nonatomic) UITextField    *medicineTextField;
+@property(strong,nonatomic) UIButton       *medicineButton;
+@property(strong,nonatomic) UITableView    *medicineTableView;
 
 @end
 
@@ -32,7 +40,9 @@ const CGFloat OldMessageTitleFont = 18.f;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    _dataArray = @[@"男",@"女"];
+    _sexArray = @[@"男",@"女"];
+    _healthArray = @[@"健康", @"不健康"];
+    _medicineArray = @[@"未知", @"无需服药", @"服药"];
     
     [self setupUI];
     
@@ -43,35 +53,71 @@ const CGFloat OldMessageTitleFont = 18.f;
     
     NSString *sexStr = [_sexTextField.text componentsSeparatedByString:@"  "][1];
     NSString *birthdayStr = [_birthdayTextField.text componentsSeparatedByString:@"  "][1];
-    [_parameters addEntriesFromDictionary:@{@"name": _nameTextField.text, @"birthday": birthdayStr, @"gender": sexStr, @"healthStatus": _physicalTextField.text, @"medicine": _medicineTextField.text}];
     
-    [[NetworkTool sharedTool] parentRegisterWithParameters:@{@"parentForm": _parameters} finished:^(id  _Nullable result, NSError * _Nullable error) {
+    __weak typeof(self) weakSelf = self;
+    [[NetworkTool sharedTool] parentRegisterWithNickname:_nickname password:_password birthday:birthdayStr gender:sexStr healthStatus:_healthStatus medicine:_medicine name:_nameTextField.text finished:^(id  _Nullable result, NSError * _Nullable error) {
         if (error) {
             NSLog(@"%@",error);
-        }else {
-            NSLog(@"%@",result);
-
-            OldBindingViewController *vc = [[OldBindingViewController alloc] init];
-            [self presentViewController:vc animated:NO completion:nil];
+            
+            return;
         }
+        
+        NSLog(@"%@",result);
+        
+        __strong typeof(self) strongSelf = weakSelf;
+        [[NetworkTool sharedTool] parentMessageWithNickname:strongSelf->_nickname finished:^(id  _Nullable result, NSError * _Nullable error) {
+            if (error) {
+                NSLog(@"%@",error);
+                
+                return;
+            }
+            
+            NSLog(@"%@",result);
+            
+            NSDictionary *dataDic = result[@"data"];
+            NSString *parentCode = dataDic[@"parentCode"];
+            
+            OldBindingViewController *vc = [[OldBindingViewController alloc] init];
+            vc.userID = parentCode;
+            [strongSelf presentViewController:vc animated:NO completion:nil];
+        }];
     }];
 }
 
-- (void)clickShowDownButton {
-    _dropDownTableView.hidden = !_dropDownTableView.hidden;
+- (void)clickShowDownWithButton:(UIButton *)btn {
+    if (btn.tag == 1000) {
+        _sexTableView.hidden = !_sexTableView.hidden;
+    }else if (btn.tag == 1001) {
+        _healthTableView.hidden = !_healthTableView.hidden;
+    }else {
+        _medicineTableView.hidden = !_medicineTableView.hidden;
+    }
+    
 }
 
 - (void)datePickerChange:(UIDatePicker *)datePicker {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    formatter.dateFormat = @"MM/dd/yyyy";
+    formatter.dateFormat = @"yyyy-MM-dd";
     NSString *dateString = [NSString stringWithFormat:@"  %@",[formatter stringFromDate:datePicker.date]];
     _birthdayTextField.text = dateString;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    _dropDownTableView.hidden = YES;
-    NSString *text = [NSString stringWithFormat:@"  %@",_dataArray[indexPath.row]];
-    _sexTextField.text = text;
+    if (tableView.tag == 100) {
+        NSString *text = [NSString stringWithFormat:@"  %@",_sexArray[indexPath.row]];
+        _sexTextField.text = text;
+        _sexTableView.hidden = YES;
+    }else if (tableView.tag == 101) {
+        NSString *text = [NSString stringWithFormat:@"  %@",_healthArray[indexPath.row]];
+        _healthTextField.text = text;
+        _healthTableView.hidden = YES;
+        _healthStatus = indexPath.row;
+    }else {
+        NSString *text = [NSString stringWithFormat:@"  %@",_medicineArray[indexPath.row]];
+        _medicineTextField.text = text;
+        _medicineTableView.hidden = YES;
+        _medicine = indexPath.row;
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -83,11 +129,25 @@ const CGFloat OldMessageTitleFont = 18.f;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return _dataArray.count;
+    if (tableView.tag == 100) {
+        return _sexArray.count;
+    }else if (tableView.tag == 101) {
+        return _healthArray.count;
+    }else {
+        return _medicineArray.count;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSString *identifier = @"dropDownTableViewCell";
+    NSString *identifier;
+    if (tableView.tag == 100) {
+        identifier = @"sexTableViewCell";
+    }else if (tableView.tag == 101) {
+        identifier = @"healthTableViewCell";
+    }else {
+        identifier = @"medicineTableCell";
+    }
+    
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
@@ -96,7 +156,14 @@ const CGFloat OldMessageTitleFont = 18.f;
         cell.backgroundColor = [UIColor whiteColor];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
-    cell.textLabel.text = _dataArray[indexPath.row];
+    
+    if (tableView.tag == 100) {
+        cell.textLabel.text = _sexArray[indexPath.row];
+    }else if (tableView.tag == 101) {
+        cell.textLabel.text = _healthArray[indexPath.row];
+    }else {
+        cell.textLabel.text = _medicineArray[indexPath.row];
+    }
     
     return cell;
 }
@@ -107,7 +174,9 @@ const CGFloat OldMessageTitleFont = 18.f;
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     [self.view endEditing:YES];
-    self.dropDownTableView.hidden = YES;
+    self.sexTableView.hidden = YES;
+    self.healthTableView.hidden = YES;
+    self.medicineTableView.hidden = YES;
 }
 
 - (void)setupUI {
@@ -153,18 +222,20 @@ const CGFloat OldMessageTitleFont = 18.f;
     _sexButton = [UIButton buttonWithType:UIButtonTypeCustom];
     _sexButton.layer.borderColor = [UIColor blackColor].CGColor;
     _sexButton.layer.borderWidth = 1;
+    _sexButton.tag = 1000;
     [_sexButton setImage:[UIImage imageNamed:@"arrows_down"] forState:UIControlStateNormal];
-    [_sexButton addTarget:self action:@selector(clickShowDownButton) forControlEvents:UIControlEventTouchUpInside];
+    [_sexButton addTarget:self action:@selector(clickShowDownWithButton:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_sexButton];
     
-    _dropDownTableView = [[UITableView alloc] init];
-    _dropDownTableView.delegate = self;
-    _dropDownTableView.dataSource = self;
-    _dropDownTableView.hidden = YES;
-    _dropDownTableView.layer.borderColor = [UIColor blackColor].CGColor;
-    _dropDownTableView.layer.borderWidth = 1;
-    _dropDownTableView.backgroundColor = [UIColor whiteColor];
-    [self.view addSubview:_dropDownTableView];
+    _sexTableView = [[UITableView alloc] init];
+    _sexTableView.delegate = self;
+    _sexTableView.dataSource = self;
+    _sexTableView.hidden = YES;
+    _sexTableView.layer.borderColor = [UIColor blackColor].CGColor;
+    _sexTableView.layer.borderWidth = 1;
+    _sexTableView.backgroundColor = [UIColor whiteColor];
+    _sexTableView.tag = 100;
+    [self.view addSubview:_sexTableView];
     
     UILabel *birthdayLabel = [[UILabel alloc] init];
     birthdayLabel.text = @"出生日期";
@@ -174,12 +245,17 @@ const CGFloat OldMessageTitleFont = 18.f;
     _birthdayTextField = [[UITextField alloc] init];
     _birthdayTextField.layer.borderColor = [UIColor blackColor].CGColor;
     _birthdayTextField.layer.borderWidth = 1;
-    _birthdayTextField.text = @"  03/10/2014";
+    _birthdayTextField.text = @"  2014-03-10";
     [self.view addSubview:_birthdayTextField];
     
     UIDatePicker *datePicker = [[UIDatePicker alloc] init];
     datePicker.datePickerMode = UIDatePickerModeDate;
     [datePicker addTarget:self action:@selector(datePickerChange:) forControlEvents:UIControlEventValueChanged];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    formatter.dateFormat = @"yyyy-MM-dd";
+    NSString *birthdayStr = [_birthdayTextField.text componentsSeparatedByString:@"  "][1];
+    NSDate *date = [formatter dateFromString:birthdayStr];
+    datePicker.date = date;
     
     _birthdayTextField.inputView = datePicker;
     
@@ -188,11 +264,30 @@ const CGFloat OldMessageTitleFont = 18.f;
     physicalLabel.font = [UIFont boldSystemFontOfSize:OldMessageTitleFont];
     [self.view addSubview:physicalLabel];
     
-    _physicalTextField = [[UITextField alloc] init];
-    _physicalTextField.placeholder = @"  请输入身体情况";
-    _physicalTextField.layer.borderColor = [UIColor blackColor].CGColor;
-    _physicalTextField.layer.borderWidth = 1;
-    [self.view addSubview:_physicalTextField];
+    _healthTextField = [[UITextField alloc] init];
+    _healthTextField.text = @"  健康";
+    _healthTextField.layer.borderColor = [UIColor blackColor].CGColor;
+    _healthTextField.layer.borderWidth = 1;
+    _healthTextField.delegate = self;
+    [self.view addSubview:_healthTextField];
+    
+    _healthButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    _healthButton.layer.borderColor = [UIColor blackColor].CGColor;
+    _healthButton.layer.borderWidth = 1;
+    [_healthButton setImage:[UIImage imageNamed:@"arrows_down"] forState:UIControlStateNormal];
+    [_healthButton addTarget:self action:@selector(clickShowDownWithButton:) forControlEvents:UIControlEventTouchUpInside];
+    _healthButton.tag = 1001;
+    [self.view addSubview:_healthButton];
+    
+    _healthTableView = [[UITableView alloc] init];
+    _healthTableView.delegate = self;
+    _healthTableView.dataSource = self;
+    _healthTableView.hidden = YES;
+    _healthTableView.layer.borderColor = [UIColor blackColor].CGColor;
+    _healthTableView.layer.borderWidth = 1;
+    _healthTableView.backgroundColor = [UIColor whiteColor];
+    _healthTableView.tag = 101;
+    [self.view addSubview:_healthTableView];
     
     UILabel *medicineLabel = [[UILabel alloc] init];
     medicineLabel.text = @"服药情况";
@@ -200,10 +295,29 @@ const CGFloat OldMessageTitleFont = 18.f;
     [self.view addSubview:medicineLabel];
     
     _medicineTextField = [[UITextField alloc] init];
-    _medicineTextField.placeholder = @"  请输入服药情况";
+    _medicineTextField.text = @"  未知";
     _medicineTextField.layer.borderColor = [UIColor blackColor].CGColor;
     _medicineTextField.layer.borderWidth = 1;
+    _medicineTextField.delegate = self;
     [self.view addSubview:_medicineTextField];
+    
+    _medicineButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    _medicineButton.layer.borderColor = [UIColor blackColor].CGColor;
+    _medicineButton.layer.borderWidth = 1;
+    [_medicineButton setImage:[UIImage imageNamed:@"arrows_down"] forState:UIControlStateNormal];
+    [_medicineButton addTarget:self action:@selector(clickShowDownWithButton:) forControlEvents:UIControlEventTouchUpInside];
+    _medicineButton.tag = 1002;
+    [self.view addSubview:_medicineButton];
+    
+    _medicineTableView = [[UITableView alloc] init];
+    _medicineTableView.delegate = self;
+    _medicineTableView.dataSource = self;
+    _medicineTableView.hidden = YES;
+    _medicineTableView.layer.borderColor = [UIColor blackColor].CGColor;
+    _medicineTableView.layer.borderWidth = 1;
+    _medicineTableView.backgroundColor = [UIColor whiteColor];
+    _medicineTableView.tag = 102;
+    [self.view addSubview:_medicineTableView];
     
     UIButton *nextButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [nextButton setTitle:@"下一步" forState:UIControlStateNormal];
@@ -216,7 +330,9 @@ const CGFloat OldMessageTitleFont = 18.f;
     [nextButton addTarget:self action:@selector(clickNextButton) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:nextButton];
     
-    [self.view bringSubviewToFront:_dropDownTableView];
+    [self.view bringSubviewToFront:_sexTableView];
+    [self.view bringSubviewToFront:_healthTableView];
+    [self.view bringSubviewToFront:_medicineTableView];
     
     // 设置布局
     [successLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -262,20 +378,20 @@ const CGFloat OldMessageTitleFont = 18.f;
         make.left.equalTo(sexLabel.mas_right).offset(10.f);
         make.centerY.equalTo(sexLabel.mas_centerY);
         make.width.mas_equalTo(60.f);
-        make.height.mas_equalTo(40.f);
+        make.height.mas_equalTo(44.f);
     }];
     
     [_sexButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.sexTextField.mas_right);
         make.centerY.equalTo(sexLabel.mas_centerY);
-        make.height.mas_equalTo(40.f);
+        make.height.mas_equalTo(44.f);
     }];
     
-    [_dropDownTableView mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_sexTableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.sexTextField.mas_bottom);
         make.left.equalTo(self.sexTextField.mas_left);
         make.right.equalTo(self.sexButton.mas_right);
-        make.height.mas_equalTo(80.f);
+        make.height.mas_equalTo(self->_sexArray.count * 40.f);
     }];
     
     [birthdayLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -299,15 +415,31 @@ const CGFloat OldMessageTitleFont = 18.f;
         make.height.mas_equalTo(OldMessageTitleFont);
     }];
     
-    [_physicalTextField mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_healthTextField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(physicalLabel.mas_right).offset(10.f);
         make.centerY.equalTo(physicalLabel.mas_centerY);
-        make.right.equalTo(self.view.mas_right).offset(-20.f);
+        make.right.equalTo(self.healthButton.mas_left);
         make.height.mas_equalTo(44.f);
     }];
     
+    [_healthButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.healthTextField.mas_right);
+        make.centerY.equalTo(physicalLabel.mas_centerY);
+        make.width.mas_equalTo(24.f);
+        make.height.mas_equalTo(44.f);
+        
+        make.right.equalTo(self.view.mas_right).offset(-20.f);
+    }];
+    
+    [_healthTableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.healthTextField.mas_bottom);
+        make.left.equalTo(self.healthTextField.mas_left);
+        make.right.equalTo(self.healthButton.mas_right);
+        make.height.mas_equalTo(self->_healthArray.count * 40.f);
+    }];
+    
     [medicineLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.physicalTextField.mas_bottom).offset(30.f);
+        make.top.equalTo(self.healthTextField.mas_bottom).offset(30.f);
         make.left.equalTo(self.view.mas_left).offset(20.f);
         make.width.mas_equalTo(80.f);
         make.height.mas_equalTo(OldMessageTitleFont);
@@ -316,8 +448,24 @@ const CGFloat OldMessageTitleFont = 18.f;
     [_medicineTextField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(medicineLabel.mas_right).offset(10.f);
         make.centerY.equalTo(medicineLabel.mas_centerY);
-        make.right.equalTo(self.view.mas_right).offset(-20.f);
+        make.right.equalTo(self.medicineButton.mas_left);
         make.height.mas_equalTo(44.f);
+    }];
+    
+    [_medicineButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.medicineTextField.mas_right);
+        make.centerY.equalTo(medicineLabel.mas_centerY);
+        make.width.mas_equalTo(24.f);
+        make.height.mas_equalTo(44.f);
+        
+        make.right.equalTo(self.view.mas_right).offset(-20.f);
+    }];
+    
+    [_medicineTableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.medicineTextField.mas_bottom);
+        make.left.equalTo(self.medicineTextField.mas_left);
+        make.right.equalTo(self.medicineButton.mas_right);
+        make.height.mas_equalTo(self->_medicineArray.count * 40.f);
     }];
     
     [nextButton mas_makeConstraints:^(MASConstraintMaker *make) {

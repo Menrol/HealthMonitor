@@ -42,14 +42,106 @@
     return tool;
 }
 
-- (void)parentRegisterWithParameters:(id)parameters finished:(FinishedCallBack)finished {
+- (void)parentMessageWithNickname:(NSString *)nickname finished:(FinishedCallBack)finished {
+    NSString *url = @"parent/batch";
+    NSDictionary *parameters = @{@"nickname": nickname};
+    
+    [self requestWithHTTPMethod:GET URLString:url paramters:parameters finished:finished];
+}
+
+- (void)parentCheckWithNickname:(NSString *)nickName finished:(FinishedCallBack)finished {
+    NSString *url = @"parent/check";
+    NSDictionary *parameters = @{@"nickname": nickName};
+    
+    [self requestWithHTTPMethod:GET URLString:url paramters:parameters finished:finished];
+}
+
+- (void)parentRegisterWithNickname:(NSString *)nickname password:(NSString *)password birthday:(NSString *)birthday gender:(NSString *)gender healthStatus:(NSInteger)healthStatus medicine:(NSInteger) medicine name:(NSString *)name finished:(FinishedCallBack)finished {
     NSString *url = @"parent/register";
+    
+    NSCalendar *calender = [NSCalendar currentCalendar];
+    NSDate *nowDate = [NSDate date];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    formatter.dateFormat  = @"yyyy-MM-dd";
+    NSString *nowStr = [formatter stringFromDate:nowDate];
+    NSDate *endDate = [formatter dateFromString:nowStr];
+    NSDate *startDate;
+    if (birthday.length > 0) {
+        startDate = [formatter dateFromString:birthday];
+    }else {
+        startDate = endDate;
+    }
+    NSDateComponents *compoents = [calender components:NSCalendarUnitYear fromDate:startDate toDate:endDate options:0];
+    NSInteger age = [compoents year];
+    NSDictionary *parameters = @{@"nickname": nickname,
+                                 @"password": password,
+                                 @"birthday": birthday,
+                                 @"age": @(age),
+                                 @"gender": gender,
+                                 @"healthStatus": @(healthStatus),
+                                 @"medicine": @(medicine),
+                                 @"name": name
+                                 };
     
     [self requestWithHTTPMethod:POST URLString:url paramters:parameters finished:finished];
 }
 
+- (void)parentUpdateWithNickname:(NSString *)nickname password:(NSString *)password birthday:(NSString *)birthday gender:(NSString *)gender healthStatus:(NSInteger)healthStatus medicine:(NSInteger) medicine name:(NSString *)name finished:(FinishedCallBack)finished {
+    NSString *url = @"parent/update";
+    
+    NSCalendar *calender = [NSCalendar currentCalendar];
+    NSDate *nowDate = [NSDate date];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    formatter.dateFormat  = @"yyyy-MM-dd";
+    NSString *nowStr = [formatter stringFromDate:nowDate];
+    NSDate *endDate = [formatter dateFromString:nowStr];
+    NSDate *startDate;
+    if (birthday.length > 0) {
+        startDate = [formatter dateFromString:birthday];
+    }else {
+        startDate = endDate;
+    }
+    NSDateComponents *compoents = [calender components:NSCalendarUnitYear fromDate:startDate toDate:endDate options:0];
+    NSInteger age = [compoents year];
+    NSDictionary *parameters = @{@"nickname": nickname,
+                                 @"password": password,
+                                 @"birthday": birthday,
+                                 @"age": @(age),
+                                 @"gender": gender,
+                                 @"healthStatus": @(healthStatus),
+                                 @"medicine": @(medicine),
+                                 @"name": name
+                                 };
+    
+    [self requestWithHTTPMethod:PUT URLString:url paramters:parameters finished:finished];
+}
+
+- (void)parentLoginWithNickname:(NSString *)nickName password:(NSString *)password finished:(FinishedCallBack)finished {
+    NSString *url = @"parent/login";
+    NSDictionary *parameters = @{@"nickname": nickName, @"password": password};
+    
+    [self requestWithHTTPMethod:GET URLString:url paramters:parameters finished:finished];
+}
+
 - (void)requestWithHTTPMethod:(HTTPMethod)method  URLString:(NSString *)URLString paramters:(nullable id)parameters finished:(FinishedCallBack)finished {
-    NSString *methodStr = (method == GET) ? @"GET" : @"POST";
+    NSString *methodStr;
+    
+    switch (method) {
+        case GET:
+            methodStr = @"GET";
+            break;
+        case POST:
+            methodStr = @"POST";
+            break;
+        case PUT:
+            methodStr = @"PUT";
+            break;
+        case DELETE:
+            methodStr = @"DELETE";
+            break;
+        default:
+            break;
+    }
     
     [[self dataTaskWithHTTPMethod:methodStr URLString:URLString parameters:parameters uploadProgress:nil downloadProgress:nil success:^(NSURLSessionDataTask *task, id result) {
         finished(result, nil);

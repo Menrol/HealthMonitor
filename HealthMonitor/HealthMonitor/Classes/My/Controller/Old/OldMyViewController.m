@@ -9,11 +9,16 @@
 #import "OldMyViewController.h"
 #import "MyTableViewCell.h"
 #import "MessageView.h"
+#import "ChangePopView.h"
+#import "ParentModel.h"
+#import "MainViewController.h"
+#import "NetworkTool.h"
 #import <Masonry/Masonry.h>
+#import <SVProgressHUD/SVProgressHUD.h>
 
 NSString * const OldMyTableViewCellId = @"OldMyTableViewCellId";
 
-@interface OldMyViewController ()<UITableViewDataSource, MyTableViewCellDelegate>
+@interface OldMyViewController ()<UITableViewDataSource, MyTableViewCellDelegate, ChangePopViewDelegate>
 @property(strong,nonatomic) UIImageView      *iconImageView;
 @property(strong,nonatomic) UILabel          *nameLabel;
 @property(strong,nonatomic) MessageView      *sexView;
@@ -21,6 +26,8 @@ NSString * const OldMyTableViewCellId = @"OldMyTableViewCellId";
 @property(strong,nonatomic) MessageView      *physicalView;
 @property(strong,nonatomic) MessageView      *medicineView;
 @property(strong,nonatomic) UITableView      *bindingTableView;
+@property(strong,nonatomic) ChangePopView    *popView;
+@property(strong,nonatomic) ParentModel      *model;
 
 @end
 
@@ -32,12 +39,125 @@ NSString * const OldMyTableViewCellId = @"OldMyTableViewCellId";
     [self setupUI];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    MainViewController *vc = (MainViewController *)self.tabBarController;
+    _model = (ParentModel *)vc.model;
+    
+    [self updateUI];
+}
+
 - (void)clickExitButton {
     NSLog(@"退出登录");
+    
+    _popView = [ChangePopView changePopViewWithTip:@"确定要退出登录吗？" type:ChangePopViewTypeDefult text:nil];
+    _popView.delegate = self;
+    [_popView show];
 }
 
 - (void)clickEditButton:(UIButton *)btn {
     NSLog(@"编辑");
+    
+    NSString *tipString;
+    NSString *text;
+    ChangePopViewType type;
+    
+    switch (btn.tag) {
+        case 100:
+            tipString = @"请输入姓名";
+            text = _nameLabel.text;
+            type = ChangePopViewTypeName;
+            break;
+        case 101:
+            tipString = @"请选择性别";
+            text = _sexView.textLabel.text;
+            type = ChangePopViewTypeSex;
+            break;
+        case 102:
+            tipString = @"请选择出生日期";
+            text = _birthdayView.textLabel.text;
+            type = ChangePopViewTypeDate;
+            break;
+        case 103:
+            tipString = @"请选择身体情况";
+            text = _physicalView.textLabel.text;
+            type = ChangePopViewTypeHealth;
+            break;
+        case 104:
+            tipString = @"请选择服药情况";
+            text = _medicineView.textLabel.text;
+            type = ChangePopViewTypeMedicine;
+            break;
+        default:
+            type = ChangePopViewTypeDefult;
+            break;
+    }
+    
+    _popView = [ChangePopView changePopViewWithTip:tipString type:type text:text];
+    _popView.delegate = self;
+    [_popView show];
+}
+
+- (void)changePopViewDidClickConfirmWithText:(NSString *)text type:(ChangePopViewType)type {
+    NSLog(@"修改为%@",text);
+    
+    __weak typeof(self) weakSelf = self;
+    switch (type) {
+        case ChangePopViewTypeDefult: {
+            [self dismissViewControllerAnimated:YES completion:^{
+                [weakSelf.popView dismiss];
+            }];
+            return;
+        }
+        case ChangePopViewTypeName:
+            _model.name = text;
+            break;
+        case ChangePopViewTypeSex:
+            _model.gender = text;
+            break;
+        case ChangePopViewTypeDate:
+            _model.birthday = text;
+            break;
+        case ChangePopViewTypeHealth:
+            if ([text isEqualToString:@"健康"]) {
+                _model.healthStatus = 0;
+            }else {
+                _model.healthStatus = 1;
+            }
+            break;
+        case ChangePopViewTypeMedicine:
+            if ([text isEqualToString:@"未知"]) {
+                _model.medicine = 0;
+            }else if ([text isEqualToString:@"无需服药"]) {
+                _model.medicine = 1;
+            }else {
+                _model.medicine = 2;
+            }
+            break;
+        default:
+            break;
+    }
+    
+    [SVProgressHUD show];
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
+    [SVProgressHUD setDefaultStyle:SVProgressHUDStyleDark];
+    
+    [[NetworkTool sharedTool] parentUpdateWithNickname:_model.nickname password:_model.password birthday:_model.birthday gender:_model.gender healthStatus:_model.healthStatus medicine:_model.medicine name:_model.name finished:^(id  _Nullable result, NSError * _Nullable error) {
+        if (error) {
+            NSLog(@"%@",error);
+            return;
+        }
+        
+        NSLog(@"%@",result);
+        
+        [SVProgressHUD dismiss];
+        
+        [weakSelf.popView dismiss];
+        
+        [self updateUI];
+        
+    }];
+    
+    
 }
 
 - (void)clickDeleteButtonWithCell:(MyTableViewCell *)cell {
@@ -72,7 +192,31 @@ NSString * const OldMyTableViewCellId = @"OldMyTableViewCellId";
     return cell;
 }
 
+- (void)updateUI {
+    _nameLabel.text = _model.name;
+    _sexView.textLabel.text = _model.gender;
+    _birthdayView.textLabel.text = _model.birthday;
+    NSString *healthStr;
+    if (_model.healthStatus == 0) {
+        healthStr = @"健康";
+    }else {
+        healthStr = @"不健康";
+    }
+    _physicalView.textLabel.text = healthStr;
+    NSString *medicineStr;
+    if (_model.medicine == 0) {
+        medicineStr = @"未知";
+    }else if (_model.medicine == 1) {
+        medicineStr = @"无需服药";
+    }else {
+        medicineStr = @"服药";
+    }
+    _medicineView.textLabel.text = medicineStr;
+}
+
 - (void)setupUI {
+    self.view.backgroundColor = [UIColor whiteColor];
+    
     // 创建控件
     _iconImageView = [[UIImageView alloc] init];
     _iconImageView.layer.cornerRadius = 45.f;
