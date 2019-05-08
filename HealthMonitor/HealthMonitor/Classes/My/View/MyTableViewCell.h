@@ -20,7 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface MyTableViewCell : UITableViewCell
 @property(strong,nonatomic) UILabel                       *nameLabel;
-@property(strong,nonatomic) UILabel                       *relationLabel;
+@property(strong,nonatomic) UILabel                       *ageLabel;
 @property(strong,nonatomic) UIButton                      *addButton;
 @property(strong,nonatomic) UIButton                      *deleteButton;
 @property(weak,nonatomic)id<MyTableViewCellDelegate>   delegate;

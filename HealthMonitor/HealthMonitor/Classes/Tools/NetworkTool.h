@@ -24,18 +24,14 @@ typedef void (^FinishedCallBack) (id _Nullable result, NSError * _Nullable error
 
 + (instancetype)sharedTool;
 
+- (void)parentGetChildWithNickname:(NSString *)nickname finished:(FinishedCallBack)finished;
+
 - (void)parentMessageWithNickname:(NSString *)nickname finished:(FinishedCallBack)finished;
 
 - (void)parentCheckWithNickname:(NSString *)nickName finished:(FinishedCallBack)finished;
 
-- (void)parentUpdateWithNickname:(NSString *)nickname
-                        password:(NSString *)password
-                        birthday:(NSString *)birthday
-                          gender:(NSString *)gender
-                    healthStatus:(NSInteger)healthStatus
-                        medicine:(NSInteger) medicine
-                            name:(NSString *)name
-                        finished:(FinishedCallBack)finished;
+- (void)parentUpdateWithParamters:(NSDictionary *)parameters
+                         finished:(FinishedCallBack)finished;
 
 - (void)parentRegisterWithNickname:(NSString *)nickname
                           password:(NSString *)password
@@ -47,6 +43,53 @@ typedef void (^FinishedCallBack) (id _Nullable result, NSError * _Nullable error
                           finished:(FinishedCallBack)finished;
 
 - (void)parentLoginWithNickname:(NSString *)nickName password:(NSString *)password finished:(FinishedCallBack)finished;
+
+- (void)childCheckWithNickname:(NSString *)nickname finished:(FinishedCallBack)finished;
+
+- (void)childRegisterWithNickname:(NSString *)nickname
+                         password:(NSString *)password
+                              age:(NSInteger)age
+                           gender:(NSString *)gender
+                             name:(NSString *)name
+                         finished:(FinishedCallBack)finished;
+
+- (void)childMessageWithNickname:(NSString *)nickname finished:(FinishedCallBack)finished;
+
+- (void)childLoginWithNickname:(NSString *)nickName password:(NSString *)password finished:(FinishedCallBack)finished;
+
+- (void)childUpdateWithParamters:(NSDictionary *)parameters finished:(FinishedCallBack)finished;
+
+- (void)childGetParentWithNickname:(NSString *)nickname finished:(FinishedCallBack)finished;
+
+- (void)parentChildBindingSaveWithChildCode:(NSString *)childCode
+                                     userID:(NSInteger)userID
+                                 parentCode:(NSString *)parentCode
+                                     status:(NSInteger)status
+                                   finished:(FinishedCallBack)finished;
+
+- (void)parentChildBindingUpdateWithChildCode:(NSString *)childCode
+                                       userID:(NSInteger)userID
+                                   parentCode:(NSString *)parentCode
+                                       status:(NSInteger)status
+                                     finished:(FinishedCallBack)finished;
+
+- (void)parentChildBindingDeleteWithUserID:(NSInteger)userID finished:(FinishedCallBack)finished;
+
+- (void)chapCheckWithNickname:(NSString *)nickname finished:(FinishedCallBack)finished;
+
+- (void)chapRegisterWithAge:(NSInteger)age
+                     gender:(NSString *)gender
+                       name:(NSString *)name
+                   nickname:(NSString *)nickname
+                   password:(NSString *)password
+             workExperience:(NSString *)workExperience
+                   workTime:(NSString *)workTime
+                   workType:(NSInteger)workType
+                   finished:(FinishedCallBack)finished;
+
+- (void)chapGetMessageWithNickname:(NSString *)nickname finished:(FinishedCallBack)finished;
+
+- (void)chapLoginWithNickname:(NSString *)nickname password:(NSString *)password finished:(FinishedCallBack)finished;
 
 @end
 

@@ -35,9 +35,9 @@
     _nameLabel.font = [UIFont boldSystemFontOfSize:16.f];
     [self.contentView addSubview:_nameLabel];
     
-    _relationLabel = [[UILabel alloc] init];
-    _relationLabel.font = [UIFont boldSystemFontOfSize:16.f];
-    [self.contentView addSubview:_relationLabel];
+    _ageLabel = [[UILabel alloc] init];
+    _ageLabel.font = [UIFont boldSystemFontOfSize:16.f];
+    [self.contentView addSubview:_ageLabel];
     
     _deleteButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [_deleteButton setImage:[UIImage imageNamed:@"delete"] forState:UIControlStateNormal];
@@ -57,7 +57,7 @@
         make.height.mas_equalTo(20.f);
     }];
     
-    [_relationLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_ageLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.nameLabel.mas_right).offset(15.f);
         make.centerY.equalTo(self.contentView.mas_centerY);
         make.height.mas_equalTo(20.f);

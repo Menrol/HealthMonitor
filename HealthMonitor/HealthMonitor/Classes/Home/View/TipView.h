@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface TipView : UIView
 @property(nonatomic, strong) UILabel *tipLabel;
+@property(nonatomic, strong) UILabel *titleLabel;
 
 @end
 

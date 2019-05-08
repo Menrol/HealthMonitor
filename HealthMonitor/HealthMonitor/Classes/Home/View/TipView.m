@@ -22,10 +22,9 @@
 
 - (void)setupUI {
     // 添加控件
-    UILabel *titleLabel = [[UILabel alloc] init];
-    titleLabel.text = @"您的健康状况：";
-    titleLabel.font = [UIFont systemFontOfSize:15.f];
-    [self addSubview:titleLabel];
+    _titleLabel = [[UILabel alloc] init];
+    _titleLabel.font = [UIFont systemFontOfSize:15.f];
+    [self addSubview:_titleLabel];
     
     _tipLabel = [[UILabel alloc] init];
     _tipLabel.font = [UIFont boldSystemFontOfSize:18.f];
@@ -34,14 +33,14 @@
     
     
     // 设置布局
-    [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.mas_top).offset(15.f);
         make.left.equalTo(self.mas_left).offset(15.f);
         make.height.mas_equalTo(15.f);
     }];
     
     [_tipLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(titleLabel.mas_bottom).offset(15.f);
+        make.top.equalTo(self.titleLabel.mas_bottom).offset(15.f);
         make.left.equalTo(self.mas_left).offset(15.f);
         make.right.equalTo(self.mas_right).offset(-15.f);
         make.height.mas_equalTo(18.f);

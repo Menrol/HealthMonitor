@@ -8,6 +8,8 @@
 
 #import "ChildrenBindingViewController.h"
 #import "LoginViewController.h"
+#import "RQProgressHUD.h"
+#import "NetworkTool.h"
 #import <Masonry/Masonry.h>
 
 extern CGFloat OldMessageBigFont;
@@ -27,6 +29,10 @@ extern CGFloat OldMessageTitleFont;
     [self setupUI];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    _numberLabel.text = _childCode;
+}
+
 - (void)clickSkipButton {
     NSLog(@"跳过绑定");
     
@@ -36,6 +42,32 @@ extern CGFloat OldMessageTitleFont;
 
 - (void)clickBindingButton {
     NSLog(@"绑定");
+    
+    [RQProgressHUD rq_show];
+    [[NetworkTool sharedTool] parentChildBindingSaveWithChildCode:_childCode userID:_userID parentCode:_numberTextField.text status:1 finished:^(id  _Nullable result, NSError * _Nullable error) {
+        [RQProgressHUD dismiss];
+        
+        if (error) {
+            NSLog(@"%@",error);
+            
+            return;
+        }
+        
+        NSLog(@"%@",result);
+        
+        NSInteger code = [result[@"code"] integerValue];
+        if (code != 200) {
+            [RQProgressHUD rq_showErrorWithStatus:result[@"msg"]];
+            
+            return;
+        }
+        
+        __weak typeof(self) weakSelf = self;
+        [RQProgressHUD rq_showSuccessWithStatus:@"绑定成功" completion:^{
+            LoginViewController *vc = [[LoginViewController alloc] init];
+            [weakSelf presentViewController:vc animated:YES completion:nil];
+        }];
+    }];
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {

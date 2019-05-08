@@ -12,7 +12,9 @@
 #import "MainViewController.h"
 #import "NetworkTool.h"
 #import "ParentModel.h"
-#import <SVProgressHUD/SVProgressHUD.h>
+#import "ChildModel.h"
+#import "ChapModel.h"
+#import "RQProgressHUD.h"
 #import <YYModel/YYModel.h>
 
 #define buttonWidth [UIScreen mainScreen].bounds.size.width / 3
@@ -48,40 +50,144 @@
     [self.passwordTextField resignFirstResponder];
     
     if (_accountTextField.text.length == 0 || _passwordTextField.text.length == 0) {
-        [SVProgressHUD showInfoWithStatus:@"用户名或密码不能为空"];
-        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
-        [SVProgressHUD dismissWithDelay:1.f];
+        [RQProgressHUD rq_showInfoWithStatus:@"用户名或密码不能为空"];
         
         return;
     }
     
-    [SVProgressHUD show];
-    [SVProgressHUD setDefaultStyle:SVProgressHUDStyleDark];
-    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
+    [RQProgressHUD rq_show];
     
-    __weak typeof(self) weakSelf = self;
-    [[NetworkTool sharedTool] parentLoginWithNickname:_accountTextField.text password:_passwordTextField.text finished:^(id  _Nullable result, NSError * _Nullable error) {
-        
-        __strong typeof(self) strongSelf = weakSelf;
-        
-        [SVProgressHUD dismiss];
-        
-        if (error) {
-            NSLog(@"%@",error);
+    if (_tag == 0) {
+        [[NetworkTool sharedTool] parentLoginWithNickname:_accountTextField.text password:_passwordTextField.text finished:^(id  _Nullable result, NSError * _Nullable error) {
+            if (error) {
+                [RQProgressHUD dismiss];
+                NSLog(@"%@",error);
+                
+                return;
+            }
             
-            return;
-        }
-       
-        NSLog(@"%@",result);
-        
-        NSDictionary *dataDic = result[@"data"];
-        ParentModel *model = [ParentModel yy_modelWithDictionary:dataDic];
-        
-        MainViewController *vc = [[MainViewController alloc] init];
-        vc.userType = strongSelf->_tag;
-        vc.model = model;
-        [self presentViewController:vc animated:YES completion:nil];
-    }];
+            NSLog(@"%@",result);
+            
+            NSInteger code = [result[@"code"] integerValue];
+            if (code != 200) {
+                [RQProgressHUD dismiss];
+                [RQProgressHUD rq_showErrorWithStatus:result[@"msg"]];
+                
+                return;
+            }
+            
+            __weak typeof(self) weakSelf = self;
+            [[NetworkTool sharedTool] parentGetChildWithNickname:weakSelf.accountTextField.text finished:^(id  _Nullable result, NSError * _Nullable error) {
+                
+                
+                [RQProgressHUD dismiss];
+                
+                if (error) {
+                    NSLog(@"%@",error);
+                    
+                    return;
+                }
+                
+                NSLog(@"%@",result);
+                
+                NSInteger code = [result[@"code"] integerValue];
+                if (code != 200) {
+                    [RQProgressHUD rq_showErrorWithStatus:result[@"msg"]];
+                    
+                    return;
+                }
+                
+                __strong typeof(self) strongSelf = weakSelf;
+                
+                NSDictionary *dataDic = result[@"data"];
+                ParentModel *model = [ParentModel yy_modelWithDictionary:dataDic];
+                
+                MainViewController *vc = [[MainViewController alloc] init];
+                vc.userType = strongSelf->_tag;
+                vc.model = model;
+                [strongSelf presentViewController:vc animated:YES completion:nil];
+            }];
+        }];
+    }else if (_tag == 1) {
+        [[NetworkTool sharedTool] childLoginWithNickname:_accountTextField.text password:_passwordTextField.text finished:^(id  _Nullable result, NSError * _Nullable error) {
+            if (error) {
+                [RQProgressHUD dismiss];
+                NSLog(@"%@",error);
+                
+                return;
+            }
+            
+            NSLog(@"%@",result);
+            
+            NSInteger code = [result[@"code"] integerValue];
+            if (code != 200) {
+                [RQProgressHUD dismiss];
+                [RQProgressHUD rq_showErrorWithStatus:result[@"msg"]];
+                
+                return;
+            }
+            
+            __weak typeof(self) weakSelf = self;
+            [[NetworkTool sharedTool] childGetParentWithNickname:weakSelf.accountTextField.text finished:^(id  _Nullable result, NSError * _Nullable error) {
+                [RQProgressHUD dismiss];
+                
+                if (error) {
+                    NSLog(@"%@",error);
+                    
+                    return;
+                }
+                
+                NSLog(@"%@",result);
+                
+                NSInteger code = [result[@"code"] integerValue];
+                if (code != 200) {
+                    [RQProgressHUD rq_showErrorWithStatus:result[@"msg"]];
+                    
+                    return;
+                }
+                
+                NSDictionary *dataDic = result[@"data"];
+                ChildModel *model = [ChildModel yy_modelWithDictionary:dataDic];
+                
+                __strong typeof(self) strongSelf = weakSelf;
+                
+                MainViewController *vc = [[MainViewController alloc] init];
+                vc.userType = strongSelf->_tag;
+                vc.model = model;
+                [strongSelf presentViewController:vc animated:YES completion:nil];
+            }];
+        }];
+    }else {
+        __weak typeof(self) weakSelf = self;
+        [[NetworkTool sharedTool] chapLoginWithNickname:_accountTextField.text password:_passwordTextField.text finished:^(id  _Nullable result, NSError * _Nullable error) {
+            [RQProgressHUD dismiss];
+            
+            if (error) {
+                NSLog(@"%@",error);
+                
+                return;
+            }
+            
+            NSLog(@"%@",result);
+            
+            NSInteger code = [result[@"code"] integerValue];
+            if (code != 200) {
+                [RQProgressHUD rq_showErrorWithStatus:result[@"msg"]];
+                
+                return;
+            }
+            
+            NSDictionary *dataDic = result[@"data"];
+            ChapModel *model = [ChapModel yy_modelWithDictionary:dataDic];
+            
+            __strong typeof(self) strongSelf = weakSelf;
+            
+            MainViewController *vc = [[MainViewController alloc] init];
+            vc.userType = strongSelf->_tag;
+            vc.model = model;
+            [strongSelf presentViewController:vc animated:YES completion:nil];
+        }];
+    }
 }
 
 - (void)clickRegister {

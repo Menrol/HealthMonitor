@@ -99,12 +99,14 @@
     TipView *physicalTipView = [[TipView alloc] init];
     physicalTipView.layer.borderColor = [UIColor blackColor].CGColor;
     physicalTipView.layer.borderWidth = 0.5;
+    physicalTipView.titleLabel.text = @"您的健康状况：";
     physicalTipView.tipLabel.text = @"良好！请继续保持";
     [self.view addSubview:physicalTipView];
     
     TipView *healthTipView = [[TipView alloc] init];
     healthTipView.layer.borderColor = [UIColor blackColor].CGColor;
     healthTipView.layer.borderWidth = 0.5;
+    healthTipView.titleLabel.text = @"健康提醒：";
     healthTipView.tipLabel.text = @"现在是中午，到您使用XXX药的时候了";
     [self.view addSubview:healthTipView];
     

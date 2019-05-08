@@ -11,6 +11,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface ChildrenBindingViewController : UIViewController
+@property(strong,nonatomic) NSString      *childCode;
+@property(assign,nonatomic) NSInteger     userID;
 
 @end
 

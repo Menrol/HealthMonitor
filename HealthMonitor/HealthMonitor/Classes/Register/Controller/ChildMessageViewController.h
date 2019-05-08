@@ -1,8 +1,8 @@
 //
-//  ChaperonageMViewController.h
+//  ChildMessageViewController.h
 //  HealthMonitor
 //
-//  Created by WRQ on 2019/4/7.
+//  Created by WRQ on 2019/5/7.
 //  Copyright © 2019 WRQ. All rights reserved.
 //
 
@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ChaperonageMViewController : UIViewController
+@interface ChildMessageViewController : UIViewController
 @property(strong,nonatomic) NSString      *nickname;
 @property(strong,nonatomic) NSString      *password;
 

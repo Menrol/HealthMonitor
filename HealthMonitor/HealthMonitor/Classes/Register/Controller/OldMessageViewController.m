@@ -9,6 +9,7 @@
 #import "OldMessageViewController.h"
 #import "OldBindingViewController.h"
 #import "NetworkTool.h"
+#import "RQProgressHUD.h"
 #import <Masonry/Masonry.h>
 
 @interface OldMessageViewController ()<UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate> {
@@ -51,12 +52,20 @@ const CGFloat OldMessageTitleFont = 18.f;
 - (void)clickNextButton {
     NSLog(@"下一步");
     
+    if (_nameTextField.text.length == 0) {
+        [RQProgressHUD rq_showInfoWithStatus:@"姓名不能为空"];
+        
+        return;
+    }
+    
     NSString *sexStr = [_sexTextField.text componentsSeparatedByString:@"  "][1];
     NSString *birthdayStr = [_birthdayTextField.text componentsSeparatedByString:@"  "][1];
     
+    [RQProgressHUD show];
     __weak typeof(self) weakSelf = self;
     [[NetworkTool sharedTool] parentRegisterWithNickname:_nickname password:_password birthday:birthdayStr gender:sexStr healthStatus:_healthStatus medicine:_medicine name:_nameTextField.text finished:^(id  _Nullable result, NSError * _Nullable error) {
         if (error) {
+            [RQProgressHUD dismiss];
             NSLog(@"%@",error);
             
             return;
@@ -64,8 +73,18 @@ const CGFloat OldMessageTitleFont = 18.f;
         
         NSLog(@"%@",result);
         
+        NSInteger code = [result[@"code"] integerValue];
+        if (code != 200) {
+            [RQProgressHUD dismiss];
+            [RQProgressHUD rq_showErrorWithStatus:result[@"msg"]];
+            
+            return;
+        }
+        
         __strong typeof(self) strongSelf = weakSelf;
         [[NetworkTool sharedTool] parentMessageWithNickname:strongSelf->_nickname finished:^(id  _Nullable result, NSError * _Nullable error) {
+            [RQProgressHUD dismiss];
+            
             if (error) {
                 NSLog(@"%@",error);
                 
@@ -74,11 +93,20 @@ const CGFloat OldMessageTitleFont = 18.f;
             
             NSLog(@"%@",result);
             
+            NSInteger code = [result[@"code"] integerValue];
+            if (code != 200) {
+                [RQProgressHUD rq_showErrorWithStatus:result[@"msg"]];
+                
+                return;
+            }
+            
             NSDictionary *dataDic = result[@"data"];
             NSString *parentCode = dataDic[@"parentCode"];
+            NSInteger userID = [dataDic[@"id"] integerValue];
             
             OldBindingViewController *vc = [[OldBindingViewController alloc] init];
-            vc.userID = parentCode;
+            vc.parentCode = parentCode;
+            vc.userID = userID;
             [strongSelf presentViewController:vc animated:NO completion:nil];
         }];
     }];
@@ -245,17 +273,16 @@ const CGFloat OldMessageTitleFont = 18.f;
     _birthdayTextField = [[UITextField alloc] init];
     _birthdayTextField.layer.borderColor = [UIColor blackColor].CGColor;
     _birthdayTextField.layer.borderWidth = 1;
-    _birthdayTextField.text = @"  2014-03-10";
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    formatter.dateFormat = @"yyyy-MM-dd";
+    NSString *dateStr = [formatter stringFromDate:[NSDate date]];
+    _birthdayTextField.text = [NSString stringWithFormat:@"  %@",dateStr];
     [self.view addSubview:_birthdayTextField];
     
     UIDatePicker *datePicker = [[UIDatePicker alloc] init];
     datePicker.datePickerMode = UIDatePickerModeDate;
     [datePicker addTarget:self action:@selector(datePickerChange:) forControlEvents:UIControlEventValueChanged];
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    formatter.dateFormat = @"yyyy-MM-dd";
-    NSString *birthdayStr = [_birthdayTextField.text componentsSeparatedByString:@"  "][1];
-    NSDate *date = [formatter dateFromString:birthdayStr];
-    datePicker.date = date;
+    datePicker.date = [NSDate date];
     
     _birthdayTextField.inputView = datePicker;
     

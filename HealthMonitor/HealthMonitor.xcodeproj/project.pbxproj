@@ -34,6 +34,8 @@
 		189D2CF92268662700DF14ED /* ChildOrderListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 189D2CF82268662700DF14ED /* ChildOrderListViewController.m */; };
 		189D2CFC2268663A00DF14ED /* ChildOrderDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 189D2CFB2268663A00DF14ED /* ChildOrderDetailViewController.m */; };
 		189D2CFF2268665100DF14ED /* ChildSendOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 189D2CFE2268665100DF14ED /* ChildSendOrderViewController.m */; };
+		18A96F34228166540012975E /* RQProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 18A96F33228166540012975E /* RQProgressHUD.m */; };
+		18A96F372281990D0012975E /* ChildMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18A96F362281990D0012975E /* ChildMessageViewController.m */; };
 		18B0CDA22271AFB1000B039B /* NetworkTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 18B0CDA12271AFB1000B039B /* NetworkTool.m */; };
 		18B303C9227F03D4007EF30E /* ChangePopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18B303C8227F03D4007EF30E /* ChangePopView.m */; };
 		18B5B66F226719AB008117BD /* ChapDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18B5B66E226719AB008117BD /* ChapDetailViewController.m */; };
@@ -142,6 +144,10 @@
 		189D2CFB2268663A00DF14ED /* ChildOrderDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChildOrderDetailViewController.m; sourceTree = "<group>"; };
 		189D2CFD2268665100DF14ED /* ChildSendOrderViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChildSendOrderViewController.h; sourceTree = "<group>"; };
 		189D2CFE2268665100DF14ED /* ChildSendOrderViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChildSendOrderViewController.m; sourceTree = "<group>"; };
+		18A96F32228166540012975E /* RQProgressHUD.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RQProgressHUD.h; sourceTree = "<group>"; };
+		18A96F33228166540012975E /* RQProgressHUD.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RQProgressHUD.m; sourceTree = "<group>"; };
+		18A96F352281990D0012975E /* ChildMessageViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChildMessageViewController.h; sourceTree = "<group>"; };
+		18A96F362281990D0012975E /* ChildMessageViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChildMessageViewController.m; sourceTree = "<group>"; };
 		18B0CDA02271AFB1000B039B /* NetworkTool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NetworkTool.h; sourceTree = "<group>"; };
 		18B0CDA12271AFB1000B039B /* NetworkTool.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NetworkTool.m; sourceTree = "<group>"; };
 		18B303C7227F03D4007EF30E /* ChangePopView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChangePopView.h; sourceTree = "<group>"; };
@@ -268,6 +274,8 @@
 				18752B95225A2ADA008EF44F /* ChaperonageMViewController.m */,
 				18CC4286225B2D96007C5949 /* ChildrenBindingViewController.h */,
 				18CC4287225B2D96007C5949 /* ChildrenBindingViewController.m */,
+				18A96F352281990D0012975E /* ChildMessageViewController.h */,
+				18A96F362281990D0012975E /* ChildMessageViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -318,6 +326,8 @@
 			children = (
 				18B0CDA02271AFB1000B039B /* NetworkTool.h */,
 				18B0CDA12271AFB1000B039B /* NetworkTool.m */,
+				18A96F32228166540012975E /* RQProgressHUD.h */,
+				18A96F33228166540012975E /* RQProgressHUD.m */,
 			);
 			path = Tools;
 			sourceTree = "<group>";
@@ -880,6 +890,7 @@
 				189D2CF322685EA000DF14ED /* ChildMyViewController.m in Sources */,
 				18BB9D8C226490AF00FDF08C /* OldSendOrderViewController.m in Sources */,
 				18E4002D2255FCD70065E4B3 /* main.m in Sources */,
+				18A96F34228166540012975E /* RQProgressHUD.m in Sources */,
 				183547FE22803965008108DE /* ChapModel.m in Sources */,
 				18E4001F2255FCD60065E4B3 /* AppDelegate.m in Sources */,
 				18BB9DA62264911300FDF08C /* ChapMyViewController.m in Sources */,
@@ -913,6 +924,7 @@
 				189D2CF022685E8A00DF14ED /* ChildChapViewController.m in Sources */,
 				18BB9D9D226490D200FDF08C /* CurOrderUpView.m in Sources */,
 				18F14C58225DE44200E75295 /* StepView.m in Sources */,
+				18A96F372281990D0012975E /* ChildMessageViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

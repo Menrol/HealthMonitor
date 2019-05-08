@@ -8,14 +8,25 @@
 
 #import "ChildMyViewController.h"
 #import "MyTableViewCell.h"
+#import "ChildModel.h"
+#import "ParentModel.h"
+#import "MainViewController.h"
+#import "ChangePopView.h"
+#import "RQProgressHUD.h"
+#import "NetworkTool.h"
 #import <Masonry/Masonry.h>
+#import <YYModel/YYModel.h>
 
 NSString * const ChildMyTableViewCellId = @"ChildMyTableViewCellId";
 
-@interface ChildMyViewController ()<UITableViewDataSource, MyTableViewCellDelegate>
+@interface ChildMyViewController ()<UITableViewDataSource, MyTableViewCellDelegate, ChangePopViewDelegate> {
+    NSMutableArray<ParentModel *>          *_parentList;
+}
 @property(strong,nonatomic) UIImageView      *iconImageView;
 @property(strong,nonatomic) UILabel          *nameLabel;
 @property(strong,nonatomic) UITableView      *bindingTableView;
+@property(strong,nonatomic) ChildModel       *model;
+@property(strong,nonatomic) ChangePopView    *popView;
 
 @end
 
@@ -27,25 +38,165 @@ NSString * const ChildMyTableViewCellId = @"ChildMyTableViewCellId";
     [self setupUI];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    MainViewController *vc = (MainViewController *)self.tabBarController;
+    _model = vc.model;
+    
+    _nameLabel.text = _model.name;
+    _parentList = [NSMutableArray arrayWithArray:_model.parentList];
+    
+    [_bindingTableView reloadData];
+}
+
 - (void)clickEditButton {
     NSLog(@"编辑");
+    
+    _popView = [ChangePopView changePopViewWithTip:@"请输入姓名" type:ChangePopViewTypeName text:_nameLabel.text];
+    _popView.delegate = self;
+    [_popView show];
 }
 
 - (void)clickExitButton {
     NSLog(@"退出登录");
+    
+    _popView = [ChangePopView changePopViewWithTip:@"确定要退出登录吗？" type:ChangePopViewTypeDefult text:nil];
+    _popView.delegate = self;
+    [_popView show];
 }
 
 - (void)clickDeleteButtonWithCell:(MyTableViewCell *)cell {
     NSLog(@"删除Cell");
+    NSIndexPath *indexPath = [_bindingTableView indexPathForCell:cell];
+    ParentModel *model = _parentList[indexPath.row];
+    
+    __weak typeof(self) weakSelf = self;
+    [[NetworkTool sharedTool] parentChildBindingDeleteWithUserID:model.userID finished:^(id  _Nullable result, NSError * _Nullable error) {
+        if (error) {
+            NSLog(@"%@",error);
+            
+            return;
+        }
+        
+        NSLog(@"%@",result);
+        
+        NSInteger code = [result[@"code"] integerValue];
+        if (code != 200) {
+            [RQProgressHUD rq_showErrorWithStatus:result[@"msg"]];
+            
+            return;
+        }
+        
+        __strong typeof(self) strongSelf = weakSelf;
+        
+        [strongSelf->_parentList removeObject:model];
+        [strongSelf.bindingTableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+    }];
 }
 
 - (void)clickAddButtonWithCell:(MyTableViewCell *)cell {
     NSLog(@"添加Cell");
+    
+    _popView = [ChangePopView changePopViewWithTip:@"请输入老人用户编码" type:ChangePopViewTypeBinding text:nil];
+    _popView.delegate = self;
+    [_popView show];
+}
+
+- (void)changePopViewDidClickConfirmWithText:(NSString *)text type:(ChangePopViewType)type {
+    NSLog(@"修改为%@",text);
+    
+    if (type == ChangePopViewTypeDefult) {
+        [_popView dismiss];
+        [self dismissViewControllerAnimated:YES completion:nil];
+        return;
+    }
+    
+    if (type == ChangePopViewTypeBinding) {
+        [_popView dismiss];
+        
+        [RQProgressHUD show];
+       
+        [[NetworkTool sharedTool] parentChildBindingSaveWithChildCode:_model.childCode userID:_model.userID parentCode:text status:1 finished:^(id  _Nullable result, NSError * _Nullable error) {
+            if (error) {
+                [RQProgressHUD dismiss];
+                
+                NSLog(@"%@",error);
+                return;
+            }
+            
+            NSLog(@"%@",result);
+            
+            NSInteger code = [result[@"code"] integerValue];
+            if (code != 200) {
+                [RQProgressHUD dismiss];
+                [RQProgressHUD rq_showErrorWithStatus:result[@"msg"]];
+                
+                return;
+            }
+            
+             __weak typeof(self) weakSelf = self;
+            [[NetworkTool sharedTool] childGetParentWithNickname:weakSelf.model.nickname finished:^(id  _Nullable result, NSError * _Nullable error) {
+                [RQProgressHUD dismiss];
+                
+                if (error) {
+                    NSLog(@"%@",error);
+                    
+                    return;
+                }
+                
+                NSLog(@"%@",result);
+                
+                NSInteger code = [result[@"code"] integerValue];
+                if (code != 200) {
+                    [RQProgressHUD rq_showErrorWithStatus:result[@"msg"]];
+                    
+                    return;
+                }
+                
+                __strong typeof(self) strongSelf = weakSelf;
+                
+                NSDictionary *dataDic = result[@"data"];
+                ChildModel *model = [ChildModel yy_modelWithDictionary:dataDic];
+                strongSelf->_parentList = [NSMutableArray arrayWithArray:model.parentList];
+                
+                [strongSelf.bindingTableView reloadData];
+            }];
+        }];
+        
+        return;
+    }
+    
+    _model.name = text;
+    NSDictionary *paramters = @{@"id": @(_model.userID),
+                                @"name": _model.name
+                                };
+    
+    [RQProgressHUD rq_show];
+    
+    __weak typeof(self) weakSelf = self;
+    [[NetworkTool sharedTool] childUpdateWithParamters:paramters finished:^(id  _Nullable result, NSError * _Nullable error) {
+        [RQProgressHUD dismiss];
+        [weakSelf.popView dismiss];
+        
+        if (error) {
+            NSLog(@"%@",error);
+            return;
+        }
+        
+        NSLog(@"%@",result);
+        
+        NSInteger code = [result[@"code"] integerValue];
+        if (code != 200) {
+            [RQProgressHUD rq_showErrorWithStatus:result[@"msg"]];
+            
+            return;
+        }
+        
+        weakSelf.nameLabel.text = text;
+    }];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    // TODO: 测试数据
-    return 2;
+    return _parentList.count + 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -53,14 +204,19 @@ NSString * const ChildMyTableViewCellId = @"ChildMyTableViewCellId";
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.delegate = self;
     
-    if (indexPath.row == 0) {
-        cell.nameLabel.text = @"张三";
-        cell.relationLabel.text = @"父亲";
-    }else {
+    if (indexPath.row == _parentList.count) {
         cell.nameLabel.hidden = YES;
-        cell.relationLabel.hidden = YES;
+        cell.ageLabel.hidden = YES;
         cell.deleteButton.hidden = YES;
         cell.addButton.hidden = NO;
+    }else {
+        cell.nameLabel.hidden = NO;
+        cell.ageLabel.hidden = NO;
+        cell.deleteButton.hidden = NO;
+        cell.addButton.hidden = YES;
+        ParentModel *model = _parentList[indexPath.row];
+        cell.nameLabel.text = model.name;
+        cell.ageLabel.text = [NSString stringWithFormat:@"%ld岁",model.age];
     }
     
     

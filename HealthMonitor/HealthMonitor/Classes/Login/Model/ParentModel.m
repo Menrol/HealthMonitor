@@ -21,4 +21,14 @@
              @"escortList": [ChapModel class]};
 }
 
+- (void)setBirthday:(NSString *)birthday {
+    NSTimeInterval timeInterval = [birthday doubleValue] / 1000;
+    NSDate *date = [NSDate dateWithTimeIntervalSince1970:timeInterval];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    formatter.dateFormat = @"yyyy-MM-dd";
+    NSString *birthdayStr = [formatter stringFromDate:date];
+    
+    _birthday = birthdayStr;
+}
+
 @end

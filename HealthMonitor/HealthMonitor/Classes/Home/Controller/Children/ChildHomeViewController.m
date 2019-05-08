@@ -172,6 +172,7 @@ NSString * const ChildHomeTableViewCellID = @"ChildHomeTableViewCellID";
     TipView *physicalTipView = [[TipView alloc] init];
     physicalTipView.layer.borderColor = [UIColor blackColor].CGColor;
     physicalTipView.layer.borderWidth = 0.5;
+    physicalTipView.titleLabel.text = @"老人当前健康状况：";
     physicalTipView.tipLabel.text = @"良好！请继续保持";
     [self.view addSubview:physicalTipView];
     

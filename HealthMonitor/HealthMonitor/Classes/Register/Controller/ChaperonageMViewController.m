@@ -8,6 +8,8 @@
 
 #import "ChaperonageMViewController.h"
 #import "LoginViewController.h"
+#import "NetworkTool.h"
+#import "RQProgressHUD.h"
 #import <Masonry/Masonry.h>
 
 extern CGFloat OldMessageTitleFont;
@@ -16,6 +18,7 @@ const CGFloat ChaperonageTipFont = 20.f;
 @interface ChaperonageMViewController ()<UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate> {
     NSArray            *_sexDataArray;
     NSArray            *_workTypeArray;
+    NSInteger          _workType;
 }
 @property(strong,nonatomic) UITextField    *nameTextField;
 @property(strong,nonatomic) UITextField    *sexTextField;
@@ -36,7 +39,7 @@ const CGFloat ChaperonageTipFont = 20.f;
     [super viewDidLoad];
     
     _sexDataArray = @[@"男", @"女"];
-    _workTypeArray = @[@"全职", @"兼职"];
+    _workTypeArray = @[@"兼职", @"全职"];
     
     [self setupUI];
 }
@@ -44,8 +47,48 @@ const CGFloat ChaperonageTipFont = 20.f;
 - (void)clickSubmitButton {
     NSLog(@"提交信息");
     
-    LoginViewController *vc = [[LoginViewController alloc] init];
-    [self presentViewController:vc animated:YES completion:nil];
+    if (_nameTextField.text.length == 0) {
+        [RQProgressHUD rq_showInfoWithStatus:@"姓名不能为空"];
+        
+        return;
+    }
+    
+    if (_ageTextField.text.length == 0) {
+        [RQProgressHUD rq_showInfoWithStatus:@"年龄不能为空"];
+        
+        return;
+    }
+    
+    NSString *sexStr = [_sexTextField.text componentsSeparatedByString:@"  "][1];
+    
+    [RQProgressHUD show];
+    
+    [[NetworkTool sharedTool] chapRegisterWithAge:[_ageTextField.text integerValue] gender:sexStr name:_nameTextField.text nickname:_nickname password:_password workExperience:_workExperienceTextField.text workTime:_workTimeTextField.text workType:_workType finished:^(id  _Nullable result, NSError * _Nullable error) {
+        [RQProgressHUD dismiss];
+        
+        if (error) {
+            NSLog(@"%@",error);
+            
+            return;
+        }
+        
+        NSLog(@"%@",result);
+        
+        NSInteger code = [result[@"code"] integerValue];
+        if (code != 200) {
+            [RQProgressHUD rq_showErrorWithStatus:result[@"msg"]];
+            
+            return;
+        }
+        
+        __weak typeof(self) weakSelf = self;
+        [RQProgressHUD rq_showSuccessWithStatus:@"提交信息成功" completion:^{
+            LoginViewController *vc = [[LoginViewController alloc] init];
+            [weakSelf presentViewController:vc animated:YES completion:nil];
+        }];
+    }];
+    
+    
 }
 
 - (void)clickShowDownWithButton:(UIButton *)btn {
@@ -66,6 +109,7 @@ const CGFloat ChaperonageTipFont = 20.f;
         NSString *text = [NSString stringWithFormat:@"  %@",_workTypeArray[indexPath.row]];
         _workTypeTextField.text = text;
         _workTypeTableView.hidden = YES;
+        _workType = indexPath.row;
     }
 }
 
@@ -199,7 +243,7 @@ const CGFloat ChaperonageTipFont = 20.f;
     [self.view addSubview:workTypeLabel];
     
     _workTypeTextField = [[UITextField alloc] init];
-    _workTypeTextField.text = @"  全职";
+    _workTypeTextField.text = @"  兼职";
     _workTypeTextField.layer.borderColor = [UIColor blackColor].CGColor;
     _workTypeTextField.layer.borderWidth = 1;
     _workTypeTextField.delegate = self;

@@ -125,7 +125,7 @@
 - (void)clickConfirm {
     NSLog(@"确定");
     
-    if (([_originalText isEqualToString:_changeTextField.text] && _type != ChangePopViewTypeDefult) || _changeTextField.text.length == 0) {
+    if (([_originalText isEqualToString:_changeTextField.text] || _changeTextField.text.length == 0) && _type != ChangePopViewTypeDefult) {
         [self dismiss];
         return;
     }

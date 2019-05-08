@@ -8,6 +8,8 @@
 
 #import "ChapMyViewController.h"
 #import "MessageView.h"
+#import "ChapModel.h"
+#import "MainViewController.h"
 #import <Masonry/Masonry.h>
 
 @interface ChapMyViewController ()
@@ -18,6 +20,7 @@
 @property(strong,nonatomic) MessageView      *workTypeView;
 @property(strong,nonatomic) MessageView      *workTimeView;
 @property(strong,nonatomic) MessageView      *intelligenceView;
+@property(strong,nonatomic) ChapModel        *model;
 
 @end
 
@@ -27,6 +30,23 @@
     [super viewDidLoad];
     
     [self setupUI];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    MainViewController *vc = (MainViewController *)self.tabBarController;
+    _model = vc.model;
+    
+    _nameLabel.text = _model.name;
+    _sexView.textLabel.text = _model.gender;
+    _ageView.textLabel.text = [NSString stringWithFormat:@"%ld",_model.age];
+    NSString *workTypeStr;
+    if (_model.workType == 0) {
+        workTypeStr = @"兼职";
+    }else {
+        workTypeStr = @"全职";
+    }
+    _workTimeView.textLabel.text = _model.workTime;
+    
 }
 
 - (void)clickExitButton {

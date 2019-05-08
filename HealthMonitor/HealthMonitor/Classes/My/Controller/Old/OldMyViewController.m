@@ -11,14 +11,18 @@
 #import "MessageView.h"
 #import "ChangePopView.h"
 #import "ParentModel.h"
+#import "ChildModel.h"
 #import "MainViewController.h"
 #import "NetworkTool.h"
+#import "RQProgressHUD.h"
 #import <Masonry/Masonry.h>
-#import <SVProgressHUD/SVProgressHUD.h>
+#import <YYModel/YYModel.h>
 
 NSString * const OldMyTableViewCellId = @"OldMyTableViewCellId";
 
-@interface OldMyViewController ()<UITableViewDataSource, MyTableViewCellDelegate, ChangePopViewDelegate>
+@interface OldMyViewController ()<UITableViewDataSource, MyTableViewCellDelegate, ChangePopViewDelegate> {
+    NSMutableArray<ChildModel *>          *_childList;
+}
 @property(strong,nonatomic) UIImageView      *iconImageView;
 @property(strong,nonatomic) UILabel          *nameLabel;
 @property(strong,nonatomic) MessageView      *sexView;
@@ -44,6 +48,9 @@ NSString * const OldMyTableViewCellId = @"OldMyTableViewCellId";
     _model = (ParentModel *)vc.model;
     
     [self updateUI];
+    
+    _childList = [NSMutableArray arrayWithArray:_model.childList];
+    [_bindingTableView reloadData];
 }
 
 - (void)clickExitButton {
@@ -100,29 +107,103 @@ NSString * const OldMyTableViewCellId = @"OldMyTableViewCellId";
 - (void)changePopViewDidClickConfirmWithText:(NSString *)text type:(ChangePopViewType)type {
     NSLog(@"修改为%@",text);
     
-    __weak typeof(self) weakSelf = self;
+    if (type == ChangePopViewTypeBinding) {
+        [_popView dismiss];
+        
+        [RQProgressHUD show];
+        
+        [[NetworkTool sharedTool] parentChildBindingSaveWithChildCode:text userID:_model.userID parentCode:_model.parentCode status:1 finished:^(id  _Nullable result, NSError * _Nullable error) {
+            if (error) {
+                [RQProgressHUD dismiss];
+                
+                NSLog(@"%@",error);
+                return;
+            }
+            
+            NSLog(@"%@",result);
+            
+            NSInteger code = [result[@"code"] integerValue];
+            if (code != 200) {
+                [RQProgressHUD dismiss];
+                [RQProgressHUD rq_showErrorWithStatus:result[@"msg"]];
+                
+                return;
+            }
+            
+            __weak typeof(self) weakSelf = self;
+            [[NetworkTool sharedTool] parentGetChildWithNickname:weakSelf.model.nickname finished:^(id  _Nullable result, NSError * _Nullable error) {
+                [RQProgressHUD dismiss];
+                
+                if (error) {
+                    NSLog(@"%@",error);
+                    
+                    return;
+                }
+                
+                NSLog(@"%@",result);
+                
+                NSInteger code = [result[@"code"] integerValue];
+                if (code != 200) {
+                    [RQProgressHUD rq_showErrorWithStatus:result[@"msg"]];
+                    
+                    return;
+                }
+                
+                __strong typeof(self) strongSelf = weakSelf;
+                
+                NSDictionary *dataDic = result[@"data"];
+                ParentModel *model = [ParentModel yy_modelWithDictionary:dataDic];
+                strongSelf->_childList = [NSMutableArray arrayWithArray:model.childList];
+                
+                [strongSelf.bindingTableView reloadData];
+            }];
+        }];
+        
+        
+        return;
+    }
+    
+    NSMutableDictionary *paramters = [[NSMutableDictionary alloc] initWithDictionary:@{@"id": @(_model.userID)}];
+    
     switch (type) {
         case ChangePopViewTypeDefult: {
-            [self dismissViewControllerAnimated:YES completion:^{
-                [weakSelf.popView dismiss];
-            }];
+            [_popView dismiss];
+            [self dismissViewControllerAnimated:YES completion:nil];
             return;
         }
         case ChangePopViewTypeName:
             _model.name = text;
+            [paramters addEntriesFromDictionary:@{@"name": _model.name}];
             break;
         case ChangePopViewTypeSex:
             _model.gender = text;
+            [paramters addEntriesFromDictionary:@{@"gender": _model.gender}];
             break;
-        case ChangePopViewTypeDate:
-            _model.birthday = text;
+        case ChangePopViewTypeDate: {
+            NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+            formatter.dateFormat = @"yyyy-MM-dd";
+            NSCalendar *calender = [NSCalendar currentCalendar];
+            NSDate *nowDate = [NSDate date];
+            NSDate *startDate = [formatter dateFromString:text];
+            NSDateComponents *compoents = [calender components:NSCalendarUnitYear fromDate:startDate toDate:nowDate options:0];
+            NSInteger age = [compoents year];
+            if ([compoents month] < 0 || ([compoents month] == 0 && [compoents day] < 0)) {
+                age -= 1;
+            }
+            NSInteger birthday = [startDate timeIntervalSince1970] * 1000;
+            _model.birthday = [NSString stringWithFormat:@"%ld",birthday];
+            [paramters addEntriesFromDictionary:@{@"birthday": @(birthday),
+                                                  @"age": @(age)
+                                                  }];
             break;
+        }
         case ChangePopViewTypeHealth:
             if ([text isEqualToString:@"健康"]) {
                 _model.healthStatus = 0;
             }else {
                 _model.healthStatus = 1;
             }
+            [paramters addEntriesFromDictionary:@{@"healthStatus": @(_model.healthStatus)}];
             break;
         case ChangePopViewTypeMedicine:
             if ([text isEqualToString:@"未知"]) {
@@ -132,16 +213,19 @@ NSString * const OldMyTableViewCellId = @"OldMyTableViewCellId";
             }else {
                 _model.medicine = 2;
             }
+            [paramters addEntriesFromDictionary:@{@"medicine": @(_model.medicine)}];
             break;
         default:
             break;
     }
     
-    [SVProgressHUD show];
-    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
-    [SVProgressHUD setDefaultStyle:SVProgressHUDStyleDark];
+    [RQProgressHUD rq_show];
     
-    [[NetworkTool sharedTool] parentUpdateWithNickname:_model.nickname password:_model.password birthday:_model.birthday gender:_model.gender healthStatus:_model.healthStatus medicine:_model.medicine name:_model.name finished:^(id  _Nullable result, NSError * _Nullable error) {
+    __weak typeof(self) weakSelf = self;
+    [[NetworkTool sharedTool] parentUpdateWithParamters:paramters finished:^(id  _Nullable result, NSError * _Nullable error) {
+        [RQProgressHUD dismiss];
+        [weakSelf.popView dismiss];
+        
         if (error) {
             NSLog(@"%@",error);
             return;
@@ -149,9 +233,12 @@ NSString * const OldMyTableViewCellId = @"OldMyTableViewCellId";
         
         NSLog(@"%@",result);
         
-        [SVProgressHUD dismiss];
-        
-        [weakSelf.popView dismiss];
+        NSInteger code = [result[@"code"] integerValue];
+        if (code != 200) {
+            [RQProgressHUD rq_showErrorWithStatus:result[@"msg"]];
+            
+            return;
+        }
         
         [self updateUI];
         
@@ -166,11 +253,14 @@ NSString * const OldMyTableViewCellId = @"OldMyTableViewCellId";
 
 - (void)clickAddButtonWithCell:(MyTableViewCell *)cell {
     NSLog(@"添加Cell");
+    
+    _popView = [ChangePopView changePopViewWithTip:@"请输入子女用户编码" type:ChangePopViewTypeBinding text:nil];
+    _popView.delegate = self;
+    [_popView show];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    // TODO: 测试数据
-    return 2;
+    return _childList.count + 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -178,14 +268,19 @@ NSString * const OldMyTableViewCellId = @"OldMyTableViewCellId";
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.delegate = self;
     
-    if (indexPath.row == 0) {
-        cell.nameLabel.text = @"张明";
-        cell.relationLabel.text = @"儿子";
-    }else {
+    if (indexPath.row == _childList.count) {
         cell.nameLabel.hidden = YES;
-        cell.relationLabel.hidden = YES;
+        cell.ageLabel.hidden = YES;
         cell.deleteButton.hidden = YES;
         cell.addButton.hidden = NO;
+    }else {
+        cell.nameLabel.hidden = NO;
+        cell.ageLabel.hidden = NO;
+        cell.deleteButton.hidden = NO;
+        cell.addButton.hidden = YES;
+        ChildModel *model = _childList[indexPath.row];
+        cell.nameLabel.text = model.name;
+        cell.ageLabel.text = [NSString stringWithFormat:@"%ld岁",model.age];
     }
     
     
