@@ -9,10 +9,13 @@
 #import "ChapMyViewController.h"
 #import "MessageView.h"
 #import "ChapModel.h"
+#import "ChangePopView.h"
 #import "MainViewController.h"
+#import "RQProgressHUD.h"
+#import "NetworkTool.h"
 #import <Masonry/Masonry.h>
 
-@interface ChapMyViewController ()
+@interface ChapMyViewController ()<ChangePopViewDelegate>
 @property(strong,nonatomic) UIImageView      *iconImageView;
 @property(strong,nonatomic) UILabel          *nameLabel;
 @property(strong,nonatomic) MessageView      *sexView;
@@ -21,6 +24,7 @@
 @property(strong,nonatomic) MessageView      *workTimeView;
 @property(strong,nonatomic) MessageView      *intelligenceView;
 @property(strong,nonatomic) ChapModel        *model;
+@property(strong,nonatomic) ChangePopView    *popView;
 
 @end
 
@@ -36,6 +40,129 @@
     MainViewController *vc = (MainViewController *)self.tabBarController;
     _model = vc.model;
     
+    [self updateUI];
+}
+
+- (void)clickExitButton {
+    NSLog(@"退出登录");
+    
+    _popView = [ChangePopView changePopViewWithTip:@"确定要退出登录吗？" type:ChangePopViewTypeDefult text:nil];
+    _popView.delegate = self;
+    [_popView show];
+}
+
+- (void)clickEditButton:(UIButton *)btn {
+    NSLog(@"编辑");
+    
+    NSString *tipString;
+    NSString *text;
+    ChangePopViewType type;
+    
+    switch (btn.tag) {
+        case 100:
+            tipString = @"请输入姓名";
+            text = _nameLabel.text;
+            type = ChangePopViewTypeName;
+            break;
+        case 101:
+            tipString = @"请选择性别";
+            text = _sexView.textLabel.text;
+            type = ChangePopViewTypeSex;
+            break;
+        case 102:
+            tipString = @"请输入年龄";
+            text = _ageView.textLabel.text;
+            type = ChangePopViewTypeAge;
+            break;
+        case 103:
+            tipString = @"请选择工作类型";
+            text = _workTypeView.textLabel.text;
+            type = ChangePopViewTypeWorkType;
+            break;
+        case 104:
+            tipString = @"请输入工作时间";
+            text = _workTimeView.textLabel.text;
+            type = ChangePopViewTypeWorkTime;
+            break;
+        default:
+            type = ChangePopViewTypeDefult;
+            break;
+    }
+    
+    _popView = [ChangePopView changePopViewWithTip:tipString type:type text:text];
+    _popView.delegate = self;
+    [_popView show];
+}
+
+- (void)changePopViewDidClickConfirmWithText:(NSString *)text type:(ChangePopViewType)type {
+    NSLog(@"修改为%@",text);
+    
+    NSMutableDictionary *paramters = [[NSMutableDictionary alloc] initWithDictionary:@{@"id": @(_model.userID)}];
+    
+    switch (type) {
+        case ChangePopViewTypeDefult: {
+            [_popView dismiss];
+            [self dismissViewControllerAnimated:YES completion:nil];
+            return;
+        }
+        case ChangePopViewTypeName:
+            _model.name = text;
+            [paramters addEntriesFromDictionary:@{@"name": _model.name}];
+            break;
+        case ChangePopViewTypeSex:
+            _model.gender = text;
+            [paramters addEntriesFromDictionary:@{@"gender": _model.gender}];
+            break;
+        case ChangePopViewTypeAge: {
+            _model.age = [text integerValue];
+            [paramters addEntriesFromDictionary:@{@"age": @(_model.age)}];
+            break;
+        }
+        case ChangePopViewTypeWorkType:
+            if ([text isEqualToString:@"兼职"]) {
+                _model.workType = 0;
+            }else {
+                _model.workType = 1;
+            }
+            [paramters addEntriesFromDictionary:@{@"workType": @(_model.workType)}];
+            break;
+        case ChangePopViewTypeWorkTime:
+            _model.workTime = text;
+            [paramters addEntriesFromDictionary:@{@"workTime": _model.workTime}];
+            break;
+        default:
+            break;
+    }
+    
+    [RQProgressHUD rq_show];
+    
+    __weak typeof(self) weakSelf = self;
+    [[NetworkTool sharedTool] chapUpdateWithParamters:paramters finished:^(id  _Nullable result, NSError * _Nullable error) {
+        [RQProgressHUD dismiss];
+        [weakSelf.popView dismiss];
+        
+        if (error) {
+            NSLog(@"%@",error);
+            return;
+        }
+        
+        NSLog(@"%@",result);
+        
+        NSInteger code = [result[@"code"] integerValue];
+        if (code != 200) {
+            [RQProgressHUD rq_showErrorWithStatus:result[@"msg"]];
+            
+            return;
+        }
+        
+        [self updateUI];
+        
+    }];
+    
+    
+}
+
+- (void)updateUI {
     _nameLabel.text = _model.name;
     _sexView.textLabel.text = _model.gender;
     _ageView.textLabel.text = [NSString stringWithFormat:@"%ld",_model.age];
@@ -45,16 +172,15 @@
     }else {
         workTypeStr = @"全职";
     }
+    _workTypeView.textLabel.text = workTypeStr;
     _workTimeView.textLabel.text = _model.workTime;
-    
-}
-
-- (void)clickExitButton {
-    NSLog(@"退出登录");
-}
-
-- (void)clickEditButton:(UIButton *)btn {
-    NSLog(@"编辑");
+    NSString *cardStr;
+    if (_model.cardStatus == 0) {
+        cardStr = @"未通过";
+    }else {
+        cardStr = @"通过";
+    }
+    _intelligenceView.textLabel.text = cardStr;
 }
 
 - (void)setupUI {
@@ -201,7 +327,7 @@
     }];
 
     [_intelligenceView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.workTypeView.mas_bottom);
+        make.top.equalTo(self.workTimeView.mas_bottom);
         make.left.equalTo(self.view.mas_left);
         make.right.equalTo(self.view.mas_right);
         make.height.mas_equalTo(45.f);

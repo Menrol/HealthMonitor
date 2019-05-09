@@ -55,20 +55,10 @@
     [self requestWithHTTPMethod:POST URLString:url paramters:parameters finished:finished];
 }
 
-- (void)parentChildBindingUpdateWithChildCode:(NSString *)childCode userID:(NSInteger)userID parentCode:(NSString *)parentCode status:(NSInteger)status finished:(FinishedCallBack)finished {
-    NSString *url = @"parent/child/update";
-    NSDictionary *parameters = @{@"child": childCode,
-                                 @"id": @(userID),
-                                 @"parent": parentCode,
-                                 @"status": @(status)
-                                 };
-    
-    [self requestWithHTTPMethod:PUT URLString:url paramters:parameters finished:finished];
-}
-
-- (void)parentChildBindingDeleteWithUserID:(NSInteger)userID finished:(FinishedCallBack)finished {
+- (void)parentChildBindingDeleteWithChildCode:(NSString *)childCode parentCode:(NSString *)parentCode finished:(FinishedCallBack)finished {
     NSString *url = @"parent/child/delete";
-    NSDictionary *parameters = @{@"id": @(userID)};
+    NSDictionary *parameters = @{@"child": childCode,
+                                 @"parent": parentCode};
     
     [self requestWithHTTPMethod:DELETE URLString:url paramters:parameters finished:finished];
 }
@@ -219,6 +209,12 @@
                                  };
     
     [self requestWithHTTPMethod:GET URLString:url paramters:parameters finished:finished];
+}
+
+- (void)chapUpdateWithParamters:(NSDictionary *)parameters finished:(FinishedCallBack)finished {
+    NSString *url = @"escort/update";
+    
+    [self requestWithHTTPMethod:PUT URLString:url paramters:parameters finished:finished];
 }
 
 #pragma mark - 封装AFN

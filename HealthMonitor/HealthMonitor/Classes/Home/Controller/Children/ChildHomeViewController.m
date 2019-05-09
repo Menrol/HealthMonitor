@@ -179,6 +179,7 @@ NSString * const ChildHomeTableViewCellID = @"ChildHomeTableViewCellID";
     TipView *healthTipView = [[TipView alloc] init];
     healthTipView.layer.borderColor = [UIColor blackColor].CGColor;
     healthTipView.layer.borderWidth = 0.5;
+    healthTipView.titleLabel.text = @"健康提醒：";
     healthTipView.tipLabel.text = @"现在是中午，到老人使用XXX药的时候了";
     [self.view addSubview:healthTipView];
     

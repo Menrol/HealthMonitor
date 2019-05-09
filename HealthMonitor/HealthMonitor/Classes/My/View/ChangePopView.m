@@ -39,7 +39,7 @@
             return  self;
         }
         
-        if (type == ChangePopViewTypeName || type == ChangePopViewTypeBinding) {
+        if (type == ChangePopViewTypeName || type == ChangePopViewTypeBinding || type == ChangePopViewTypeAge || type == ChangePopViewTypeWorkTime) {
             return self;
         }
         
@@ -81,6 +81,12 @@
         
         if (type == ChangePopViewTypeSex) {
             _dataArray = @[@"男", @"女"];
+            
+            _tableView.frame = CGRectMake(CGRectGetMinX(frame), CGRectGetMaxY(frame), CGRectGetWidth(frame), _dataArray.count * 40);
+        }
+        
+        if (type == ChangePopViewTypeWorkType) {
+            _dataArray = @[@"兼职", @"全职"];
             
             _tableView.frame = CGRectMake(CGRectGetMinX(frame), CGRectGetMaxY(frame), CGRectGetWidth(frame), _dataArray.count * 40);
         }

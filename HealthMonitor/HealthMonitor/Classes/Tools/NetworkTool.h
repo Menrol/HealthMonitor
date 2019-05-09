@@ -67,13 +67,7 @@ typedef void (^FinishedCallBack) (id _Nullable result, NSError * _Nullable error
                                      status:(NSInteger)status
                                    finished:(FinishedCallBack)finished;
 
-- (void)parentChildBindingUpdateWithChildCode:(NSString *)childCode
-                                       userID:(NSInteger)userID
-                                   parentCode:(NSString *)parentCode
-                                       status:(NSInteger)status
-                                     finished:(FinishedCallBack)finished;
-
-- (void)parentChildBindingDeleteWithUserID:(NSInteger)userID finished:(FinishedCallBack)finished;
+- (void)parentChildBindingDeleteWithChildCode:(NSString *)childCode parentCode:(NSString *)parentCode finished:(FinishedCallBack)finished;
 
 - (void)chapCheckWithNickname:(NSString *)nickname finished:(FinishedCallBack)finished;
 
@@ -90,6 +84,8 @@ typedef void (^FinishedCallBack) (id _Nullable result, NSError * _Nullable error
 - (void)chapGetMessageWithNickname:(NSString *)nickname finished:(FinishedCallBack)finished;
 
 - (void)chapLoginWithNickname:(NSString *)nickname password:(NSString *)password finished:(FinishedCallBack)finished;
+
+- (void)chapUpdateWithParamters:(NSDictionary *)parameters finished:(FinishedCallBack)finished;
 
 @end
 

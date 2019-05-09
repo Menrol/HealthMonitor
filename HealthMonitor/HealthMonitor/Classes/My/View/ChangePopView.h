@@ -11,11 +11,14 @@
 typedef NS_ENUM(NSUInteger, ChangePopViewType) {
     ChangePopViewTypeDefult = 0,
     ChangePopViewTypeName,
+    ChangePopViewTypeAge,
     ChangePopViewTypeSex,
     ChangePopViewTypeDate,
     ChangePopViewTypeHealth,
     ChangePopViewTypeMedicine,
     ChangePopViewTypeBinding,
+    ChangePopViewTypeWorkType,
+    ChangePopViewTypeWorkTime,
 };
 
 @protocol ChangePopViewDelegate <NSObject>

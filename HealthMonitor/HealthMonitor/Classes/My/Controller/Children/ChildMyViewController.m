@@ -70,7 +70,7 @@ NSString * const ChildMyTableViewCellId = @"ChildMyTableViewCellId";
     ParentModel *model = _parentList[indexPath.row];
     
     __weak typeof(self) weakSelf = self;
-    [[NetworkTool sharedTool] parentChildBindingDeleteWithUserID:model.userID finished:^(id  _Nullable result, NSError * _Nullable error) {
+    [[NetworkTool sharedTool] parentChildBindingDeleteWithChildCode:_model.childCode parentCode:model.parentCode finished:^(id  _Nullable result, NSError * _Nullable error) {
         if (error) {
             NSLog(@"%@",error);
             

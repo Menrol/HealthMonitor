@@ -76,6 +76,9 @@
                 return;
             }
             
+            NSDictionary *dataDic = result[@"data"];
+            __block ParentModel *model = [ParentModel yy_modelWithDictionary:dataDic];
+            
             __weak typeof(self) weakSelf = self;
             [[NetworkTool sharedTool] parentGetChildWithNickname:weakSelf.accountTextField.text finished:^(id  _Nullable result, NSError * _Nullable error) {
                 
@@ -100,7 +103,9 @@
                 __strong typeof(self) strongSelf = weakSelf;
                 
                 NSDictionary *dataDic = result[@"data"];
-                ParentModel *model = [ParentModel yy_modelWithDictionary:dataDic];
+                if (dataDic != nil) {
+                    model = [ParentModel yy_modelWithDictionary:dataDic];
+                }
                 
                 MainViewController *vc = [[MainViewController alloc] init];
                 vc.userType = strongSelf->_tag;
@@ -127,6 +132,9 @@
                 return;
             }
             
+            NSDictionary *dataDic = result[@"data"];
+            __block ChildModel *model = [ChildModel yy_modelWithDictionary:dataDic];
+            
             __weak typeof(self) weakSelf = self;
             [[NetworkTool sharedTool] childGetParentWithNickname:weakSelf.accountTextField.text finished:^(id  _Nullable result, NSError * _Nullable error) {
                 [RQProgressHUD dismiss];
@@ -147,7 +155,9 @@
                 }
                 
                 NSDictionary *dataDic = result[@"data"];
-                ChildModel *model = [ChildModel yy_modelWithDictionary:dataDic];
+                if (dataDic != nil) {
+                    model = [ChildModel yy_modelWithDictionary:dataDic];
+                }
                 
                 __strong typeof(self) strongSelf = weakSelf;
                 

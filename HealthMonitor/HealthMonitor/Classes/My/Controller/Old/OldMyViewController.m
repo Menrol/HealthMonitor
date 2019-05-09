@@ -249,6 +249,32 @@ NSString * const OldMyTableViewCellId = @"OldMyTableViewCellId";
 
 - (void)clickDeleteButtonWithCell:(MyTableViewCell *)cell {
     NSLog(@"删除Cell");
+    
+    NSIndexPath *indexPath = [_bindingTableView indexPathForCell:cell];
+    ChildModel *model = _childList[indexPath.row];
+    
+    __weak typeof(self) weakSelf = self;
+    [[NetworkTool sharedTool] parentChildBindingDeleteWithChildCode:model.childCode parentCode:_model.parentCode finished:^(id  _Nullable result, NSError * _Nullable error) {
+        if (error) {
+            NSLog(@"%@",error);
+            
+            return;
+        }
+        
+        NSLog(@"%@",result);
+        
+        NSInteger code = [result[@"code"] integerValue];
+        if (code != 200) {
+            [RQProgressHUD rq_showErrorWithStatus:result[@"msg"]];
+            
+            return;
+        }
+        
+        __strong typeof(self) strongSelf = weakSelf;
+        
+        [strongSelf->_childList removeObject:model];
+        [strongSelf.bindingTableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+    }];
 }
 
 - (void)clickAddButtonWithCell:(MyTableViewCell *)cell {

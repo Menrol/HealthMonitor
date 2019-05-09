@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(assign,nonatomic) NSInteger                 age;
 @property(strong,nonatomic) NSString                  *gender;
 @property(assign,nonatomic) NSInteger                 userID;
-@property(strong,nonatomic) NSString                  *idCard;
+@property(assign,nonatomic) NSInteger                 cardStatus;
 @property(strong,nonatomic) NSString                  *imageUrl;
 @property(strong,nonatomic) NSString                  *name;
 @property(strong,nonatomic) NSString                  *nickname;
