@@ -8,6 +8,10 @@
 
 #import "OldSendOrderViewController.h"
 #import "ChangeAddressViewController.h"
+#import "MainViewController.h"
+#import "ParentModel.h"
+#import "RQProgressHUD.h"
+#import "NetworkTool.h"
 #import <MAMapKit/MAMapKit.h>
 #import <AMapFoundationKit/AMapFoundationKit.h>
 #import <AMapSearchKit/AMapSearchKit.h>
@@ -18,6 +22,8 @@
     NSArray                       *_chapTypeArray;
     NSString                      *_city;
     CLLocationCoordinate2D        _curCoordinate;
+    NSInteger                     _escortType;
+    NSInteger                     _healthStatus;
 }
 @property(strong,nonatomic) MAMapView       *mapView;
 @property(strong,nonatomic) UILabel         *addressLabel;
@@ -33,6 +39,7 @@
 @property(strong,nonatomic) UITextField     *chapStartTextField;
 @property(strong,nonatomic) UITextField     *chapEndTextField;
 @property(strong,nonatomic) UITextView      *remarkTextView;
+@property(strong,nonatomic) ParentModel     *model;
 
 @end
 
@@ -41,14 +48,68 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [RQProgressHUD rq_show];
+    
     _chapTypeArray = @[@"临时陪护", @"长期陪护"];
     _healthDataArray = @[@"健康", @"患病"];
     
     [self setupUI];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    MainViewController *vc = (MainViewController *)self.tabBarController;
+    _model = vc.model;
+    
+    _beChapLabel.text = _model.name;
+}
+
 - (void)clickSendButton {
     NSLog(@"发布");
+    
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    formatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
+    NSDate *endDate = [formatter dateFromString:[_chapEndTextField.text componentsSeparatedByString:@"  "][1]];
+    NSInteger escortEnd = [endDate timeIntervalSince1970] * 1000;
+    NSDate *startDate = [formatter dateFromString:[_chapStartTextField.text componentsSeparatedByString:@"  "][1]];
+    NSInteger escortStart = [startDate timeIntervalSince1970] * 1000;
+    NSString *positionStr = [NSString stringWithFormat:@"%f %f",_curCoordinate.latitude,_curCoordinate.longitude];
+    
+    [RQProgressHUD rq_show];
+    [[NetworkTool sharedTool] sendOrderWithAddress:_addressLabel.text desc:_remarkTextView.text emergencyStatus:0 escortEnd:escortEnd escortStart:escortStart escortType:_escortType healthStatus:_healthStatus parentEscort:_model.nickname position:positionStr finished:^(id  _Nullable result, NSError * _Nullable error) {
+        [RQProgressHUD dismiss];
+        
+        if (error) {
+            NSLog(@"%@",error);
+            
+            return;
+        }
+        
+        NSLog(@"%@",result);
+        
+        NSInteger code = [result[@"code"] integerValue];
+        if (code != 200) {
+            [RQProgressHUD rq_showErrorWithStatus:result[@"msg"]];
+            
+            return;
+        }
+        
+        __weak typeof(self) weakSelf = self;
+        [RQProgressHUD rq_showSuccessWithStatus:@"发布订单成功" completion:^{
+            [weakSelf.navigationController popViewControllerAnimated:YES];
+        }];
+    }];
+}
+
+- (void)datePickerChange:(UIDatePicker *)datePicker {
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    formatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
+    NSString *dateString = [NSString stringWithFormat:@"  %@",[formatter stringFromDate:datePicker.date]];
+    
+    if (datePicker.tag == 10000) {
+        _chapStartTextField.text = dateString;
+    }else {
+        _chapEndTextField.text = dateString;
+    }
 }
 
 - (void)clickShowDownWithButton:(UIButton *)btn {
@@ -110,6 +171,8 @@
 }
 
 - (void)mapView:(MAMapView *)mapView didUpdateUserLocation:(MAUserLocation *)userLocation updatingLocation:(BOOL)updatingLocation {
+    [RQProgressHUD dismiss];
+    
     _curCoordinate = userLocation.location.coordinate;
     
     AMapReGeocodeSearchRequest *rego = [[AMapReGeocodeSearchRequest alloc] init];
@@ -138,10 +201,12 @@
         NSString *text = [NSString stringWithFormat:@"  %@",_healthDataArray[indexPath.row]];
         _healthTextField.text = text;
         _healthTableView.hidden = YES;
+        _healthStatus = indexPath.row;
     }else {
         NSString *text = [NSString stringWithFormat:@"  %@",_chapTypeArray[indexPath.row]];
         _chapTypeTextField.text = text;
         _chapTypeTableView.hidden = YES;
+        _escortType = indexPath.row;
     }
 }
 
@@ -347,11 +412,23 @@
     chapStartLabel.font = [UIFont boldSystemFontOfSize:16.f];
     [downView addSubview:chapStartLabel];
     
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    formatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
+    NSString *dateStr = [formatter stringFromDate:[NSDate date]];
+    
     _chapStartTextField = [[UITextField alloc] init];
     _chapStartTextField.placeholder = @"  请输入陪护开始时间";
     _chapStartTextField.layer.borderColor = [UIColor blackColor].CGColor;
     _chapStartTextField.layer.borderWidth = 1;
+    _chapStartTextField.text = [NSString stringWithFormat:@"  %@",dateStr];
     [downView addSubview:_chapStartTextField];
+    
+    UIDatePicker *startDatePicker = [[UIDatePicker alloc] init];
+    startDatePicker.datePickerMode = UIDatePickerModeDateAndTime;
+    [startDatePicker addTarget:self action:@selector(datePickerChange:) forControlEvents:UIControlEventValueChanged];
+    startDatePicker.date = [NSDate date];
+    startDatePicker.tag = 10000;
+    _chapStartTextField.inputView = startDatePicker;
     
     UILabel *chapEndLabel = [[UILabel alloc] init];
     chapEndLabel.text = @"陪护结束时间：";
@@ -362,7 +439,15 @@
     _chapEndTextField.placeholder = @"  请输入陪护结束时间";
     _chapEndTextField.layer.borderColor = [UIColor blackColor].CGColor;
     _chapEndTextField.layer.borderWidth = 1;
+    _chapEndTextField.text = [NSString stringWithFormat:@"  %@",dateStr];
     [downView addSubview:_chapEndTextField];
+    
+    UIDatePicker *endDatePicker = [[UIDatePicker alloc] init];
+    endDatePicker.datePickerMode = UIDatePickerModeDateAndTime;
+    [endDatePicker addTarget:self action:@selector(datePickerChange:) forControlEvents:UIControlEventValueChanged];
+    endDatePicker.date = [NSDate date];
+    endDatePicker.tag = 10001;
+    _chapEndTextField.inputView = endDatePicker;
     
     UILabel *remarkLabel = [[UILabel alloc] init];
     remarkLabel.text = @"备注：";

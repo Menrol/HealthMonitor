@@ -217,6 +217,40 @@
     [self requestWithHTTPMethod:PUT URLString:url paramters:parameters finished:finished];
 }
 
+#pragma mark - 订单相关请求
+- (void)sendOrderWithAddress:(NSString *)address desc:(NSString *)desc emergencyStatus:(NSInteger)emergencyStatus escortEnd:(NSInteger)escortEnd escortStart:(NSInteger)escortStart escortType:(NSInteger)escortType healthStatus:(NSInteger)healthStatus parentEscort:(NSString *)parentEscort position:(NSString *)position finished:(FinishedCallBack)finished {
+    NSString *url = @"order/save";
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithDictionary:@{@"address": address,
+                           @"emergencyStatus": @(emergencyStatus),
+                                 @"escortEnd": @(escortEnd),
+                               @"escortStart": @(escortStart),
+                                @"escortType": @(escortType),
+                              @"healthStatus": @(healthStatus),
+                              @"parentEscort": parentEscort,
+                                  @"position": position}];
+    
+    if (desc.length > 0) {
+        [parameters addEntriesFromDictionary:@{@"desc": desc}];
+    }
+    
+    NSLog(@"%@",parameters);
+    
+    [self requestWithHTTPMethod:POST URLString:url paramters:parameters finished:finished];
+}
+
+- (void)getParentOrderWithNickname:(NSString *)nickname finished:(FinishedCallBack)finished {
+    NSString *url = @"order/parent";
+    NSDictionary *parameters = @{@"nickname": nickname};
+    
+    [self requestWithHTTPMethod:GET URLString:url paramters:parameters finished:finished];
+}
+
+- (void)orderDetailWithOrderNo:(NSString *)orderNo finished:(FinishedCallBack)finished {
+    NSString *url = [NSString stringWithFormat:@"order/%@",orderNo];
+    
+    [self requestWithHTTPMethod:GET URLString:url paramters:nil finished:finished];
+}
+
 #pragma mark - 封装AFN
 - (void)requestWithHTTPMethod:(HTTPMethod)method  URLString:(NSString *)URLString paramters:(nullable id)parameters finished:(FinishedCallBack)finished {
     NSString *methodStr;

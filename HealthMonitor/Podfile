@@ -13,6 +13,7 @@ target 'HealthMonitor' do
   pod 'AMapLocation'
   pod 'SVProgressHUD'
   pod 'YYModel'
+  pod 'MJRefresh'
 
   target 'HealthMonitorTests' do
     inherit! :search_paths

@@ -87,6 +87,21 @@ typedef void (^FinishedCallBack) (id _Nullable result, NSError * _Nullable error
 
 - (void)chapUpdateWithParamters:(NSDictionary *)parameters finished:(FinishedCallBack)finished;
 
+- (void)sendOrderWithAddress:(NSString *)address
+                        desc:(NSString *)desc
+             emergencyStatus:(NSInteger)emergencyStatus
+                   escortEnd:(NSInteger)escortEnd
+                 escortStart:(NSInteger)escortStart
+                  escortType:(NSInteger)escortType
+                healthStatus:(NSInteger)healthStatus
+                parentEscort:(NSString *)parentEscort
+                    position:(NSString *)position
+                    finished:(FinishedCallBack)finished ;
+
+- (void)getParentOrderWithNickname:(NSString *)nickname finished:(FinishedCallBack)finished;
+
+- (void)orderDetailWithOrderNo:(NSString *)orderNo finished:(FinishedCallBack)finished;
+
 @end
 
 NS_ASSUME_NONNULL_END

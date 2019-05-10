@@ -192,7 +192,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PT190204110203001" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="De4-gg-Wch">
-                    <rect key="frame" x="97" y="229" width="216" height="20"/>
+                    <rect key="frame" x="97" y="229" width="226" height="20"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="20" id="H5L-7G-3pU"/>
                     </constraints>
@@ -201,12 +201,12 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="普通单" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lI8-ul-vY7">
-                    <rect key="frame" x="328" y="229" width="64" height="20"/>
+                    <rect key="frame" x="333" y="229" width="59" height="20"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="64" id="W2e-O9-3Ja"/>
+                        <constraint firstAttribute="width" constant="59" id="W2e-O9-3Ja"/>
                         <constraint firstAttribute="height" constant="20" id="thB-og-GLA"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                     <color key="textColor" red="0.21389302417618611" green="0.45071337701100378" blue="0.21689134245530139" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                     <nil key="highlightedColor"/>
                 </label>
@@ -246,7 +246,7 @@
                 <constraint firstAttribute="trailing" secondItem="eO4-fR-5Pe" secondAttribute="trailing" constant="15" id="XnL-bx-LAV"/>
                 <constraint firstItem="HoQ-Yz-XQY" firstAttribute="leading" secondItem="qr6-sM-Myu" secondAttribute="trailing" id="Y1a-7P-JDm"/>
                 <constraint firstItem="NNM-Cu-Dwz" firstAttribute="leading" secondItem="BNN-iL-nhX" secondAttribute="trailing" id="aJp-ZX-of1"/>
-                <constraint firstItem="lI8-ul-vY7" firstAttribute="leading" secondItem="De4-gg-Wch" secondAttribute="trailing" constant="15" id="dZP-F6-mTj"/>
+                <constraint firstItem="lI8-ul-vY7" firstAttribute="leading" secondItem="De4-gg-Wch" secondAttribute="trailing" constant="10" id="dZP-F6-mTj"/>
                 <constraint firstAttribute="trailing" secondItem="HoQ-Yz-XQY" secondAttribute="trailing" constant="15" id="fFs-M8-mNE"/>
                 <constraint firstItem="0ng-vX-El2" firstAttribute="top" secondItem="anZ-aI-dAH" secondAttribute="top" id="iIl-El-Gxa"/>
                 <constraint firstItem="anZ-aI-dAH" firstAttribute="top" secondItem="nSu-pi-Yis" secondAttribute="bottom" constant="15" id="j12-wr-mnD"/>
@@ -261,14 +261,14 @@
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
-                <outlet property="ChapNameLabel" destination="qGY-vY-kYg" id="WPn-6u-9Fc"/>
-                <outlet property="ChapTypeLabel" destination="oA0-aL-GvX" id="24X-VU-Xs4"/>
-                <outlet property="HealthConditionLabel" destination="IkA-Rp-xoI" id="Av7-lc-3E3"/>
-                <outlet property="OrderTypeLabel" destination="lI8-ul-vY7" id="Pne-37-5mC"/>
                 <outlet property="ageLabel" destination="6GD-kd-Ocn" id="Exi-G7-C6C"/>
+                <outlet property="beChapNameLabel" destination="qGY-vY-kYg" id="WPn-6u-9Fc"/>
                 <outlet property="chapTimeLabel" destination="0ng-vX-El2" id="Pqt-i8-8BY"/>
+                <outlet property="chapTypeLabel" destination="oA0-aL-GvX" id="24X-VU-Xs4"/>
+                <outlet property="healthConditionLabel" destination="IkA-Rp-xoI" id="Av7-lc-3E3"/>
                 <outlet property="medicineConditionLabel" destination="NNM-Cu-Dwz" id="UPx-Cw-Fvm"/>
                 <outlet property="orderNumberLabel" destination="De4-gg-Wch" id="zgL-gB-TK6"/>
+                <outlet property="orderTypeLabel" destination="lI8-ul-vY7" id="Pne-37-5mC"/>
                 <outlet property="sexLabel" destination="HoQ-Yz-XQY" id="bdI-ZZ-0k0"/>
                 <outlet property="sicknessHistoryLabel" destination="eO4-fR-5Pe" id="djJ-sw-yLy"/>
             </connections>

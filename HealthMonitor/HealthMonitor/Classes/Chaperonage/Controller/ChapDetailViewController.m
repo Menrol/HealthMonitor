@@ -7,9 +7,20 @@
 //
 
 #import "ChapDetailViewController.h"
+#import "NetworkTool.h"
+#import "RQProgressHUD.h"
+#import "ChapModel.h"
+#import <YYModel/YYModel.h>
 #import <Masonry/Masonry.h>
 
 @interface ChapDetailViewController ()
+@property(strong,nonatomic) UIImageView    *iconImageView;
+@property(strong,nonatomic) UILabel        *nameLabel;
+@property(strong,nonatomic) UILabel        *sexLabel;
+@property(strong,nonatomic) UILabel        *ageLabel;
+@property(strong,nonatomic) UILabel        *experienceLabel;
+@property(strong,nonatomic) UILabel        *chapTimeLabel;
+@property(strong,nonatomic) UILabel        *intelligenceLabel;
 
 @end
 
@@ -19,6 +30,46 @@
     [super viewDidLoad];
     
     [self setupUI];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [RQProgressHUD rq_show];
+    
+    __weak typeof(self) weakSelf = self;
+    [[NetworkTool sharedTool] chapGetMessageWithNickname:_escortName finished:^(id  _Nullable result, NSError * _Nullable error) {
+        [RQProgressHUD dismiss];
+        
+        if (error) {
+            NSLog(@"%@",error);
+            
+            return;
+        }
+        
+        NSLog(@"%@",result);
+        
+        NSInteger code = [result[@"code"] integerValue];
+        if (code != 200) {
+            [RQProgressHUD rq_showErrorWithStatus:result[@"msg"]];
+            
+            return;
+        }
+        
+        NSDictionary *dataDic = result[@"data"];
+        ChapModel *model = [ChapModel yy_modelWithDictionary:dataDic];
+        
+        weakSelf.nameLabel.text = model.name;
+        weakSelf.sexLabel.text = model.gender;
+        weakSelf.ageLabel.text = [NSString stringWithFormat:@"%ld岁",model.age];
+        weakSelf.experienceLabel.text = (model.workExperience.length == 0) ? @"暂无看护经验" : model.workExperience;
+        weakSelf.chapTimeLabel.text = model.workTime;
+        NSString *identifyStr;
+        if (model.cardStatus == 0) {
+            identifyStr = @"未通过资质认证";
+        }else {
+            identifyStr = @"已通过资质认证";
+        }
+        weakSelf.intelligenceLabel.text = identifyStr;
+    }];
 }
 
 - (void)clickReturn {

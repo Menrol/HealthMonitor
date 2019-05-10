@@ -15,6 +15,8 @@
 		183547FE22803965008108DE /* ChapModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 183547FD22803965008108DE /* ChapModel.m */; };
 		184946692263223D001DDBEF /* MessageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 184946682263223D001DDBEF /* MessageView.xib */; };
 		1849466C2263272C001DDBEF /* MessageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1849466B2263272C001DDBEF /* MessageView.m */; };
+		185CF222228599C2008DFB51 /* OrderDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 185CF221228599C2008DFB51 /* OrderDetailModel.m */; };
+		185CF22522859B96008DFB51 /* MedicineModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 185CF22422859B96008DFB51 /* MedicineModel.m */; };
 		1869B496226C62F900A9ED1B /* ChangeAddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1869B495226C62F900A9ED1B /* ChangeAddressViewController.m */; };
 		1869B499226C712600A9ED1B /* ChangeAddressTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1869B498226C712600A9ED1B /* ChangeAddressTableViewCell.m */; };
 		1869B49C226C83B900A9ED1B /* SearchResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1869B49B226C83B900A9ED1B /* SearchResultViewController.m */; };
@@ -64,6 +66,7 @@
 		18E4002D2255FCD70065E4B3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E4002C2255FCD70065E4B3 /* main.m */; };
 		18E400372255FCD70065E4B3 /* HealthMonitorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E400362255FCD70065E4B3 /* HealthMonitorTests.m */; };
 		18E400422255FCD70065E4B3 /* HealthMonitorUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E400412255FCD70065E4B3 /* HealthMonitorUITests.m */; };
+		18E64AFC22840B2500627C58 /* OrderModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E64AFB22840B2500627C58 /* OrderModel.m */; };
 		18F14C58225DE44200E75295 /* StepView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18F14C57225DE44200E75295 /* StepView.m */; };
 		18F14C5B225DF14E00E75295 /* HistogramCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18F14C5A225DF14E00E75295 /* HistogramCollectionViewCell.m */; };
 		18F84432225C718600F331B4 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18F84431225C718600F331B4 /* HealthKit.framework */; };
@@ -106,6 +109,10 @@
 		184946682263223D001DDBEF /* MessageView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageView.xib; sourceTree = "<group>"; };
 		1849466A2263272C001DDBEF /* MessageView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MessageView.h; sourceTree = "<group>"; };
 		1849466B2263272C001DDBEF /* MessageView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MessageView.m; sourceTree = "<group>"; };
+		185CF220228599C2008DFB51 /* OrderDetailModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OrderDetailModel.h; sourceTree = "<group>"; };
+		185CF221228599C2008DFB51 /* OrderDetailModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OrderDetailModel.m; sourceTree = "<group>"; };
+		185CF22322859B96008DFB51 /* MedicineModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MedicineModel.h; sourceTree = "<group>"; };
+		185CF22422859B96008DFB51 /* MedicineModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MedicineModel.m; sourceTree = "<group>"; };
 		1869B494226C62F900A9ED1B /* ChangeAddressViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChangeAddressViewController.h; sourceTree = "<group>"; };
 		1869B495226C62F900A9ED1B /* ChangeAddressViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChangeAddressViewController.m; sourceTree = "<group>"; };
 		1869B497226C712600A9ED1B /* ChangeAddressTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChangeAddressTableViewCell.h; sourceTree = "<group>"; };
@@ -206,6 +213,8 @@
 		18E4003D2255FCD70065E4B3 /* HealthMonitorUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HealthMonitorUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		18E400412255FCD70065E4B3 /* HealthMonitorUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HealthMonitorUITests.m; sourceTree = "<group>"; };
 		18E400432255FCD70065E4B3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		18E64AFA22840B2500627C58 /* OrderModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OrderModel.h; sourceTree = "<group>"; };
+		18E64AFB22840B2500627C58 /* OrderModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OrderModel.m; sourceTree = "<group>"; };
 		18F14C56225DE44200E75295 /* StepView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StepView.h; sourceTree = "<group>"; };
 		18F14C57225DE44200E75295 /* StepView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StepView.m; sourceTree = "<group>"; };
 		18F14C59225DF14E00E75295 /* HistogramCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HistogramCollectionViewCell.h; sourceTree = "<group>"; };
@@ -509,8 +518,9 @@
 		18CC428D225B3307007C5949 /* Chaperonage */ = {
 			isa = PBXGroup;
 			children = (
-				18CC4293225B3635007C5949 /* Controller */,
+				18E64AF922840B0400627C58 /* Model */,
 				18C8676F225F5B3E004F6A2B /* View */,
+				18CC4293225B3635007C5949 /* Controller */,
 			);
 			path = Chaperonage;
 			sourceTree = "<group>";
@@ -613,6 +623,19 @@
 				18E400432255FCD70065E4B3 /* Info.plist */,
 			);
 			path = HealthMonitorUITests;
+			sourceTree = "<group>";
+		};
+		18E64AF922840B0400627C58 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				18E64AFA22840B2500627C58 /* OrderModel.h */,
+				18E64AFB22840B2500627C58 /* OrderModel.m */,
+				185CF220228599C2008DFB51 /* OrderDetailModel.h */,
+				185CF221228599C2008DFB51 /* OrderDetailModel.m */,
+				185CF22322859B96008DFB51 /* MedicineModel.h */,
+				185CF22422859B96008DFB51 /* MedicineModel.m */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		18F14C55225DE42000E75295 /* View */ = {
@@ -852,11 +875,13 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-HealthMonitor/Pods-HealthMonitor-resources.sh",
 				"${PODS_ROOT}/AMap3DMap/MAMapKit.framework/AMap.bundle",
+				"${PODS_ROOT}/MJRefresh/MJRefresh/MJRefresh.bundle",
 				"${PODS_ROOT}/SVProgressHUD/SVProgressHUD/SVProgressHUD.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AMap.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MJRefresh.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/SVProgressHUD.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -893,6 +918,7 @@
 				18A96F34228166540012975E /* RQProgressHUD.m in Sources */,
 				183547FE22803965008108DE /* ChapModel.m in Sources */,
 				18E4001F2255FCD60065E4B3 /* AppDelegate.m in Sources */,
+				185CF22522859B96008DFB51 /* MedicineModel.m in Sources */,
 				18BB9DA62264911300FDF08C /* ChapMyViewController.m in Sources */,
 				1849466C2263272C001DDBEF /* MessageView.m in Sources */,
 				186DA2FD22560D5D00C7CE10 /* LoginViewController.m in Sources */,
@@ -908,6 +934,7 @@
 				18BB9DAD2264912D00FDF08C /* MyTableViewCell.m in Sources */,
 				18BB9D752264908F00FDF08C /* ChanageTableViewCell.m in Sources */,
 				188DA5F62265C87800B74074 /* RecieveOrderTableViewCell.m in Sources */,
+				18E64AFC22840B2500627C58 /* OrderModel.m in Sources */,
 				18B0CDA22271AFB1000B039B /* NetworkTool.m in Sources */,
 				188DA5F32265C70D00B74074 /* RecieveOrderViewController.m in Sources */,
 				18BB9D8D226490AF00FDF08C /* OldCurOrderViewController.m in Sources */,
@@ -923,6 +950,7 @@
 				18BB9D88226490AF00FDF08C /* ChapChapViewController.m in Sources */,
 				189D2CF022685E8A00DF14ED /* ChildChapViewController.m in Sources */,
 				18BB9D9D226490D200FDF08C /* CurOrderUpView.m in Sources */,
+				185CF222228599C2008DFB51 /* OrderDetailModel.m in Sources */,
 				18F14C58225DE44200E75295 /* StepView.m in Sources */,
 				18A96F372281990D0012975E /* ChildMessageViewController.m in Sources */,
 			);

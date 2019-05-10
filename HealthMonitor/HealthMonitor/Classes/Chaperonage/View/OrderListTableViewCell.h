@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+@class OrderModel;
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface OrderListTableViewCell : UITableViewCell
@@ -16,6 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(strong,nonatomic) UILabel    *chaperonageLabel;
 @property(strong,nonatomic) UILabel    *chapTimeLabel;
 @property(strong,nonatomic) UILabel    *orderTypeLabel;
+@property(strong,nonatomic) OrderModel *model;
 
 @end
 

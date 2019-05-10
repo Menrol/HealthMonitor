@@ -11,13 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface ChapDetailViewController : UIViewController
-@property(strong,nonatomic) UIImageView    *iconImageView;
-@property(strong,nonatomic) UILabel        *nameLabel;
-@property(strong,nonatomic) UILabel        *sexLabel;
-@property(strong,nonatomic) UILabel        *ageLabel;
-@property(strong,nonatomic) UILabel        *experienceLabel;
-@property(strong,nonatomic) UILabel        *chapTimeLabel;
-@property(strong,nonatomic) UILabel        *intelligenceLabel;
+@property(strong,nonatomic) NSString    *escortName;
 
 @end
 
