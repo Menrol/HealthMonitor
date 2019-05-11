@@ -88,9 +88,11 @@ extern CGFloat OldMessageTitleFont;
     [self.view addSubview:bindingLabel];
     
     _numberTextField = [[UITextField alloc] init];
-    _numberTextField.placeholder = @"  请输入老人编码";
+    _numberTextField.placeholder = @"请输入老人编码";
     _numberTextField.layer.borderColor = [UIColor blackColor].CGColor;
     _numberTextField.layer.borderWidth = 1;
+    _numberTextField.leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 10, 0)];
+    _numberTextField.leftViewMode = UITextFieldViewModeAlways;
     [self.view addSubview:_numberTextField];
     
     UIButton *bindingButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];

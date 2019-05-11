@@ -21,7 +21,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface CurOrderUpView : UIView
 @property(strong,nonatomic) UILabel                   *orderStatusLabel;
+@property(strong,nonatomic) UILabel                   *chapTitleLabel;
 @property(strong,nonatomic) UILabel                   *chaperonageLabel;
+@property(strong,nonatomic) UIButton                  *detailButton;
 @property(strong,nonatomic) MAMapView                 *mapView;
 @property(weak,nonatomic) id<CurOrderUpViewDelegate>  delegate;
 

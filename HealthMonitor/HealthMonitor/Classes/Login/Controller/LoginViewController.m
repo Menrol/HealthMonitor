@@ -279,20 +279,24 @@
     [self.view addSubview:_iconImageView];
     
     _accountTextField = [[UITextField alloc] init];
-    _accountTextField.placeholder = @"  请输入账号";
+    _accountTextField.placeholder = @"请输入账号";
     _accountTextField.layer.cornerRadius = 5;
     _accountTextField.layer.masksToBounds = YES;
     _accountTextField.layer.borderWidth = 1;
     _accountTextField.layer.borderColor = [UIColor blackColor].CGColor;
+    _accountTextField.leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 10, 0)];
+    _accountTextField.leftViewMode = UITextFieldViewModeAlways;
     [self.view addSubview:_accountTextField];
     
     _passwordTextField = [[UITextField alloc] init];
-    _passwordTextField.placeholder = @"  请输入密码";
+    _passwordTextField.placeholder = @"请输入密码";
     _passwordTextField.layer.cornerRadius = 5;
     _passwordTextField.layer.masksToBounds = YES;
     _passwordTextField.layer.borderWidth = 1;
     _passwordTextField.layer.borderColor = [UIColor blackColor].CGColor;
     _passwordTextField.secureTextEntry = YES;
+    _passwordTextField.leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 10, 0)];
+    _passwordTextField.leftViewMode = UITextFieldViewModeAlways;
     [self.view addSubview:_passwordTextField];
     
     UIButton *loginButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];

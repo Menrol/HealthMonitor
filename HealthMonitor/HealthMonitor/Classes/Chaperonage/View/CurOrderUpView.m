@@ -76,25 +76,25 @@
     r.image = [UIImage imageNamed:@"location"];
     [_mapView updateUserLocationRepresentation:r];
     
-    UILabel *chapTitleLabel = [[UILabel alloc] init];
-    chapTitleLabel.text = @"陪护员：";
-    chapTitleLabel.font = [UIFont boldSystemFontOfSize:23.f];
-    [self addSubview:chapTitleLabel];
+    _chapTitleLabel = [[UILabel alloc] init];
+    _chapTitleLabel.text = @"陪护员：";
+    _chapTitleLabel.font = [UIFont boldSystemFontOfSize:23.f];
+    [self addSubview:_chapTitleLabel];
     
     _chaperonageLabel = [[UILabel alloc] init];
     _chaperonageLabel.font = [UIFont boldSystemFontOfSize:23.f];
     [self addSubview:_chaperonageLabel];
     
-    UIButton *detailButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [detailButton setTitle:@"查看详情" forState:UIControlStateNormal];
-    [detailButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    detailButton.titleLabel.font = [UIFont boldSystemFontOfSize:18.f];
-    detailButton.layer.borderColor = [UIColor blackColor].CGColor;
-    detailButton.layer.borderWidth = 1;
-    detailButton.layer.cornerRadius = 5;
-    detailButton.layer.masksToBounds = YES;
-    [detailButton addTarget:self action:@selector(clickDetailButton) forControlEvents:UIControlEventTouchUpInside];
-    [self addSubview:detailButton];
+    _detailButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [_detailButton setTitle:@"查看详情" forState:UIControlStateNormal];
+    [_detailButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    _detailButton.titleLabel.font = [UIFont boldSystemFontOfSize:18.f];
+    _detailButton.layer.borderColor = [UIColor blackColor].CGColor;
+    _detailButton.layer.borderWidth = 1;
+    _detailButton.layer.cornerRadius = 5;
+    _detailButton.layer.masksToBounds = YES;
+    [_detailButton addTarget:self action:@selector(clickDetailButton) forControlEvents:UIControlEventTouchUpInside];
+    [self addSubview:_detailButton];
     
     
     // 设置布局
@@ -112,19 +112,19 @@
         make.height.mas_equalTo(200.f);
     }];
     
-    [chapTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_chapTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.mapView.mas_bottom).offset(20.f);
         make.left.equalTo(self.mas_left).offset(15.f);
         make.height.mas_equalTo(23.f);
     }];
     
     [_chaperonageLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(chapTitleLabel.mas_right);
-        make.top.equalTo(chapTitleLabel.mas_top);
-        make.height.equalTo(chapTitleLabel.mas_height);
+        make.left.equalTo(self.chapTitleLabel.mas_right);
+        make.top.equalTo(self.chapTitleLabel.mas_top);
+        make.height.equalTo(self.chapTitleLabel.mas_height);
     }];
     
-    [detailButton mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_detailButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.chaperonageLabel.mas_centerY);
         make.right.equalTo(self.mas_right).offset(-15.f);
         make.height.mas_equalTo(30.f);

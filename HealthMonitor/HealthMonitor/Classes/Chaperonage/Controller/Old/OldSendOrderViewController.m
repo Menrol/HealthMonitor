@@ -54,9 +54,7 @@
     _healthDataArray = @[@"健康", @"患病"];
     
     [self setupUI];
-}
-
-- (void)viewWillAppear:(BOOL)animated {
+    
     MainViewController *vc = (MainViewController *)self.tabBarController;
     _model = vc.model;
     

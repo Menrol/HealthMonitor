@@ -18,14 +18,17 @@
 #import "MedicineModel.h"
 #import <Masonry/Masonry.h>
 #import <YYModel/YYModel.h>
+#import <MJRefresh/MJRefresh.h>
 
-@interface OldCurOrderViewController ()<CurOrderUpViewDelegate> {
+@interface OldCurOrderViewController ()<CurOrderUpViewDelegate, UITableViewDataSource> {
     CLLocationCoordinate2D     _chapCoordinate;
 }
 @property(strong,nonatomic) CurOrderUpView    *upView;
 @property(strong,nonatomic) CurOrderDownView  *downView;
 @property(strong,nonatomic) UILabel           *noOrderLabel;
+@property(strong,nonatomic) UITableView       *tableView;
 @property(strong,nonatomic) OrderDetailModel  *model;
+@property(strong,nonatomic) ParentModel       *parentModel;
 
 @end
 
@@ -35,37 +38,51 @@
     [super viewDidLoad];
     
     [self setupUI];
+    
+    MainViewController *vc = (MainViewController *)self.tabBarController;
+    _parentModel = vc.model;
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    MainViewController *vc = (MainViewController *)self.tabBarController;
-    ParentModel *parentModel = vc.model;
-    
-    [RQProgressHUD rq_show];
-    
+- (void)viewDidAppear:(BOOL)animated {
+    [_tableView.mj_header beginRefreshing];
+}
+
+- (void)loadData {
     __weak typeof(self) weakSelf = self;
-    [[NetworkTool sharedTool] getParentOrderWithNickname:parentModel.nickname finished:^(id  _Nullable result, NSError * _Nullable error) {
-
+    [[NetworkTool sharedTool] getParentOrderWithNickname:weakSelf.parentModel.nickname finished:^(id  _Nullable result, NSError * _Nullable error) {
+        
         if (error) {
-            [RQProgressHUD dismiss];
+            [weakSelf.tableView.mj_header endRefreshing];
             NSLog(@"%@",error);
-
+            
+            weakSelf.noOrderLabel.hidden = NO;
+            weakSelf.upView.hidden = YES;
+            weakSelf.downView.hidden = YES;
+            weakSelf.tableView.backgroundColor = [UIColor whiteColor];
+            weakSelf.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+            
             return;
         }
-
+        
         NSLog(@"%@",result);
-
+        
         NSInteger code = [result[@"code"] integerValue];
         if (code != 200) {
-            [RQProgressHUD dismiss];
+            [weakSelf.tableView.mj_header endRefreshing];
             [RQProgressHUD rq_showErrorWithStatus:result[@"msg"]];
-
+            
+            weakSelf.noOrderLabel.hidden = NO;
+            weakSelf.upView.hidden = YES;
+            weakSelf.downView.hidden = YES;
+            weakSelf.tableView.backgroundColor = [UIColor whiteColor];
+            weakSelf.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+            
             return;
         }
-
+        
         NSArray *dataArray = result[@"data"];
         NSString *orderNo;
-
+        
         for (NSDictionary *dic in dataArray) {
             NSInteger orderStatus = [dic[@"orderStatus"] integerValue];
             if (orderStatus == 1 || orderStatus == 2) {
@@ -73,38 +90,61 @@
                 break;
             }
         }
-
+        
         if (orderNo.length == 0) {
+            [weakSelf.tableView.mj_header endRefreshing];
+            
             weakSelf.noOrderLabel.hidden = NO;
+            weakSelf.upView.hidden = YES;
+            weakSelf.downView.hidden = YES;
+            weakSelf.tableView.backgroundColor = [UIColor whiteColor];
+            weakSelf.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+            
             return;
-        }else {
-            weakSelf.noOrderLabel.hidden = YES;
         }
-
+        
         [[NetworkTool sharedTool] orderDetailWithOrderNo:orderNo finished:^(id  _Nullable result, NSError * _Nullable error) {
-            [RQProgressHUD dismiss];
-
+            [weakSelf.tableView.mj_header endRefreshing];
+            
             if (error) {
                 NSLog(@"%@",error);
-
+                
+                weakSelf.noOrderLabel.hidden = NO;
+                weakSelf.upView.hidden = YES;
+                weakSelf.downView.hidden = YES;
+                weakSelf.tableView.backgroundColor = [UIColor whiteColor];
+                weakSelf.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+                
                 return;
             }
-
+            
             NSLog(@"%@",result);
-
+            
             NSInteger code = [result[@"code"] integerValue];
             if (code != 200) {
                 [RQProgressHUD rq_showErrorWithStatus:result[@"msg"]];
-
+                
+                weakSelf.noOrderLabel.hidden = NO;
+                weakSelf.upView.hidden = YES;
+                weakSelf.downView.hidden = YES;
+                weakSelf.tableView.backgroundColor = [UIColor whiteColor];
+                weakSelf.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+                
                 return;
             }
-
+            
+            weakSelf.noOrderLabel.hidden = YES;
+            weakSelf.upView.hidden = NO;
+            weakSelf.downView.hidden = NO;
+            weakSelf.tableView.backgroundColor = [UIColor colorWithRed:0.95 green:0.94 blue:0.95 alpha:1.00];
+            weakSelf.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+            
             __strong typeof(self) strongSelf = weakSelf;
-
+            
             NSDictionary *dataDic = result[@"data"];
             OrderDetailModel *model = [OrderDetailModel yy_modelWithDictionary:dataDic];
             weakSelf.model = model;
-
+            
             NSString *orderStatusStr;
             if (model.orderStatus == 1) {
                 orderStatusStr = @"陪护员已接单";
@@ -124,10 +164,10 @@
                 CLLocationCoordinate2D center = CLLocationCoordinate2DMake((userCoordinate.latitude + strongSelf->_chapCoordinate.latitude) / 2, (userCoordinate.longitude + strongSelf->_chapCoordinate.longitude) / 2);
                 MACoordinateSpan span = MACoordinateSpanMake(ABS(userCoordinate.latitude - strongSelf->_chapCoordinate.latitude) * 2, ABS(userCoordinate.longitude - strongSelf->_chapCoordinate.longitude) * 2);
                 MACoordinateRegion region = MACoordinateRegionMake(center, span);
-
+                
                 [strongSelf.upView.mapView setRegion:region animated:YES];
             }
-
+            
             strongSelf.downView.beChapNameLabel.text = model.parentName;
             strongSelf.downView.ageLabel.text = [NSString stringWithFormat:@"%ld", model.parentAge];
             strongSelf.downView.sexLabel.text = model.parentGender;
@@ -167,6 +207,55 @@
     [self.navigationController pushViewController:vc animated:YES];
 }
 
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 2;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return 1;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == 0) {
+        UITableViewCell *cell = [[UITableViewCell alloc] init];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        
+        _upView = [[CurOrderUpView alloc] init];
+        _upView.delegate = self;
+        _upView.hidden = YES;
+        [cell.contentView addSubview:_upView];
+        
+        [_upView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(cell.contentView.mas_top);
+            make.left.equalTo(cell.contentView.mas_left);
+            make.right.equalTo(cell.contentView.mas_right);
+            make.height.mas_equalTo(340.f);
+            
+            make.bottom.equalTo(cell.contentView.mas_bottom);
+        }];
+        
+        return cell;
+    }else {
+        UITableViewCell *cell = [[UITableViewCell alloc] init];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        
+        _downView = [CurOrderDownView oldOrderDownView];
+        _downView.hidden = YES;
+        [cell.contentView addSubview:_downView];
+        
+        [_downView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(cell.contentView.mas_top);
+            make.left.equalTo(cell.contentView.mas_left);
+            make.right.equalTo(cell.contentView.mas_right);
+            make.height.mas_equalTo(264.f);
+            
+            make.bottom.equalTo(cell.contentView.mas_bottom);
+        }];
+        
+        return cell;
+    }
+}
+
 - (void)didUpdateUserLocation:(MAUserLocation *)userLocation updatingLocation:(BOOL)updatingLocation {
     
     if (_chapCoordinate.latitude == 0 && _chapCoordinate.longitude == 0) {
@@ -184,48 +273,39 @@
 
 - (void)setupUI {
     // 创建控件
-    _upView = [[CurOrderUpView alloc] init];
-    _upView.layer.borderColor = [UIColor blackColor].CGColor;
-    _upView.layer.borderWidth = 0.5;
-    _upView.delegate = self;
-    // TODO: 测试数据
-    _upView.orderStatusLabel.text = @"陪护员已接单";
-    _upView.chaperonageLabel.text = @"王悦";
-    [self.view addSubview:_upView];
+    _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
+    _tableView.dataSource = self;
+    _tableView.estimatedRowHeight = 200;
+    _tableView.rowHeight = UITableViewAutomaticDimension;
+    _tableView.backgroundColor = [UIColor whiteColor];
+    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    _tableView.sectionHeaderHeight = 10.f;
+    _tableView.sectionFooterHeight = 0.01f;
+    _tableView.tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, CGFLOAT_MIN)];
+    _tableView.tableFooterView = [[UIView alloc] init];
+    _tableView.showsVerticalScrollIndicator = NO;
+    [self.view addSubview:_tableView];
     
-    _downView = [CurOrderDownView oldOrderDownView];
-    _downView.layer.borderColor = [UIColor blackColor].CGColor;
-    _downView.layer.borderWidth = 0.5;
-    [self.view addSubview:_downView];
+    _tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadData)];
     
     _noOrderLabel = [[UILabel alloc] init];
     _noOrderLabel.text = @"暂无订单";
     _noOrderLabel.textAlignment = NSTextAlignmentCenter;
     _noOrderLabel.font = [UIFont boldSystemFontOfSize:25.f];
     _noOrderLabel.textColor = [UIColor grayColor];
-    _noOrderLabel.hidden = YES;
-    [self.view addSubview:_noOrderLabel];
+    [self.tableView addSubview:_noOrderLabel];
     
     // 添加布局
-    [_upView mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.view.mas_top);
-        make.left.equalTo(self.view.mas_left);
-        make.right.equalTo(self.view.mas_right);
-        make.height.mas_equalTo(340.f);
-    }];
-    
-    [_downView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.upView.mas_bottom);
         make.left.equalTo(self.view.mas_left);
         make.right.equalTo(self.view.mas_right);
         make.bottom.equalTo(self.view.mas_bottom);
     }];
     
     [_noOrderLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(self.view.mas_centerY);
-        make.left.equalTo(self.view.mas_left);
-        make.right.equalTo(self.view.mas_right);
-        make.height.mas_equalTo(25.f);
+        make.center.equalTo(self.tableView);
+        make.size.mas_equalTo(CGSizeMake(101.33f, 25.f));
     }];
 }
 

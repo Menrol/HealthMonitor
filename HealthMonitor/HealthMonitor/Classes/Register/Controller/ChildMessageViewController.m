@@ -172,9 +172,11 @@ extern CGFloat ChaperonageTipFont;
     [self.view addSubview:nameLabel];
     
     _nameTextField = [[UITextField alloc] init];
-    _nameTextField.placeholder = @"  请输入姓名";
+    _nameTextField.placeholder = @"请输入姓名";
     _nameTextField.layer.borderColor = [UIColor blackColor].CGColor;
     _nameTextField.layer.borderWidth = 1;
+    _nameTextField.leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 10, 0)];
+    _nameTextField.leftViewMode = UITextFieldViewModeAlways;
     [self.view addSubview:_nameTextField];
     
     UILabel *sexLabel = [[UILabel alloc] init];

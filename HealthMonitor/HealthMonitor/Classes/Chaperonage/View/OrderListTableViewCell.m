@@ -13,7 +13,7 @@
 @implementation OrderListTableViewCell
 
 - (void)setModel:(OrderModel *)model {
-    _orderNumLabel.text = model.orderNO;
+    _orderNumLabel.text = model.orderNo;
     if (model.orderStatus == 0) {
         _orderTypeLabel.text = @"待接单";
         _orderTypeLabel.textColor = [UIColor colorWithRed:0.95 green:0.68 blue:0.31 alpha:1.00];

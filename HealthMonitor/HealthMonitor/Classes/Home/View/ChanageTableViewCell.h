@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+
 @class ChanageTableViewCell;
+@class ParentModel;
 
 @protocol ChangeTableViewCellDelegate <NSObject>
 
@@ -19,9 +21,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ChanageTableViewCell : UITableViewCell
 @property(strong,nonatomic) UILabel                           *nameLabel;
-@property(strong,nonatomic) UILabel                           *relationLabel;
+@property(strong,nonatomic) UILabel                           *ageLabel;
 @property(strong,nonatomic) UIButton                          *changeButton;
-@property(weak,nonatomic)id<ChangeTableViewCellDelegate>    delegate;
+@property(strong,nonatomic) ParentModel                       *model;
+@property(weak,nonatomic)id<ChangeTableViewCellDelegate>      delegate;
 
 @end
 

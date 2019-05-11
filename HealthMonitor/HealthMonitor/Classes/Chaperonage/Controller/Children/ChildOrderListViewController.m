@@ -10,14 +10,24 @@
 #import "OrderListTableViewCell.h"
 #import "ChildOrderDetailViewController.h"
 #import "ChildSendOrderViewController.h"
+#import "NetworkTool.h"
+#import "RQProgressHUD.h"
+#import "OrderModel.h"
+#import "MainViewController.h"
 #import <Masonry/Masonry.h>
+#import <YYModel/YYModel.h>
+#import <MJRefresh/MJRefresh.h>
 
 NSString * const ChildOrderListTableViewCellID = @"ChildOrderListTableViewCellID";
 
 @interface ChildOrderListViewController ()<UITableViewDelegate, UITableViewDataSource> {
-    UIButton       *_preButton;
+    UIButton                       *_preButton;
+    NSArray<OrderModel *>          *_dataArray;
 }
 @property(strong,nonatomic) UITableView       *tableView;
+@property(strong,nonatomic) UILabel                          *noOrderLabel;
+@property(strong,nonatomic) NSMutableArray<OrderModel *>     *orderList;
+@property(strong,nonatomic) NSString                         *parentNickname;
 
 @end
 
@@ -26,7 +36,59 @@ NSString * const ChildOrderListTableViewCellID = @"ChildOrderListTableViewCellID
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    _orderList = [[NSMutableArray alloc] init];
+    
     [self setupUI];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    MainViewController *vc = (MainViewController *)self.tabBarController;
+    _parentNickname = vc.parentNickname;
+    
+    [_tableView.mj_header beginRefreshing];
+}
+
+- (void)LoadData {
+    [_orderList removeAllObjects];
+    
+    __weak typeof(self) weakSelf = self;
+    [[NetworkTool sharedTool] getParentOrderWithNickname:_parentNickname finished:^(id  _Nullable result, NSError * _Nullable error) {
+        [weakSelf.tableView.mj_header endRefreshing];
+        
+        if (error) {
+            NSLog(@"%@",error);
+            
+            return;
+        }
+        
+        NSLog(@"%@",result);
+        
+        NSInteger code = [result[@"code"] integerValue];
+        if (code != 200) {
+            [RQProgressHUD rq_showErrorWithStatus:result[@"msg"]];
+            
+            return;
+        }
+        
+        __strong typeof(self) strongSelf = weakSelf;
+        
+        NSArray *dataArray = result[@"data"];
+        
+        if (dataArray.count == 0) {
+            strongSelf.noOrderLabel.hidden = NO;
+        }else {
+            strongSelf.noOrderLabel.hidden = YES;
+        }
+        
+        [strongSelf.orderList removeAllObjects];
+        for (NSDictionary *dic in dataArray) {
+            OrderModel *model = [OrderModel yy_modelWithDictionary:dic];
+            [strongSelf.orderList addObject:model];
+        }
+        
+        strongSelf->_dataArray = strongSelf.orderList;
+        [strongSelf.tableView reloadData];
+    }];
 }
 
 - (void)clickSendButton {
@@ -46,18 +108,43 @@ NSString * const ChildOrderListTableViewCellID = @"ChildOrderListTableViewCellID
         btn.selected = NO;
         btn.layer.borderColor = [UIColor blackColor].CGColor;
         NSLog(@"显示全部订单");
+        
+        _dataArray = _orderList;
+        [_tableView reloadData];
     }else {
         _preButton = btn;
         btn.selected = YES;
         btn.layer.borderColor = [UIColor colorWithRed:0.41 green:0.77 blue:0.84 alpha:1.00].CGColor;
         
+        NSMutableArray *array = [[NSMutableArray alloc] init];
         if (btn.tag == 100) {
             NSLog(@"进行中");
+            
+            for (OrderModel *model in _orderList) {
+                if (model.orderStatus == 1 || model.orderStatus == 2) {
+                    [array addObject:model];
+                }
+            }
         }else if (btn.tag == 101) {
             NSLog(@"已完成");
+            
+            for (OrderModel *model in _orderList) {
+                if (model.orderStatus == 3) {
+                    [array addObject:model];
+                }
+            }
         }else {
             NSLog(@"待接单");
+            
+            for (OrderModel *model in _orderList) {
+                if (model.orderStatus == 0) {
+                    [array addObject:model];
+                }
+            }
         }
+        
+        _dataArray = array;
+        [_tableView reloadData];
     }
 }
 
@@ -65,23 +152,18 @@ NSString * const ChildOrderListTableViewCellID = @"ChildOrderListTableViewCellID
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
     
     ChildOrderDetailViewController *vc = [[ChildOrderDetailViewController alloc] init];
+    vc.orderNo = _dataArray[indexPath.row].orderNo;
     [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    // TODO: 测试数据
-    return 1;
+    return _dataArray.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     OrderListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ChildOrderListTableViewCellID forIndexPath:indexPath];
-    // TODO: 测试数据
-    cell.orderNumLabel.text = @"PT190228184832015";
-    cell.orderTypeLabel.text = @"待接单";
-    cell.orderTypeLabel.textColor = [UIColor colorWithRed:0.95 green:0.68 blue:0.31 alpha:1.00];
-    cell.beChapLabel.text = @"张三";
-    cell.chaperonageLabel.text = @"王悦";
-    cell.chapTimeLabel.text = @"19-03-15 8:00-17:00";
+   
+    cell.model = _dataArray[indexPath.row];
     
     return cell;
 }
@@ -137,6 +219,8 @@ NSString * const ChildOrderListTableViewCellID = @"ChildOrderListTableViewCellID
     _tableView.tableFooterView = [[UIView alloc] init];
     [self.view addSubview:_tableView];
     
+    _tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(LoadData)];
+    
     UIButton *sendButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [sendButton setTitle:@"发布新单" forState:UIControlStateNormal];
     [sendButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
@@ -145,6 +229,14 @@ NSString * const ChildOrderListTableViewCellID = @"ChildOrderListTableViewCellID
     sendButton.layer.borderColor = [UIColor blackColor].CGColor;
     [sendButton addTarget:self action:@selector(clickSendButton) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:sendButton];
+    
+    _noOrderLabel = [[UILabel alloc] init];
+    _noOrderLabel.text = @"暂无订单";
+    _noOrderLabel.textAlignment = NSTextAlignmentCenter;
+    _noOrderLabel.font = [UIFont boldSystemFontOfSize:25.f];
+    _noOrderLabel.textColor = [UIColor grayColor];
+    _noOrderLabel.hidden = YES;
+    [self.tableView addSubview:_noOrderLabel];
     
     // 设置布局
     [underwayButton mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -180,6 +272,11 @@ NSString * const ChildOrderListTableViewCellID = @"ChildOrderListTableViewCellID
         make.bottom.equalTo(self.view.mas_bottom);
         make.right.equalTo(self.view.mas_right);
         make.height.mas_equalTo(45.f);
+    }];
+    
+    [_noOrderLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.center.equalTo(self.tableView);
+        make.size.mas_equalTo(CGSizeMake(101.33f, 25.f));
     }];
 }
 

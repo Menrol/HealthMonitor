@@ -21,7 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(assign,nonatomic) NSInteger         escortType;
 @property(assign,nonatomic) NSInteger         healthStatus;
 @property(assign,nonatomic) NSInteger         orderID;
-@property(strong,nonatomic) NSString          *orderNO;
+@property(strong,nonatomic) NSString          *orderNo;
 @property(assign,nonatomic) NSInteger         orderStatus;
 @property(strong,nonatomic) NSString          *parentEscort;
 @property(strong,nonatomic) NSString          *parentName;

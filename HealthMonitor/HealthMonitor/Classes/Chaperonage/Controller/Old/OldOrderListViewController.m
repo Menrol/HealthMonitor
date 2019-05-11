@@ -43,7 +43,9 @@ NSString * const OldOrderListTableViewCellID = @"OldOrderListTableViewCellID";
     
     MainViewController *vc = (MainViewController *)self.tabBarController;
     _model = vc.model;
-    
+}
+
+- (void)viewDidAppear:(BOOL)animated {
     [_tableView.mj_header beginRefreshing];
 }
 
@@ -79,6 +81,7 @@ NSString * const OldOrderListTableViewCellID = @"OldOrderListTableViewCellID";
             strongSelf.noOrderLabel.hidden = YES;
         }
         
+        [strongSelf.orderList removeAllObjects];
         for (NSDictionary *dic in dataArray) {
             OrderModel *model = [OrderModel yy_modelWithDictionary:dic];
             [strongSelf.orderList addObject:model];
@@ -149,6 +152,7 @@ NSString * const OldOrderListTableViewCellID = @"OldOrderListTableViewCellID";
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
     
     OldOrderDetailViewController *vc = [[OldOrderDetailViewController alloc] init];
+    vc.orderNo = _dataArray[indexPath.row].orderNo;
     [self.navigationController pushViewController:vc animated:YES];
 }
 
@@ -232,7 +236,7 @@ NSString * const OldOrderListTableViewCellID = @"OldOrderListTableViewCellID";
     _noOrderLabel.font = [UIFont boldSystemFontOfSize:25.f];
     _noOrderLabel.textColor = [UIColor grayColor];
     _noOrderLabel.hidden = YES;
-    [self.view addSubview:_noOrderLabel];
+    [self.tableView addSubview:_noOrderLabel];
     
     // 设置布局
     [underwayButton mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -271,10 +275,8 @@ NSString * const OldOrderListTableViewCellID = @"OldOrderListTableViewCellID";
     }];
     
     [_noOrderLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(self.view.mas_centerY);
-        make.left.equalTo(self.view.mas_left);
-        make.right.equalTo(self.view.mas_right);
-        make.height.mas_equalTo(25.f);
+        make.center.equalTo(self.tableView);
+        make.size.mas_equalTo(CGSizeMake(101.33f, 25.f));
     }];
 }
 

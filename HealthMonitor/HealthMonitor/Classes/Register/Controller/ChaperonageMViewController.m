@@ -191,9 +191,11 @@ const CGFloat ChaperonageTipFont = 20.f;
     [self.view addSubview:nameLabel];
     
     _nameTextField = [[UITextField alloc] init];
-    _nameTextField.placeholder = @"  请输入姓名";
+    _nameTextField.placeholder = @"请输入姓名";
     _nameTextField.layer.borderColor = [UIColor blackColor].CGColor;
     _nameTextField.layer.borderWidth = 1;
+    _nameTextField.leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 10, 0)];
+    _nameTextField.leftViewMode = UITextFieldViewModeAlways;
     [self.view addSubview:_nameTextField];
     
     UILabel *sexLabel = [[UILabel alloc] init];
@@ -232,9 +234,11 @@ const CGFloat ChaperonageTipFont = 20.f;
     [self.view addSubview:ageLabel];
     
     _ageTextField = [[UITextField alloc] init];
-    _ageTextField.placeholder = @"  请输入年龄";
+    _ageTextField.placeholder = @"请输入年龄";
     _ageTextField.layer.borderColor = [UIColor blackColor].CGColor;
     _ageTextField.layer.borderWidth = 1;
+    _ageTextField.leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 10, 0)];
+    _ageTextField.leftViewMode = UITextFieldViewModeAlways;
     [self.view addSubview:_ageTextField];
     
     UILabel *workTypeLabel = [[UILabel alloc] init];
@@ -273,9 +277,11 @@ const CGFloat ChaperonageTipFont = 20.f;
     [self.view addSubview:workTimeLabel];
     
     _workTimeTextField = [[UITextField alloc] init];
-    _workTimeTextField.placeholder = @"  请输入可工作时间";
+    _workTimeTextField.placeholder = @"请输入可工作时间";
     _workTimeTextField.layer.borderColor = [UIColor blackColor].CGColor;
     _workTimeTextField.layer.borderWidth = 1;
+    _workTimeTextField.leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 10, 0)];
+    _workTimeTextField.leftViewMode = UITextFieldViewModeAlways;
     [self.view addSubview:_workTimeTextField];
     
     UILabel *workExperienceLabel = [[UILabel alloc] init];
@@ -284,9 +290,11 @@ const CGFloat ChaperonageTipFont = 20.f;
     [self.view addSubview:workExperienceLabel];
     
     _workExperienceTextField = [[UITextField alloc] init];
-    _workExperienceTextField.placeholder = @"  请输入工作经验";
+    _workExperienceTextField.placeholder = @"请输入工作经验";
     _workExperienceTextField.layer.borderColor = [UIColor blackColor].CGColor;
     _workExperienceTextField.layer.borderWidth = 1;
+    _workExperienceTextField.leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 10, 0)];
+    _workExperienceTextField.leftViewMode = UITextFieldViewModeAlways;
     [self.view addSubview:_workExperienceTextField];
     
     UIButton *submitButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];

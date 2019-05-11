@@ -82,12 +82,12 @@ NSString * const ChapHomeTableViewCellID = @"ChapHomeTableViewCellID";
     // TODO: 测试数据
     if (indexPath.row == 0) {
         cell.nameLabel.text = @"张三";
-        cell.relationLabel.text = @"父亲";
+        cell.ageLabel.text = @"父亲";
         cell.changeButton.userInteractionEnabled =  NO;
         cell.changeButton.alpha = 0.4;
     }else {
         cell.nameLabel.text = @"李欣";
-        cell.relationLabel.text = @"母亲";
+        cell.ageLabel.text = @"母亲";
     }
     
     return cell;
