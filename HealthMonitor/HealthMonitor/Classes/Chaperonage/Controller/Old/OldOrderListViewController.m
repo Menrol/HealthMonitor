@@ -43,15 +43,11 @@ NSString * const OldOrderListTableViewCellID = @"OldOrderListTableViewCellID";
     
     MainViewController *vc = (MainViewController *)self.tabBarController;
     _model = vc.model;
-}
-
-- (void)viewDidAppear:(BOOL)animated {
+    
     [_tableView.mj_header beginRefreshing];
 }
 
-- (void)LoadData {
-    [_orderList removeAllObjects];
-    
+- (void)loadData {
     __weak typeof(self) weakSelf = self;
     [[NetworkTool sharedTool] getParentOrderWithNickname:_model.nickname finished:^(id  _Nullable result, NSError * _Nullable error) {
         [weakSelf.tableView.mj_header endRefreshing];
@@ -219,7 +215,7 @@ NSString * const OldOrderListTableViewCellID = @"OldOrderListTableViewCellID";
     _tableView.tableFooterView = [[UIView alloc] init];
     [self.view addSubview:_tableView];
     
-    _tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(LoadData)];
+    _tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadData)];
     
     UIButton *sendButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [sendButton setTitle:@"发布新单" forState:UIControlStateNormal];

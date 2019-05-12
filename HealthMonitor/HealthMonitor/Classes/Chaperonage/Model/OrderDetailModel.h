@@ -17,6 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(assign,nonatomic) NSInteger                  emergencyStatus;
 @property(assign,nonatomic) NSString                   *escortEnd;
 @property(strong,nonatomic) NSString                   *escortName;
+@property(strong,nonatomic) NSString                   *escortPosition;
 @property(strong,nonatomic) NSString                   *escortRealName;
 @property(assign,nonatomic) NSString                   *escortStart;
 @property(assign,nonatomic) NSInteger                  escortType;

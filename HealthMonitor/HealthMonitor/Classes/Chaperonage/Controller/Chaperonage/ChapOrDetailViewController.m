@@ -9,13 +9,19 @@
 #import "ChapOrDetailViewController.h"
 #import "ChapOrderUpView.h"
 #import "ChapOrderDownView.h"
+#import "NetworkTool.h"
+#import "RQProgressHUD.h"
+#import "OrderDetailModel.h"
+#import "MedicineModel.h"
+#import <YYModel/YYModel.h>
 #import <Masonry/Masonry.h>
 
 @interface ChapOrDetailViewController ()<ChapOrderUpViewDelegate> {
-    CLLocationCoordinate2D     _chapCoordinate;
+    CLLocationCoordinate2D     _parentCoordinate;
 }
 @property(strong,nonatomic) ChapOrderUpView     *upView;
 @property(strong,nonatomic) ChapOrderDownView   *downView;
+@property(strong,nonatomic) OrderDetailModel    *model;
 
 @end
 
@@ -25,12 +31,93 @@
     [super viewDidLoad];
     
     [self setupUI];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [RQProgressHUD rq_show];
     
-    // TODO: 测试数据
-    _chapCoordinate = CLLocationCoordinate2DMake(22.52, 113.92);
-    MAPointAnnotation *pointAnnotation = [[MAPointAnnotation alloc] init];
-    pointAnnotation.coordinate = _chapCoordinate;
-    [_upView.mapView addAnnotation:pointAnnotation];
+    __strong typeof(self) weakSelf = self;
+    [[NetworkTool sharedTool] orderDetailWithOrderNo:_orderNo finished:^(id  _Nullable result, NSError * _Nullable error) {
+        [RQProgressHUD dismiss];
+        
+        if (error) {
+            NSLog(@"%@",error);
+            
+            return;
+        }
+        
+        NSLog(@"%@",result);
+        
+        NSInteger code = [result[@"code"] integerValue];
+        if (code != 200) {
+            [RQProgressHUD rq_showErrorWithStatus:result[@"msg"]];
+            
+            return;
+        }
+        
+        NSDictionary *dataDic = result[@"data"];
+        OrderDetailModel *model = [OrderDetailModel yy_modelWithDictionary:dataDic];
+        weakSelf.model = model;
+        
+        NSString *orderStatusStr;
+        if (model.orderStatus == 0) {
+            orderStatusStr = @"未接单";
+        }else if (model.orderStatus == 1) {
+            orderStatusStr = @"请尽快赶往地点";
+        }else if (model.orderStatus == 2) {
+            orderStatusStr = @"陪护中";
+        }else {
+            orderStatusStr = @"陪护完成";
+        }
+        weakSelf.upView.orderStatusLabel.text = orderStatusStr;
+        weakSelf.downView.addressLabel.text = model.address;
+
+        if ([model.position componentsSeparatedByString:@" "].count == 2) {
+            double latitude = [[model.position componentsSeparatedByString:@" "][0] doubleValue];
+            double longitude = [[model.position componentsSeparatedByString:@" "][1] doubleValue];
+            weakSelf->_parentCoordinate = CLLocationCoordinate2DMake(latitude, longitude);
+            
+            MAPointAnnotation *pointAnnotation = [[MAPointAnnotation alloc] init];
+            pointAnnotation.coordinate = weakSelf->_parentCoordinate;
+            [weakSelf.upView.mapView addAnnotation:pointAnnotation];
+            
+            CLLocationCoordinate2D userCoordinate = weakSelf.upView.mapView.userLocation.location.coordinate;
+            if (userCoordinate.latitude != 0 || userCoordinate.longitude != 0) {
+                CLLocationCoordinate2D center = CLLocationCoordinate2DMake((userCoordinate.latitude + weakSelf->_parentCoordinate.latitude) / 2, (userCoordinate.longitude + weakSelf->_parentCoordinate.longitude) / 2);
+                MACoordinateSpan span = MACoordinateSpanMake(ABS(userCoordinate.latitude - weakSelf->_parentCoordinate.latitude) * 2, ABS(userCoordinate.longitude - weakSelf->_parentCoordinate.longitude) * 2);
+                MACoordinateRegion region = MACoordinateRegionMake(center, span);
+                
+                [weakSelf.upView.mapView setRegion:region animated:YES];
+            }
+        }
+        
+        weakSelf.downView.beChapNameLabel.text = model.parentName;
+        weakSelf.downView.ageLabel.text = [NSString stringWithFormat:@"%ld", model.parentAge];
+        weakSelf.downView.sexLabel.text = model.parentGender;
+        weakSelf.downView.chapTimeLabel.text = [NSString stringWithFormat:@"%@至%@",model.escortStart, model.escortEnd];
+        NSString *healthStr;
+        if (model.healthStatus == 0) {
+            healthStr = @"健康";
+        }else {
+            healthStr = @"患病";
+        }
+        weakSelf.downView.healthConditionLabel.text = healthStr;
+        NSString *chapTypeStr;
+        if (model.escortType == 0) {
+            chapTypeStr = @"临时陪护";
+        }else {
+            chapTypeStr = @"长期陪护";
+        }
+        weakSelf.downView.chapTypeLabel.text = chapTypeStr;
+        weakSelf.downView.sicknessHistoryLabel.text = model.illness;
+        if (model.medicationComplianceList.count == 0) {
+            weakSelf.downView.medicineLabel.text = @"无";
+        }else {
+            MedicineModel *medicineModel = model.medicationComplianceList[0];
+            weakSelf.downView.medicineLabel.text = [NSString stringWithFormat:@"%@每日%@次",medicineModel.medicine, medicineModel.count];
+        }
+        weakSelf.downView.orderNumLabel.text = model.orderNo;
+    }];
 }
 
 - (void)clickReturn {
@@ -39,13 +126,13 @@
 
 - (void)didUpdateUserLocation:(MAUserLocation *)userLocation updatingLocation:(BOOL)updatingLocation {
     
-    if (_chapCoordinate.latitude == 0 && _chapCoordinate.longitude == 0) {
+    if (_parentCoordinate.latitude == 0 && _parentCoordinate.longitude == 0) {
         return;
     }
     
     CLLocationCoordinate2D userCoordinate = userLocation.location.coordinate;
-    CLLocationCoordinate2D center = CLLocationCoordinate2DMake((userCoordinate.latitude + _chapCoordinate.latitude) / 2, (userCoordinate.longitude + _chapCoordinate.longitude) / 2);
-    MACoordinateSpan span = MACoordinateSpanMake(ABS(userCoordinate.latitude - _chapCoordinate.latitude) + 0.3, ABS(userCoordinate.longitude - _chapCoordinate.longitude) + 0.3);
+    CLLocationCoordinate2D center = CLLocationCoordinate2DMake((userCoordinate.latitude + _parentCoordinate.latitude) / 2, (userCoordinate.longitude + _parentCoordinate.longitude) / 2);
+    MACoordinateSpan span = MACoordinateSpanMake(ABS(userCoordinate.latitude - _parentCoordinate.latitude) * 2, ABS(userCoordinate.longitude - _parentCoordinate.longitude) * 2);
     MACoordinateRegion region = MACoordinateRegionMake(center, span);
     
     [_upView.mapView setRegion:region animated:YES];

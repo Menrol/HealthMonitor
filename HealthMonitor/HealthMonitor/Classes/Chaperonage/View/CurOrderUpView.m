@@ -30,26 +30,24 @@
     [_delegate didClickDetailButton];
 }
 
-- (void)mapView:(MAMapView *)mapView didUpdateUserLocation:(MAUserLocation *)userLocation updatingLocation:(BOOL)updatingLocation {
-    [_delegate didUpdateUserLocation:userLocation updatingLocation:updatingLocation];
-}
-
 - (MAAnnotationView *)mapView:(MAMapView *)mapView viewForAnnotation:(id<MAAnnotation>)annotation {
-    if ([annotation isKindOfClass:[MAUserLocation class]]) {
+    if (![annotation isKindOfClass:[RQPointAnnotation class]]) {
         return nil;
-    }else if ([annotation isKindOfClass:[MAPointAnnotation class]]) {
-        static NSString *reuseIndetifier = @"chapPointReuseIndetifier";
-        MAAnnotationView *annotationView = (MAAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:reuseIndetifier];
-        if (annotationView == nil) {
-            annotationView = [[MAAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:reuseIndetifier];
-        }
-        
-        annotationView.image = [UIImage imageNamed:@"person"];
-        
-        return annotationView;
     }
     
-    return nil;
+    static NSString *reuseIndetifier = @"OrderDetailPointReuseIndetifier";
+    MAAnnotationView *annotationView = (MAAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:reuseIndetifier];
+    if (annotationView == nil) {
+        annotationView = [[MAAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:reuseIndetifier];
+    }
+   
+    if (((RQPointAnnotation *)annotation).index == 0) {
+        annotationView.image = [UIImage imageNamed:@"location"];
+    }else {
+        annotationView.image = [UIImage imageNamed:@"person"];
+    }
+    
+    return annotationView;
 }
 
 - (void)setupUI {
@@ -67,6 +65,7 @@
     _mapView.showsScale = NO;
     _mapView.userTrackingMode = MAUserTrackingModeFollow;
     _mapView.delegate = self;
+    [_mapView setZoomLevel:15.f];
     [self addSubview:_mapView];
     
     // 自定义定位点

@@ -102,6 +102,14 @@ typedef void (^FinishedCallBack) (id _Nullable result, NSError * _Nullable error
 
 - (void)orderDetailWithOrderNo:(NSString *)orderNo finished:(FinishedCallBack)finished;
 
+- (void)getOrderListWithFinished:(FinishedCallBack)finished;
+
+- (void)getReceivingOrderWithFinished:(FinishedCallBack)finished;
+
+- (void)updateOrderStatusWithOrderStatus:(NSInteger)orderStatus orderID:(NSInteger)orderID finished:(FinishedCallBack)finished;
+
+- (void)chapReceiveOrderWithNickname:(NSString *)nickname orderID:(NSInteger)orderID finished:(FinishedCallBack)finished;
+
 @end
 
 NS_ASSUME_NONNULL_END

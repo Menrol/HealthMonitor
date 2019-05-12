@@ -17,9 +17,7 @@
 #import <Masonry/Masonry.h>
 #import <YYModel/YYModel.h>
 
-@interface ChildOrderDetailViewController ()<CurOrderUpViewDelegate> {
-    CLLocationCoordinate2D     _chapCoordinate;
-}
+@interface ChildOrderDetailViewController ()<CurOrderUpViewDelegate>
 @property(strong,nonatomic) CurOrderUpView    *upView;
 @property(strong,nonatomic) CurOrderDownView  *downView;
 @property(strong,nonatomic) OrderDetailModel  *model;
@@ -80,30 +78,64 @@
                 make.right.equalTo(self.view.mas_right);
                 make.bottom.equalTo(self.view.mas_bottom);
             }];
-        }else if (model.orderStatus == 1) {
-            orderStatusStr = @"陪护员已接单";
-            weakSelf.upView.chaperonageLabel.text = model.escortRealName;
-        }else if (model.orderStatus == 2) {
-            orderStatusStr = @"陪护中";
-            weakSelf.upView.chaperonageLabel.text = model.escortRealName;
         }else {
-            orderStatusStr = @"陪护完成";
+            weakSelf.upView.chapTitleLabel.hidden = NO;
+            weakSelf.upView.chaperonageLabel.hidden = NO;
+            weakSelf.upView.detailButton.hidden = NO;
             weakSelf.upView.chaperonageLabel.text = model.escortRealName;
+            
+            [weakSelf.upView mas_remakeConstraints:^(MASConstraintMaker *make) {
+                make.top.equalTo(self.view.mas_top).offset(getRectNavAndStatusHeight);
+                make.left.equalTo(self.view.mas_left);
+                make.right.equalTo(self.view.mas_right);
+                make.height.mas_equalTo(340.f);
+            }];
+            
+            [weakSelf.downView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.top.equalTo(self.upView.mas_bottom);
+                make.left.equalTo(self.view.mas_left);
+                make.right.equalTo(self.view.mas_right);
+                make.bottom.equalTo(self.view.mas_bottom);
+            }];
+
+            if (model.orderStatus == 1) {
+                orderStatusStr = @"陪护员已接单";
+            }else if (model.orderStatus == 2) {
+                orderStatusStr = @"陪护中";
+            }else {
+                orderStatusStr = @"陪护完成";
+            }
         }
         weakSelf.upView.orderStatusLabel.text = orderStatusStr;
-        double latitude = [[model.position componentsSeparatedByString:@" "][0] doubleValue];
-        double longitude = [[model.position componentsSeparatedByString:@" "][1] doubleValue];
-        weakSelf->_chapCoordinate = CLLocationCoordinate2DMake(latitude, longitude);
-        MAPointAnnotation *pointAnnotation = [[MAPointAnnotation alloc] init];
-        pointAnnotation.coordinate = weakSelf->_chapCoordinate;
-        [weakSelf.upView.mapView addAnnotation:pointAnnotation];
-        CLLocationCoordinate2D userCoordinate = weakSelf.upView.mapView.userLocation.location.coordinate;
-        if (userCoordinate.latitude != 0 || userCoordinate.longitude != 0) {
-            CLLocationCoordinate2D center = CLLocationCoordinate2DMake((userCoordinate.latitude + weakSelf->_chapCoordinate.latitude) / 2, (userCoordinate.longitude + weakSelf->_chapCoordinate.longitude) / 2);
-            MACoordinateSpan span = MACoordinateSpanMake(ABS(userCoordinate.latitude - weakSelf->_chapCoordinate.latitude) * 2, ABS(userCoordinate.longitude - weakSelf->_chapCoordinate.longitude) * 2);
+        
+        [weakSelf.upView.mapView removeAnnotations:weakSelf.upView.mapView.annotations];
+        CLLocationCoordinate2D parentCoordinate = kCLLocationCoordinate2DInvalid;
+        CLLocationCoordinate2D chapCoordinate = kCLLocationCoordinate2DInvalid;
+        if ([model.position componentsSeparatedByString:@" "].count == 2) {
+            parentCoordinate = CLLocationCoordinate2DMake([[model.position componentsSeparatedByString:@" "][0] doubleValue], [[model.position componentsSeparatedByString:@" "][1] doubleValue]);
+            RQPointAnnotation *parentAnnotation = [[RQPointAnnotation alloc] initWithCoordinate:parentCoordinate index:0];
+            [weakSelf.upView.mapView addAnnotation:parentAnnotation];
+        }
+        
+        if ([model.escortPosition componentsSeparatedByString:@" "].count == 2) {
+            chapCoordinate = CLLocationCoordinate2DMake([[model.escortPosition componentsSeparatedByString:@" "][0] doubleValue], [[model.escortPosition componentsSeparatedByString:@" "][1] doubleValue]);
+            RQPointAnnotation *chapAnnotation = [[RQPointAnnotation alloc] initWithCoordinate:chapCoordinate index:1];
+            [weakSelf.upView.mapView addAnnotation:chapAnnotation];
+        }
+        
+        if (CLLocationCoordinate2DIsValid(parentCoordinate) && CLLocationCoordinate2DIsValid(chapCoordinate)) {
+            CLLocationCoordinate2D center = CLLocationCoordinate2DMake((parentCoordinate.latitude + chapCoordinate.latitude) / 2, (parentCoordinate.longitude + chapCoordinate.longitude) / 2);
+            MACoordinateSpan span = MACoordinateSpanMake(ABS(parentCoordinate.latitude - chapCoordinate.latitude) * 2, ABS(parentCoordinate.longitude - chapCoordinate.longitude) * 2);
             MACoordinateRegion region = MACoordinateRegionMake(center, span);
-            
             [weakSelf.upView.mapView setRegion:region animated:YES];
+        }
+        
+        if (CLLocationCoordinate2DIsValid(parentCoordinate) && !(CLLocationCoordinate2DIsValid(chapCoordinate))) {
+            [weakSelf.upView.mapView setCenterCoordinate:parentCoordinate animated:YES];
+        }
+        
+        if (CLLocationCoordinate2DIsValid(chapCoordinate) && !CLLocationCoordinate2DIsValid(parentCoordinate)) {
+            [weakSelf.upView.mapView setCenterCoordinate:chapCoordinate animated:YES];
         }
         
         weakSelf.downView.beChapNameLabel.text = model.parentName;
@@ -146,20 +178,6 @@
 
 - (void)clickReturn {
     [self.navigationController popViewControllerAnimated:YES];
-}
-
-- (void)didUpdateUserLocation:(MAUserLocation *)userLocation updatingLocation:(BOOL)updatingLocation {
-    
-    if (_chapCoordinate.latitude == 0 && _chapCoordinate.longitude == 0) {
-        return;
-    }
-    
-    CLLocationCoordinate2D userCoordinate = userLocation.location.coordinate;
-    CLLocationCoordinate2D center = CLLocationCoordinate2DMake((userCoordinate.latitude + _chapCoordinate.latitude) / 2, (userCoordinate.longitude + _chapCoordinate.longitude) / 2);
-    MACoordinateSpan span = MACoordinateSpanMake(ABS(userCoordinate.latitude - _chapCoordinate.latitude) * 2, ABS(userCoordinate.longitude - _chapCoordinate.longitude) * 2);
-    MACoordinateRegion region = MACoordinateRegionMake(center, span);
-    
-    [_upView.mapView setRegion:region animated:YES];
 }
 
 - (void)setupUI {

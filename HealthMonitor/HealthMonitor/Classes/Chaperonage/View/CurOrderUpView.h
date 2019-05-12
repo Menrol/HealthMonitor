@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <MAMapKit/MAMapKit.h>
+#import "RQPointAnnotation.h"
 #import <AMapFoundationKit/AMapFoundationKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
@@ -15,7 +16,6 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol CurOrderUpViewDelegate <NSObject>
 
 - (void)didClickDetailButton;
-- (void)didUpdateUserLocation:(MAUserLocation *)userLocation updatingLocation:(BOOL)updatingLocation;
 
 @end
 

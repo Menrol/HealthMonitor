@@ -26,6 +26,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(strong,nonatomic) NSString                *nickname;
 @property(strong,nonatomic) NSString                *parentCode;
 @property(strong,nonatomic) NSString                *password;
+@property(strong,nonatomic) NSString                *position;
 
 @end
 

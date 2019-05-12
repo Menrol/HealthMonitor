@@ -7,9 +7,34 @@
 //
 
 #import "RecieveOrderTableViewCell.h"
+#import "OrderModel.h"
 #import <Masonry/Masonry.h>
 
 @implementation RecieveOrderTableViewCell
+
+- (void)setModel:(OrderModel *)model {
+    _orderNumLabel.text = model.orderNo;
+    _addressLabel.text = model.address;
+    if (model.orderStatus == 0) {
+        _orderTypeLabel.text = @"待接单";
+        _orderTypeLabel.textColor = [UIColor colorWithRed:0.95 green:0.68 blue:0.31 alpha:1.00];
+    }else if (model.orderStatus == 1 || model.orderStatus == 2) {
+        _orderTypeLabel.text = @"进行中";
+        _orderTypeLabel.textColor = [UIColor colorWithRed:0.28 green:0.51 blue:0.36 alpha:1.00];
+    }else {
+        _orderTypeLabel.text = @"已完成";
+        _orderTypeLabel.textColor = [UIColor colorWithRed:0.22 green:0.29 blue:0.96 alpha:1.00];
+    }
+    _beChapLabel.text = model.parentName;
+    NSString *healthStr;
+    if (model.healthStatus == 0) {
+        healthStr = @"健康";
+    }else {
+        healthStr = @"患病";
+    }
+    _healthLabel.text = healthStr;
+    _chapTimeLabel.text = [NSString stringWithFormat:@"%@至%@",model.escortStart,model.escortEnd];
+}
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];

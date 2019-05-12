@@ -9,14 +9,24 @@
 #import "ChapOrderListViewController.h"
 #import "OrderListTableViewCell.h"
 #import "ChapOrDetailViewController.h"
+#import "NetworkTool.h"
+#import "RQProgressHUD.h"
+#import "ChapModel.h"
+#import "OrderModel.h"
+#import "MainViewController.h"
 #import <Masonry/Masonry.h>
+#import <YYModel/YYModel.h>
+#import <MJRefresh/MJRefresh.h>
 
 NSString * const ChapOrderListTableViewCellId = @"ChapOrderListTableViewCellId";
 
 @interface ChapOrderListViewController ()<UITableViewDelegate, UITableViewDataSource> {
-    UIButton       *_preButton;
+    UIButton                       *_preButton;
+    NSArray<OrderModel *>          *_dataArray;
 }
-@property(strong,nonatomic) UITableView       *tableView;
+@property(strong,nonatomic) UITableView                      *tableView;
+@property(strong,nonatomic) NSMutableArray<OrderModel *>     *orderList;
+@property(strong,nonatomic) ChapModel                        *model;
 
 @end
 
@@ -25,7 +35,57 @@ NSString * const ChapOrderListTableViewCellId = @"ChapOrderListTableViewCellId";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    _orderList = [[NSMutableArray alloc] init];
+    
     [self setupUI];
+    
+    MainViewController *vc = (MainViewController *)self.tabBarController;
+    _model = vc.model;
+    
+    [_tableView.mj_header beginRefreshing];
+}
+
+- (void)loadData {
+    __weak typeof(self) weakSelf = self;
+    [[NetworkTool sharedTool] getOrderListWithFinished:^(id  _Nullable result, NSError * _Nullable error) {
+        [weakSelf.tableView.mj_header endRefreshing];
+        
+        if (error) {
+            NSLog(@"%@",error);
+            
+            return;
+        }
+        
+        NSLog(@"%@",result);
+        
+        NSInteger code = [result[@"code"] integerValue];
+        if (code != 0) {
+            [RQProgressHUD rq_showErrorWithStatus:result[@"msg"]];
+            
+            return;
+        }
+        
+        NSArray *dataArray = result[@"data"];
+        
+        [weakSelf.orderList removeAllObjects];
+        for (NSDictionary *dic in dataArray) {
+            NSString *escortName = dic[@"escortName"];
+            
+            if ((NSNull *)escortName == [NSNull null]) {
+                continue;
+            }
+            
+            if ([weakSelf.model.nickname isEqualToString:escortName]) {
+                OrderModel *model = [OrderModel yy_modelWithDictionary:dic];
+                [weakSelf.orderList addObject:model];
+            }
+        }
+        
+        __strong typeof(self) strongSelf = weakSelf;
+        
+        strongSelf->_dataArray = strongSelf.orderList;
+        [strongSelf.tableView reloadData];
+    }];
 }
 
 - (void)clickButton:(UIButton *)btn {
@@ -39,16 +99,35 @@ NSString * const ChapOrderListTableViewCellId = @"ChapOrderListTableViewCellId";
         btn.selected = NO;
         btn.layer.borderColor = [UIColor blackColor].CGColor;
         NSLog(@"显示全部订单");
+        
+        _dataArray = _orderList;
+        [_tableView reloadData];
     }else {
         _preButton = btn;
         btn.selected = YES;
         btn.layer.borderColor = [UIColor colorWithRed:0.41 green:0.77 blue:0.84 alpha:1.00].CGColor;
         
+        NSMutableArray *array = [[NSMutableArray alloc] init];
         if (btn.tag == 100) {
             NSLog(@"进行中");
+            
+            for (OrderModel *model in _orderList) {
+                if (model.orderStatus == 1 || model.orderStatus == 2) {
+                    [array addObject:model];
+                }
+            }
         }else {
             NSLog(@"已完成");
+            
+            for (OrderModel *model in _orderList) {
+                if (model.orderStatus == 3) {
+                    [array addObject:model];
+                }
+            }
         }
+        
+        _dataArray = array;
+        [_tableView reloadData];
     }
 }
 
@@ -56,33 +135,18 @@ NSString * const ChapOrderListTableViewCellId = @"ChapOrderListTableViewCellId";
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
     
     ChapOrDetailViewController *vc = [[ChapOrDetailViewController alloc] init];
+    vc.orderNo = _dataArray[indexPath.row].orderNo;
     [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    // TODO: 测试数据
-    return 2;
+    return _dataArray.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     OrderListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ChapOrderListTableViewCellId forIndexPath:indexPath];
-    // TODO: 测试数据
-    if (indexPath.row == 0) {
-        cell.orderNumLabel.text = @"PT190204110203001";
-        cell.orderTypeLabel.text = @"进行中";
-        cell.orderTypeLabel.textColor = [UIColor colorWithRed:0.21 green:0.44 blue:0.28 alpha:1.00];
-        cell.beChapLabel.text = @"张三";
-        cell.chaperonageLabel.text = @"王悦";
-        cell.chapTimeLabel.text = @"19-02-04 8:00-17:00";
-    }else {
-        cell.orderNumLabel.text = @"JJ190122131503001";
-        cell.orderTypeLabel.text = @"已完成";
-        cell.orderTypeLabel.textColor = [UIColor colorWithRed:0.16 green:0.22 blue:0.96 alpha:1.00];
-        cell.beChapLabel.text = @"张三";
-        cell.chaperonageLabel.text = @"王悦";
-        cell.chapTimeLabel.text = @"19-02-04 8:00-17:00";
-    }
     
+    cell.model = _dataArray[indexPath.row];
     
     return cell;
 }
@@ -123,6 +187,8 @@ NSString * const ChapOrderListTableViewCellId = @"ChapOrderListTableViewCellId";
     _tableView.layer.borderWidth = 0.5;
     _tableView.tableFooterView = [[UIView alloc] init];
     [self.view addSubview:_tableView];
+    
+    _tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadData)];
     
     // 设置布局
     [underwayButton mas_makeConstraints:^(MASConstraintMaker *make) {

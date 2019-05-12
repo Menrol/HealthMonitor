@@ -52,7 +52,7 @@
                                  @"status": @(status)
                                  };
     
-    [self requestWithHTTPMethod:POST URLString:url paramters:parameters finished:finished];
+    [self requestWithHTTPMethod:POST URLString:url parameters:parameters finished:finished];
 }
 
 - (void)parentChildBindingDeleteWithChildCode:(NSString *)childCode parentCode:(NSString *)parentCode finished:(FinishedCallBack)finished {
@@ -60,7 +60,7 @@
     NSDictionary *parameters = @{@"child": childCode,
                                  @"parent": parentCode};
     
-    [self requestWithHTTPMethod:DELETE URLString:url paramters:parameters finished:finished];
+    [self requestWithHTTPMethod:DELETE URLString:url parameters:parameters finished:finished];
 }
 
 #pragma mark - 父母相关请求
@@ -68,21 +68,21 @@
     NSString *url = @"parent/batch/child";
     NSDictionary *parameters = @{@"nickname": nickname};
     
-    [self requestWithHTTPMethod:GET URLString:url paramters:parameters finished:finished];
+    [self requestWithHTTPMethod:GET URLString:url parameters:parameters finished:finished];
 }
 
 - (void)parentMessageWithNickname:(NSString *)nickname finished:(FinishedCallBack)finished {
     NSString *url = @"parent/batch";
     NSDictionary *parameters = @{@"nickname": nickname};
     
-    [self requestWithHTTPMethod:GET URLString:url paramters:parameters finished:finished];
+    [self requestWithHTTPMethod:GET URLString:url parameters:parameters finished:finished];
 }
 
 - (void)parentCheckWithNickname:(NSString *)nickName finished:(FinishedCallBack)finished {
     NSString *url = @"parent/check";
     NSDictionary *parameters = @{@"nickname": nickName};
     
-    [self requestWithHTTPMethod:GET URLString:url paramters:parameters finished:finished];
+    [self requestWithHTTPMethod:GET URLString:url parameters:parameters finished:finished];
 }
 
 - (void)parentRegisterWithNickname:(NSString *)nickname password:(NSString *)password birthday:(NSString *)birthday gender:(NSString *)gender healthStatus:(NSInteger)healthStatus medicine:(NSInteger) medicine name:(NSString *)name finished:(FinishedCallBack)finished {
@@ -109,20 +109,20 @@
                                  @"name": name
                                  };
     
-    [self requestWithHTTPMethod:POST URLString:url paramters:parameters finished:finished];
+    [self requestWithHTTPMethod:POST URLString:url parameters:parameters finished:finished];
 }
 
 - (void)parentUpdateWithParamters:(NSDictionary *)parameters finished:(FinishedCallBack)finished {
     NSString *url = @"parent/update";
     
-    [self requestWithHTTPMethod:PUT URLString:url paramters:parameters finished:finished];
+    [self requestWithHTTPMethod:PUT URLString:url parameters:parameters finished:finished];
 }
 
 - (void)parentLoginWithNickname:(NSString *)nickName password:(NSString *)password finished:(FinishedCallBack)finished {
     NSString *url = @"parent/login";
     NSDictionary *parameters = @{@"nickname": nickName, @"password": password};
     
-    [self requestWithHTTPMethod:GET URLString:url paramters:parameters finished:finished];
+    [self requestWithHTTPMethod:GET URLString:url parameters:parameters finished:finished];
 }
 
 #pragma mark - 子女相关请求
@@ -130,7 +130,7 @@
     NSString *url = @"child/check";
     NSDictionary *parameters = @{@"nickname": nickname};
     
-    [self requestWithHTTPMethod:GET URLString:url paramters:parameters finished:finished];
+    [self requestWithHTTPMethod:GET URLString:url parameters:parameters finished:finished];
 }
 
 - (void)childRegisterWithNickname:(NSString *)nickname password:(NSString *)password age:(NSInteger)age gender:(NSString *)gender name:(NSString *)name finished:(FinishedCallBack)finished {
@@ -142,34 +142,34 @@
                                  @"password": password
                                  };
     
-    [self requestWithHTTPMethod:POST URLString:url paramters:parameters finished:finished];
+    [self requestWithHTTPMethod:POST URLString:url parameters:parameters finished:finished];
 }
 
 - (void)childMessageWithNickname:(NSString *)nickname finished:(FinishedCallBack)finished {
     NSString *url = @"child/batch";
     NSDictionary *parameters = @{@"nickname": nickname};
     
-    [self requestWithHTTPMethod:GET URLString:url paramters:parameters finished:finished];
+    [self requestWithHTTPMethod:GET URLString:url parameters:parameters finished:finished];
 }
 
 - (void)childLoginWithNickname:(NSString *)nickName password:(NSString *)password finished:(FinishedCallBack)finished {
     NSString *url = @"child/login";
     NSDictionary *parameters = @{@"nickname": nickName, @"password": password};
     
-    [self requestWithHTTPMethod:GET URLString:url paramters:parameters finished:finished];
+    [self requestWithHTTPMethod:GET URLString:url parameters:parameters finished:finished];
 }
 
 - (void)childUpdateWithParamters:(NSDictionary *)parameters finished:(FinishedCallBack)finished {
     NSString *url = @"child/update";
     
-    [self requestWithHTTPMethod:PUT URLString:url paramters:parameters finished:finished];
+    [self requestWithHTTPMethod:PUT URLString:url parameters:parameters finished:finished];
 }
 
 - (void)childGetParentWithNickname:(NSString *)nickname finished:(FinishedCallBack)finished {
     NSString *url = @"child/batch/parent";
     NSDictionary *parameters = @{@"nickname": nickname};
     
-    [self requestWithHTTPMethod:GET URLString:url paramters:parameters finished:finished];
+    [self requestWithHTTPMethod:GET URLString:url parameters:parameters finished:finished];
 }
 
 #pragma mark - 陪护相关请求
@@ -177,7 +177,7 @@
     NSString *url = @"escort/check";
     NSDictionary *parameters = @{@"nickname": nickname};
     
-    [self requestWithHTTPMethod:GET URLString:url paramters:parameters finished:finished];
+    [self requestWithHTTPMethod:GET URLString:url parameters:parameters finished:finished];
 }
 
 - (void)chapRegisterWithAge:(NSInteger)age gender:(NSString *)gender name:(NSString *)name nickname:(NSString *)nickname password:(NSString *)password workExperience:(NSString *)workExperience workTime:(NSString *)workTime workType:(NSInteger)workType finished:(FinishedCallBack)finished {
@@ -192,14 +192,14 @@
                                  @"workType": @(workType)
                                  };
     
-    [self requestWithHTTPMethod:POST URLString:url paramters:parameters finished:finished];
+    [self requestWithHTTPMethod:POST URLString:url parameters:parameters finished:finished];
 }
 
 - (void)chapGetMessageWithNickname:(NSString *)nickname finished:(FinishedCallBack)finished {
     NSString *url = @"escort/batch";
     NSDictionary *parameters = @{@"nickname": nickname};
     
-    [self requestWithHTTPMethod:GET URLString:url paramters:parameters finished:finished];
+    [self requestWithHTTPMethod:GET URLString:url parameters:parameters finished:finished];
 }
 
 - (void)chapLoginWithNickname:(NSString *)nickname password:(NSString *)password finished:(FinishedCallBack)finished {
@@ -208,13 +208,13 @@
                                  @"password": password
                                  };
     
-    [self requestWithHTTPMethod:GET URLString:url paramters:parameters finished:finished];
+    [self requestWithHTTPMethod:GET URLString:url parameters:parameters finished:finished];
 }
 
 - (void)chapUpdateWithParamters:(NSDictionary *)parameters finished:(FinishedCallBack)finished {
     NSString *url = @"escort/update";
     
-    [self requestWithHTTPMethod:PUT URLString:url paramters:parameters finished:finished];
+    [self requestWithHTTPMethod:PUT URLString:url parameters:parameters finished:finished];
 }
 
 #pragma mark - 订单相关请求
@@ -235,24 +235,51 @@
     
     NSLog(@"%@",parameters);
     
-    [self requestWithHTTPMethod:POST URLString:url paramters:parameters finished:finished];
+    [self requestWithHTTPMethod:POST URLString:url parameters:parameters finished:finished];
 }
 
 - (void)getParentOrderWithNickname:(NSString *)nickname finished:(FinishedCallBack)finished {
     NSString *url = @"order/parent";
     NSDictionary *parameters = @{@"nickname": nickname};
     
-    [self requestWithHTTPMethod:GET URLString:url paramters:parameters finished:finished];
+    [self requestWithHTTPMethod:GET URLString:url parameters:parameters finished:finished];
 }
 
 - (void)orderDetailWithOrderNo:(NSString *)orderNo finished:(FinishedCallBack)finished {
     NSString *url = [NSString stringWithFormat:@"order/%@",orderNo];
     
-    [self requestWithHTTPMethod:GET URLString:url paramters:nil finished:finished];
+    [self requestWithHTTPMethod:GET URLString:url parameters:nil finished:finished];
+}
+
+- (void)getOrderListWithFinished:(FinishedCallBack)finished {
+    NSString *url = @"order/batch/list";
+    NSDictionary *parameters = @{@"page": @(1),
+                                 @"limit": @(INT_MAX)
+                                 };
+    
+    [self requestWithHTTPMethod:GET URLString:url parameters:parameters finished:finished];
+}
+
+- (void)getReceivingOrderWithFinished:(FinishedCallBack)finished {
+    NSString *url = @"order/valid";
+    
+    [self requestWithHTTPMethod:GET URLString:url parameters:nil finished:finished];
+}
+
+- (void)updateOrderStatusWithOrderStatus:(NSInteger)orderStatus orderID:(NSInteger)orderID finished:(FinishedCallBack)finished {
+    NSString *url = [NSString stringWithFormat:@"%@?orderStatus=%ld&id=%ld",@"order/update/status",orderStatus,orderID];
+    
+    [self requestWithHTTPMethod:PUT URLString:url parameters:nil finished:finished];
+}
+
+- (void)chapReceiveOrderWithNickname:(NSString *)nickname orderID:(NSInteger)orderID finished:(FinishedCallBack)finished {
+    NSString *url = [NSString stringWithFormat:@"%@?nickname=%@&id=%ld",@"order/update/escort",nickname,orderID];
+    
+    [self requestWithHTTPMethod:PUT URLString:url parameters:nil finished:finished];
 }
 
 #pragma mark - 封装AFN
-- (void)requestWithHTTPMethod:(HTTPMethod)method  URLString:(NSString *)URLString paramters:(nullable id)parameters finished:(FinishedCallBack)finished {
+- (void)requestWithHTTPMethod:(HTTPMethod)method  URLString:(NSString *)URLString parameters:(nullable id)parameters finished:(FinishedCallBack)finished {
     NSString *methodStr;
     
     switch (method) {

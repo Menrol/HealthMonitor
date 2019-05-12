@@ -11,6 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface ChapOrDetailViewController : UIViewController
+@property(strong,nonatomic) NSString     *orderNo;
 
 @end
 

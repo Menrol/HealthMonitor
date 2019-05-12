@@ -25,6 +25,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(strong,nonatomic) NSString                  *workExperience;
 @property(strong,nonatomic) NSString                  *workTime;
 @property(assign,nonatomic) NSInteger                 workType;
+@property(strong,nonatomic) NSString                  *escortPosition;
 
 @end
 

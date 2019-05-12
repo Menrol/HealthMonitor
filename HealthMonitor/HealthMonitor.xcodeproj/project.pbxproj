@@ -10,6 +10,7 @@
 		181073AF225735120010D844 /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 181073AD225735120010D844 /* RegisterViewController.m */; };
 		181073B2225751DA0010D844 /* OldMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 181073B1225751DA0010D844 /* OldMessageViewController.m */; };
 		181073B4225788420010D844 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 181073B3225788410010D844 /* Assets.xcassets */; };
+		181B68AB228733DB002E4E85 /* RQPointAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 181B68AA228733DB002E4E85 /* RQPointAnnotation.m */; };
 		183547F822803906008108DE /* ParentModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 183547F722803906008108DE /* ParentModel.m */; };
 		183547FB22803913008108DE /* ChildModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 183547FA22803913008108DE /* ChildModel.m */; };
 		183547FE22803965008108DE /* ChapModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 183547FD22803965008108DE /* ChapModel.m */; };
@@ -100,6 +101,8 @@
 		181073B0225751DA0010D844 /* OldMessageViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OldMessageViewController.h; sourceTree = "<group>"; };
 		181073B1225751DA0010D844 /* OldMessageViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OldMessageViewController.m; sourceTree = "<group>"; };
 		181073B3225788410010D844 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		181B68A9228733DB002E4E85 /* RQPointAnnotation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RQPointAnnotation.h; sourceTree = "<group>"; };
+		181B68AA228733DB002E4E85 /* RQPointAnnotation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RQPointAnnotation.m; sourceTree = "<group>"; };
 		183547F622803906008108DE /* ParentModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ParentModel.h; sourceTree = "<group>"; };
 		183547F722803906008108DE /* ParentModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ParentModel.m; sourceTree = "<group>"; };
 		183547F922803913008108DE /* ChildModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChildModel.h; sourceTree = "<group>"; };
@@ -287,6 +290,15 @@
 				18A96F362281990D0012975E /* ChildMessageViewController.m */,
 			);
 			path = Controller;
+			sourceTree = "<group>";
+		};
+		181B68A8228733BF002E4E85 /* Tools */ = {
+			isa = PBXGroup;
+			children = (
+				181B68A9228733DB002E4E85 /* RQPointAnnotation.h */,
+				181B68AA228733DB002E4E85 /* RQPointAnnotation.m */,
+			);
+			path = Tools;
 			sourceTree = "<group>";
 		};
 		183547F5228038BC008108DE /* Model */ = {
@@ -518,6 +530,7 @@
 		18CC428D225B3307007C5949 /* Chaperonage */ = {
 			isa = PBXGroup;
 			children = (
+				181B68A8228733BF002E4E85 /* Tools */,
 				18E64AF922840B0400627C58 /* Model */,
 				18C8676F225F5B3E004F6A2B /* View */,
 				18CC4293225B3635007C5949 /* Controller */,
@@ -908,6 +921,7 @@
 				189D2CFC2268663A00DF14ED /* ChildOrderDetailViewController.m in Sources */,
 				18BB9DA72264911300FDF08C /* OldMyViewController.m in Sources */,
 				18BB9D8A226490AF00FDF08C /* OldOrderDetailViewController.m in Sources */,
+				181B68AB228733DB002E4E85 /* RQPointAnnotation.m in Sources */,
 				18BB9D6A2264904400FDF08C /* OldHomeViewController.m in Sources */,
 				18BB9D9C226490D200FDF08C /* CurOrderDownView.m in Sources */,
 				1869B49C226C83B900A9ED1B /* SearchResultViewController.m in Sources */,

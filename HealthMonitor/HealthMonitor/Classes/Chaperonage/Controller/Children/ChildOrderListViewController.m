@@ -39,17 +39,13 @@ NSString * const ChildOrderListTableViewCellID = @"ChildOrderListTableViewCellID
     _orderList = [[NSMutableArray alloc] init];
     
     [self setupUI];
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    MainViewController *vc = (MainViewController *)self.tabBarController;
-    _parentNickname = vc.parentNickname;
     
     [_tableView.mj_header beginRefreshing];
 }
 
-- (void)LoadData {
-    [_orderList removeAllObjects];
+- (void)loadData {
+    MainViewController *vc = (MainViewController *)self.tabBarController;
+    _parentNickname = vc.parentNickname;
     
     __weak typeof(self) weakSelf = self;
     [[NetworkTool sharedTool] getParentOrderWithNickname:_parentNickname finished:^(id  _Nullable result, NSError * _Nullable error) {
@@ -219,7 +215,7 @@ NSString * const ChildOrderListTableViewCellID = @"ChildOrderListTableViewCellID
     _tableView.tableFooterView = [[UIView alloc] init];
     [self.view addSubview:_tableView];
     
-    _tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(LoadData)];
+    _tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadData)];
     
     UIButton *sendButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [sendButton setTitle:@"发布新单" forState:UIControlStateNormal];

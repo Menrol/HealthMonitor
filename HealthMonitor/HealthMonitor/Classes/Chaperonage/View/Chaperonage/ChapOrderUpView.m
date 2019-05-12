@@ -40,7 +40,7 @@
             annotationView = [[MAAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:reuseIndetifier];
         }
         
-        annotationView.image = [UIImage imageNamed:@"person"];
+        annotationView.image = [UIImage imageNamed:@"location"];
         
         return annotationView;
     }
@@ -61,13 +61,14 @@
     _mapView.showsScale = NO;
     _mapView.userTrackingMode = MAUserTrackingModeFollow;
     _mapView.delegate = self;
+    [_mapView setZoomLevel:15.f];
     [self addSubview:_mapView];
     
     // 自定义定位点
     MAUserLocationRepresentation * r = [[MAUserLocationRepresentation alloc] init];
     r.showsAccuracyRing = NO;
     r.showsHeadingIndicator = NO;
-    r.image = [UIImage imageNamed:@"location"];
+    r.image = [UIImage imageNamed:@"person"];
     [_mapView updateUserLocationRepresentation:r];
     
     // 设置布局
