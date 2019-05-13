@@ -16,9 +16,7 @@
 #import <YYModel/YYModel.h>
 #import <Masonry/Masonry.h>
 
-@interface ReOrderDetailViewController ()<ChapOrderUpViewDelegate> {
-    CLLocationCoordinate2D     _parentCoordinate;
-}
+@interface ReOrderDetailViewController ()
 @property(strong,nonatomic) ChapOrderUpView     *upView;
 @property(strong,nonatomic) ChapOrderDownView   *downView;
 @property(strong,nonatomic) UIButton            *recieveButton;
@@ -65,20 +63,13 @@
         if ([model.position componentsSeparatedByString:@" "].count == 2) {
             double latitude = [[model.position componentsSeparatedByString:@" "][0] doubleValue];
             double longitude = [[model.position componentsSeparatedByString:@" "][1] doubleValue];
-            weakSelf->_parentCoordinate = CLLocationCoordinate2DMake(latitude, longitude);
+            CLLocationCoordinate2D parentCoordinate = CLLocationCoordinate2DMake(latitude, longitude);
             
             MAPointAnnotation *pointAnnotation = [[MAPointAnnotation alloc] init];
-            pointAnnotation.coordinate = weakSelf->_parentCoordinate;
+            pointAnnotation.coordinate = parentCoordinate;
             [weakSelf.upView.mapView addAnnotation:pointAnnotation];
             
-            CLLocationCoordinate2D userCoordinate = weakSelf.upView.mapView.userLocation.location.coordinate;
-            if (userCoordinate.latitude != 0 || userCoordinate.longitude != 0) {
-                CLLocationCoordinate2D center = CLLocationCoordinate2DMake((userCoordinate.latitude + weakSelf->_parentCoordinate.latitude) / 2, (userCoordinate.longitude + weakSelf->_parentCoordinate.longitude) / 2);
-                MACoordinateSpan span = MACoordinateSpanMake(ABS(userCoordinate.latitude - weakSelf->_parentCoordinate.latitude) * 2, ABS(userCoordinate.longitude - weakSelf->_parentCoordinate.longitude) * 2);
-                MACoordinateRegion region = MACoordinateRegionMake(center, span);
-                
-                [weakSelf.upView.mapView setRegion:region animated:YES];
-            }
+            [weakSelf.upView.mapView setCenterCoordinate:parentCoordinate animated:YES];
         }
         
         weakSelf.downView.beChapNameLabel.text = model.parentName;
@@ -168,20 +159,6 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void)didUpdateUserLocation:(MAUserLocation *)userLocation updatingLocation:(BOOL)updatingLocation {
-    
-    if (_parentCoordinate.latitude == 0 && _parentCoordinate.longitude == 0) {
-        return;
-    }
-    
-    CLLocationCoordinate2D userCoordinate = userLocation.location.coordinate;
-    CLLocationCoordinate2D center = CLLocationCoordinate2DMake((userCoordinate.latitude + _parentCoordinate.latitude) / 2, (userCoordinate.longitude + _parentCoordinate.longitude) / 2);
-    MACoordinateSpan span = MACoordinateSpanMake(ABS(userCoordinate.latitude - _parentCoordinate.latitude) * 2, ABS(userCoordinate.longitude - _parentCoordinate.longitude) * 2);
-    MACoordinateRegion region = MACoordinateRegionMake(center, span);
-    
-    [_upView.mapView setRegion:region animated:YES];
-}
-
 - (void)setupUI {
     self.title = @"订单详情";
     self.view.backgroundColor = [UIColor whiteColor];
@@ -191,7 +168,8 @@
     // 创建控件
     _upView = [[ChapOrderUpView alloc] init];
     _upView.orderStatusLabel.hidden = YES;
-    _upView.delegate = self;
+    _upView.mapView.showsUserLocation = NO;
+    _upView.mapView.userTrackingMode = MAUserTrackingModeNone;
     [self.view addSubview:_upView];
     
     _downView = [ChapOrderDownView chapOrderDownView];

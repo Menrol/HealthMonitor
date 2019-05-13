@@ -36,7 +36,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [RQProgressHUD rq_show];
     
-    __strong typeof(self) weakSelf = self;
+    __weak typeof(self) weakSelf = self;
     [[NetworkTool sharedTool] orderDetailWithOrderNo:_orderNo finished:^(id  _Nullable result, NSError * _Nullable error) {
         [RQProgressHUD dismiss];
         
@@ -55,9 +55,11 @@
             return;
         }
         
+        __strong typeof(self) strongSelf = weakSelf;
+        
         NSDictionary *dataDic = result[@"data"];
         OrderDetailModel *model = [OrderDetailModel yy_modelWithDictionary:dataDic];
-        weakSelf.model = model;
+        strongSelf.model = model;
         
         NSString *orderStatusStr;
         if (model.orderStatus == 0) {
@@ -69,54 +71,54 @@
         }else {
             orderStatusStr = @"陪护完成";
         }
-        weakSelf.upView.orderStatusLabel.text = orderStatusStr;
-        weakSelf.downView.addressLabel.text = model.address;
+        strongSelf.upView.orderStatusLabel.text = orderStatusStr;
+        strongSelf.downView.addressLabel.text = model.address;
 
         if ([model.position componentsSeparatedByString:@" "].count == 2) {
             double latitude = [[model.position componentsSeparatedByString:@" "][0] doubleValue];
             double longitude = [[model.position componentsSeparatedByString:@" "][1] doubleValue];
-            weakSelf->_parentCoordinate = CLLocationCoordinate2DMake(latitude, longitude);
+            strongSelf->_parentCoordinate = CLLocationCoordinate2DMake(latitude, longitude);
             
             MAPointAnnotation *pointAnnotation = [[MAPointAnnotation alloc] init];
-            pointAnnotation.coordinate = weakSelf->_parentCoordinate;
-            [weakSelf.upView.mapView addAnnotation:pointAnnotation];
+            pointAnnotation.coordinate = strongSelf->_parentCoordinate;
+            [strongSelf.upView.mapView addAnnotation:pointAnnotation];
             
-            CLLocationCoordinate2D userCoordinate = weakSelf.upView.mapView.userLocation.location.coordinate;
+            CLLocationCoordinate2D userCoordinate = strongSelf.upView.mapView.userLocation.location.coordinate;
             if (userCoordinate.latitude != 0 || userCoordinate.longitude != 0) {
-                CLLocationCoordinate2D center = CLLocationCoordinate2DMake((userCoordinate.latitude + weakSelf->_parentCoordinate.latitude) / 2, (userCoordinate.longitude + weakSelf->_parentCoordinate.longitude) / 2);
-                MACoordinateSpan span = MACoordinateSpanMake(ABS(userCoordinate.latitude - weakSelf->_parentCoordinate.latitude) * 2, ABS(userCoordinate.longitude - weakSelf->_parentCoordinate.longitude) * 2);
+                CLLocationCoordinate2D center = CLLocationCoordinate2DMake((userCoordinate.latitude + strongSelf->_parentCoordinate.latitude) / 2, (userCoordinate.longitude + strongSelf->_parentCoordinate.longitude) / 2);
+                MACoordinateSpan span = MACoordinateSpanMake(ABS(userCoordinate.latitude - strongSelf->_parentCoordinate.latitude) * 2, ABS(userCoordinate.longitude - strongSelf->_parentCoordinate.longitude) * 2);
                 MACoordinateRegion region = MACoordinateRegionMake(center, span);
                 
-                [weakSelf.upView.mapView setRegion:region animated:YES];
+                [strongSelf.upView.mapView setRegion:region animated:YES];
             }
         }
         
-        weakSelf.downView.beChapNameLabel.text = model.parentName;
-        weakSelf.downView.ageLabel.text = [NSString stringWithFormat:@"%ld", model.parentAge];
-        weakSelf.downView.sexLabel.text = model.parentGender;
-        weakSelf.downView.chapTimeLabel.text = [NSString stringWithFormat:@"%@至%@",model.escortStart, model.escortEnd];
+        strongSelf.downView.beChapNameLabel.text = model.parentName;
+        strongSelf.downView.ageLabel.text = [NSString stringWithFormat:@"%ld", model.parentAge];
+        strongSelf.downView.sexLabel.text = model.parentGender;
+        strongSelf.downView.chapTimeLabel.text = [NSString stringWithFormat:@"%@至%@",model.escortStart, model.escortEnd];
         NSString *healthStr;
         if (model.healthStatus == 0) {
             healthStr = @"健康";
         }else {
             healthStr = @"患病";
         }
-        weakSelf.downView.healthConditionLabel.text = healthStr;
+        strongSelf.downView.healthConditionLabel.text = healthStr;
         NSString *chapTypeStr;
         if (model.escortType == 0) {
             chapTypeStr = @"临时陪护";
         }else {
             chapTypeStr = @"长期陪护";
         }
-        weakSelf.downView.chapTypeLabel.text = chapTypeStr;
-        weakSelf.downView.sicknessHistoryLabel.text = model.illness;
+        strongSelf.downView.chapTypeLabel.text = chapTypeStr;
+        strongSelf.downView.sicknessHistoryLabel.text = model.illness;
         if (model.medicationComplianceList.count == 0) {
-            weakSelf.downView.medicineLabel.text = @"无";
+            strongSelf.downView.medicineLabel.text = @"无";
         }else {
             MedicineModel *medicineModel = model.medicationComplianceList[0];
-            weakSelf.downView.medicineLabel.text = [NSString stringWithFormat:@"%@每日%@次",medicineModel.medicine, medicineModel.count];
+            strongSelf.downView.medicineLabel.text = [NSString stringWithFormat:@"%@每日%@次",medicineModel.medicine, medicineModel.count];
         }
-        weakSelf.downView.orderNumLabel.text = model.orderNo;
+        strongSelf.downView.orderNumLabel.text = model.orderNo;
     }];
 }
 

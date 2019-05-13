@@ -21,13 +21,14 @@
 #import <MJRefresh/MJRefresh.h>
 
 @interface ChildCurOrderViewController ()<UITableViewDataSource, CurOrderUpViewDelegate>
-@property(strong,nonatomic) CurOrderUpView    *upView;
-@property(strong,nonatomic) CurOrderDownView  *downView;
-@property(strong,nonatomic) UILabel           *noOrderLabel;
-@property(strong,nonatomic) UITableView       *tableView;
-@property(strong,nonatomic) OrderDetailModel  *model;
-@property(strong,nonatomic) NSString          *parentNickname;
-@property(strong,nonatomic) NSTimer           *timer;
+@property(strong,nonatomic) CurOrderUpView              *upView;
+@property(strong,nonatomic) CurOrderDownView            *downView;
+@property(strong,nonatomic) UILabel                     *noOrderLabel;
+@property(strong,nonatomic) UITableView                 *tableView;
+@property(strong,nonatomic) OrderDetailModel            *model;
+@property(strong,nonatomic) NSString                    *parentNickname;
+@property(strong,nonatomic) NSTimer                     *timer;
+@property(assign,nonatomic) CLLocationCoordinate2D      parentCoordinate;
 
 @end
 
@@ -38,11 +39,58 @@
     
     [self setupUI];
     
-//    _timer = [NSTimer timerWithTimeInterval:5.f repeats:YES block:^(NSTimer * _Nonnull timer) {
-//        NSLog(@"1");
-//    }];
-//
-//    [[NSRunLoop mainRunLoop] addTimer:_timer forMode:NSRunLoopCommonModes];
+    __weak typeof(self) weakSelf = self;
+    _timer = [NSTimer timerWithTimeInterval:5 * 60 repeats:YES block:^(NSTimer * _Nonnull timer) {
+        if (weakSelf.model == nil) {
+            return;
+        }
+        
+        [[NetworkTool sharedTool] chapGetMessageWithNickname:weakSelf.model.escortName finished:^(id  _Nullable result, NSError * _Nullable error) {
+            if (error) {
+                NSLog(@"%@",error);
+                
+                return;
+            }
+            
+            NSLog(@"%@",result);
+            
+            NSInteger code = [result[@"code"] integerValue];
+            if (code != 200) {
+                return;
+            }
+            
+            NSDictionary *dataDic = result[@"data"];
+            NSString *positionStr = dataDic[@"escortPosition"];
+            
+            if ([positionStr componentsSeparatedByString:@" "].count < 2) {
+                return;
+            }
+            
+            CLLocationCoordinate2D chapCoordinate = CLLocationCoordinate2DMake([[positionStr componentsSeparatedByString:@" "][0] doubleValue], [[positionStr componentsSeparatedByString:@" "][1] doubleValue]);
+            
+            if (CLLocationCoordinate2DIsValid(chapCoordinate)) {
+                return;
+            }
+            
+            [weakSelf.upView.mapView removeAnnotations:weakSelf.upView.mapView.annotations];
+            
+            RQPointAnnotation *chapAnnotation = [[RQPointAnnotation alloc] initWithCoordinate:chapCoordinate index:1];
+            [weakSelf.upView.mapView addAnnotation:chapAnnotation];
+            [weakSelf.upView.mapView setCenterCoordinate:chapCoordinate animated:YES];
+            
+            if (CLLocationCoordinate2DIsValid(weakSelf.parentCoordinate) && CLLocationCoordinate2DIsValid(chapCoordinate)) {
+                RQPointAnnotation *parentAnnotation = [[RQPointAnnotation alloc] initWithCoordinate:weakSelf.parentCoordinate index:0];
+                
+                [weakSelf.upView.mapView addAnnotation:parentAnnotation];
+                CLLocationCoordinate2D center = CLLocationCoordinate2DMake((weakSelf.parentCoordinate.latitude + chapCoordinate.latitude) / 2, (weakSelf.parentCoordinate.longitude + chapCoordinate.longitude) / 2);
+                MACoordinateSpan span = MACoordinateSpanMake(ABS(weakSelf.parentCoordinate.latitude - chapCoordinate.latitude) * 2, ABS(weakSelf.parentCoordinate.longitude - chapCoordinate.longitude) * 2);
+                MACoordinateRegion region = MACoordinateRegionMake(center, span);
+                [weakSelf.upView.mapView setRegion:region animated:YES];
+            }
+        }];
+    }];
+    
+    [[NSRunLoop mainRunLoop] addTimer:_timer forMode:NSRunLoopCommonModes];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -144,8 +192,6 @@
             weakSelf.tableView.backgroundColor = [UIColor colorWithRed:0.95 green:0.94 blue:0.95 alpha:1.00];
             weakSelf.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
             
-            __strong typeof(self) strongSelf = weakSelf;
-            
             NSDictionary *dataDic = result[@"data"];
             OrderDetailModel *model = [OrderDetailModel yy_modelWithDictionary:dataDic];
             weakSelf.model = model;
@@ -156,14 +202,15 @@
             }else {
                 orderStatusStr = @"陪护中";
             }
-            strongSelf.upView.orderStatusLabel.text = orderStatusStr;
-            strongSelf.upView.chaperonageLabel.text = model.escortRealName;
+            weakSelf.upView.orderStatusLabel.text = orderStatusStr;
+            weakSelf.upView.chaperonageLabel.text = model.escortRealName;
             
             [weakSelf.upView.mapView removeAnnotations:weakSelf.upView.mapView.annotations];
             CLLocationCoordinate2D parentCoordinate = kCLLocationCoordinate2DInvalid;
             CLLocationCoordinate2D chapCoordinate = kCLLocationCoordinate2DInvalid;
             if ([model.position componentsSeparatedByString:@" "].count == 2) {
                 parentCoordinate = CLLocationCoordinate2DMake([[model.position componentsSeparatedByString:@" "][0] doubleValue], [[model.position componentsSeparatedByString:@" "][1] doubleValue]);
+                weakSelf.parentCoordinate = parentCoordinate;
                 RQPointAnnotation *parentAnnotation = [[RQPointAnnotation alloc] initWithCoordinate:parentCoordinate index:0];
                 [weakSelf.upView.mapView addAnnotation:parentAnnotation];
             }
@@ -189,32 +236,32 @@
                 [weakSelf.upView.mapView setCenterCoordinate:chapCoordinate animated:YES];
             }
             
-            strongSelf.downView.beChapNameLabel.text = model.parentName;
-            strongSelf.downView.ageLabel.text = [NSString stringWithFormat:@"%ld", model.parentAge];
-            strongSelf.downView.sexLabel.text = model.parentGender;
-            strongSelf.downView.chapTimeLabel.text = [NSString stringWithFormat:@"%@至%@",model.escortStart, model.escortEnd];
+            weakSelf.downView.beChapNameLabel.text = model.parentName;
+            weakSelf.downView.ageLabel.text = [NSString stringWithFormat:@"%ld", model.parentAge];
+            weakSelf.downView.sexLabel.text = model.parentGender;
+            weakSelf.downView.chapTimeLabel.text = [NSString stringWithFormat:@"%@至%@",model.escortStart, model.escortEnd];
             NSString *healthStr;
             if (model.healthStatus == 0) {
                 healthStr = @"健康";
             }else {
                 healthStr = @"患病";
             }
-            strongSelf.downView.healthConditionLabel.text = healthStr;
+            weakSelf.downView.healthConditionLabel.text = healthStr;
             NSString *chapTypeStr;
             if (model.escortType == 0) {
                 chapTypeStr = @"临时陪护";
             }else {
                 chapTypeStr = @"长期陪护";
             }
-            strongSelf.downView.chapTypeLabel.text = chapTypeStr;
-            strongSelf.downView.sicknessHistoryLabel.text = model.illness;
+            weakSelf.downView.chapTypeLabel.text = chapTypeStr;
+            weakSelf.downView.sicknessHistoryLabel.text = model.illness;
             if (model.medicationComplianceList.count == 0) {
-                strongSelf.downView.medicineConditionLabel.text = @"无";
+                weakSelf.downView.medicineConditionLabel.text = @"无";
             }else {
                 MedicineModel *medicineModel = model.medicationComplianceList[0];
-                strongSelf.downView.medicineConditionLabel.text = [NSString stringWithFormat:@"%@每日%@次",medicineModel.medicine, medicineModel.count];
+                weakSelf.downView.medicineConditionLabel.text = [NSString stringWithFormat:@"%@每日%@次",medicineModel.medicine, medicineModel.count];
             }
-            strongSelf.downView.orderNumberLabel.text = model.orderNo;
+            weakSelf.downView.orderNumberLabel.text = model.orderNo;
         }];
     }];
 }

@@ -67,9 +67,17 @@
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     formatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
     NSDate *endDate = [formatter dateFromString:[_chapEndTextField.text componentsSeparatedByString:@"  "][1]];
-    NSInteger escortEnd = [endDate timeIntervalSince1970] * 1000;
     NSDate *startDate = [formatter dateFromString:[_chapStartTextField.text componentsSeparatedByString:@"  "][1]];
+    
+    NSComparisonResult result = [startDate compare:endDate];
+    if (result == NSOrderedDescending || result == NSOrderedSame) {
+        [RQProgressHUD rq_showErrorWithStatus:@"陪护结束时间不可早于或等于陪护开始时间"];
+        
+        return;
+    }
+    
     NSInteger escortStart = [startDate timeIntervalSince1970] * 1000;
+    NSInteger escortEnd = [endDate timeIntervalSince1970] * 1000;
     NSString *positionStr = [NSString stringWithFormat:@"%f %f",_curCoordinate.latitude,_curCoordinate.longitude];
     
     [RQProgressHUD rq_show];

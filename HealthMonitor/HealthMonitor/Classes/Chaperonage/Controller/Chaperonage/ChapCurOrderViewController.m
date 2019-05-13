@@ -156,7 +156,7 @@
             
             NSDictionary *dataDic = result[@"data"];
             OrderDetailModel *model = [OrderDetailModel yy_modelWithDictionary:dataDic];
-            weakSelf.model = model;
+            strongSelf.model = model;
             
             NSString *orderStatusStr;
             if (model.orderStatus == 1) {
