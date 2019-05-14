@@ -116,6 +116,10 @@ typedef void (^FinishedCallBack) (id _Nullable result, NSError * _Nullable error
 
 - (void)parentChapBindingDeleteWithChapCode:(NSString *)chapCode parentCode:(NSString *)parentCode finished:(FinishedCallBack)finished;
 
+- (void)saveParentStepCountWithDate:(NSInteger)date nickname:(NSString *)nickname walkCount:(NSInteger)walkCount finished:(FinishedCallBack)finished;
+
+- (void)getParentStepCountWithNickname:(NSString *)nickname finished:(FinishedCallBack)finished;
+
 @end
 
 NS_ASSUME_NONNULL_END

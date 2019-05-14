@@ -304,6 +304,24 @@
     [self requestWithHTTPMethod:DELETE URLString:url parameters:parameters finished:finished];
 }
 
+#pragma mark - 父母步数相关请求
+- (void)saveParentStepCountWithDate:(NSInteger)date nickname:(NSString *)nickname walkCount:(NSInteger)walkCount finished:(FinishedCallBack)finished {
+    NSString *url = @"parent/record/save";
+    NSDictionary *parameters = @{@"date": @(date),
+                                 @"nickname": nickname,
+                                 @"walkCount": @(walkCount)
+                                 };
+    
+    [self requestWithHTTPMethod:POST URLString:url parameters:parameters finished:finished];
+}
+
+- (void)getParentStepCountWithNickname:(NSString *)nickname finished:(FinishedCallBack)finished {
+    NSString *url = @"parent/record/batch/list";
+    NSDictionary *parameters = @{@"nickname": nickname};
+    
+    [self requestWithHTTPMethod:GET URLString:url parameters:parameters finished:finished];
+}
+
 #pragma mark - 封装AFN
 - (void)requestWithHTTPMethod:(HTTPMethod)method  URLString:(NSString *)URLString parameters:(nullable id)parameters finished:(FinishedCallBack)finished {
     NSString *methodStr;

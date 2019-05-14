@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "LoginViewController.h"
 #import <AMapFoundationKit/AMapFoundationKit.h>
+#import <HealthKit/HealthKit.h>
 
 @interface AppDelegate ()
 
@@ -27,7 +28,29 @@
     // 设置地图
     [AMapServices sharedServices].apiKey = @"7a3b0f6d93712c79f2857377d91189e8";
     [AMapServices sharedServices].enableHTTPS = YES;
-
+    
+    // 获取步数权限
+    if (![HKHealthStore isHealthDataAvailable]) {
+        NSLog(@"该设备不支持HealthKit");
+        _canGetStep = NO;
+    }else {
+        HKHealthStore *healthStore = [[HKHealthStore alloc] init];
+        
+        HKObjectType *stepType = [HKObjectType quantityTypeForIdentifier:HKQuantityTypeIdentifierStepCount];
+        NSSet *healthSet = [NSSet setWithObjects:stepType, nil];
+        
+        __weak typeof(self) weakSelf = self;
+        [healthStore requestAuthorizationToShareTypes:nil readTypes:healthSet completion:^(BOOL success, NSError * _Nullable error) {
+            if (success) {
+                weakSelf.canGetStep = YES;
+            }else {
+                NSLog(@"获取步数权限失败");
+                weakSelf.canGetStep = NO;
+            }
+        }];
+    }
+    
+    
     return YES;
 }
 

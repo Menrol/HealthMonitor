@@ -14,40 +14,21 @@
 NSString *HistogramCollectionViewCellID = @"HistogramCollectionViewCellID";
 
 @interface StepView()<UICollectionViewDataSource>
-@property(strong,nonatomic) UILabel             *stepCountLabel;
+@property(strong,nonatomic) UICollectionView    *histogramView;
 
 @end
 
 @implementation StepView
 
+- (void)setStepArray:(NSArray *)stepArray {
+    _stepArray = stepArray;
+    
+    [self.histogramView reloadData];
+}
+
 - (instancetype)init {
     self = [super init];
     if (self) {
-        _stepArray = [[NSMutableArray alloc] init];
-        // TODO: 测试数据
-        [_stepArray addObject:@"20000"];
-        [_stepArray addObject:@"1000"];
-        [_stepArray addObject:@"1000"];
-        [_stepArray addObject:@"3000"];
-        [_stepArray addObject:@"4000"];
-        [_stepArray addObject:@"11000"];
-        [_stepArray addObject:@"2000"];
-        [_stepArray addObject:@"3000"];
-        [_stepArray addObject:@"3000"];
-        [_stepArray addObject:@"3000"];
-        [_stepArray addObject:@"1500"];
-        [_stepArray addObject:@"6000"];
-        [_stepArray addObject:@"6000"];
-        [_stepArray addObject:@"6000"];
-        [_stepArray addObject:@"6000"];
-        [_stepArray addObject:@"6000"];
-        [_stepArray addObject:@"6000"];
-        [_stepArray addObject:@"6000"];
-        [_stepArray addObject:@"6000"];
-        [_stepArray addObject:@"6000"];
-        [_stepArray addObject:@"6000"];
-        [_stepArray addObject:@"6000"];
-        [_stepArray addObject:@"6000"];
         
         [self setupUI];
     }

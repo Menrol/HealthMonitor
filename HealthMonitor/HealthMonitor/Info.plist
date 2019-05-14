@@ -48,5 +48,9 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSHealthUpdateUsageDescription</key>
+	<string>some string value stating the reason</string>
+	<key>NSHealthShareUsageDescription</key>
+	<string>如果不允许，你将无法看到自己最近一个月的步数</string>
 </dict>
 </plist>

@@ -60,10 +60,10 @@
     _mapView = [[MAMapView alloc] init];
     _mapView.layer.borderColor = [UIColor blackColor].CGColor;
     _mapView.layer.borderWidth = 0.5;
-    _mapView.showsUserLocation = YES;
+    _mapView.showsUserLocation = NO;
     _mapView.showsCompass = NO;
     _mapView.showsScale = NO;
-    _mapView.userTrackingMode = MAUserTrackingModeFollow;
+    _mapView.userTrackingMode = MAUserTrackingModeNone;
     _mapView.delegate = self;
     [_mapView setZoomLevel:15.f];
     [self addSubview:_mapView];

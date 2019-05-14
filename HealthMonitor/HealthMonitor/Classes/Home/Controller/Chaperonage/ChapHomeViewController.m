@@ -106,6 +106,37 @@ NSString * const ChapHomeTableViewCellID = @"ChapHomeTableViewCellID";
             
             [weakSelf.search AMapReGoecodeSearch:rego];
         }];
+        
+        [[NetworkTool sharedTool] getParentStepCountWithNickname:weakSelf.parentModel.nickname finished:^(id  _Nullable result, NSError * _Nullable error) {
+            if (error) {
+                NSLog(@"%@",error);
+                
+                return;
+            }
+            
+            NSLog(@"%@",result);
+            
+            NSInteger code = [result[@"code"] integerValue];
+            if (code != 200) {
+                [RQProgressHUD rq_showErrorWithStatus:result[@"msg"]];
+                
+                return;
+            }
+            
+            NSArray *dataArray = result[@"data"];
+            
+            if (dataArray == nil) {
+                return;
+            }
+            
+            NSMutableArray *stepArray = [[NSMutableArray alloc] init];
+            for (NSDictionary *dic in dataArray) {
+                [stepArray addObject:dic[@"walkCount"]];
+            }
+            
+            weakSelf.stepView.stepCountLabel.text = [NSString stringWithFormat:@"%d",[stepArray.lastObject intValue]];
+            weakSelf.stepView.stepArray = stepArray;
+        }];
     }];
     
     [[NSRunLoop mainRunLoop] addTimer:_timer forMode:NSRunLoopCommonModes];
@@ -218,8 +249,39 @@ NSString * const ChapHomeTableViewCellID = @"ChapHomeTableViewCellID";
             [weakSelf.search AMapReGoecodeSearch:rego];
         }];
         
-        
-        
+        dispatch_group_enter(group);
+        [[NetworkTool sharedTool] getParentStepCountWithNickname:parentModel.nickname finished:^(id  _Nullable result, NSError * _Nullable error) {
+            dispatch_group_leave(group);
+            
+            if (error) {
+                NSLog(@"%@",error);
+                
+                return;
+            }
+            
+            NSLog(@"%@",result);
+            
+            NSInteger code = [result[@"code"] integerValue];
+            if (code != 200) {
+                [RQProgressHUD rq_showErrorWithStatus:result[@"msg"]];
+                
+                return;
+            }
+            
+            NSArray *dataArray = result[@"data"];
+            
+            if (dataArray == nil) {
+                return;
+            }
+            
+            NSMutableArray *stepArray = [[NSMutableArray alloc] init];
+            for (NSDictionary *dic in dataArray) {
+                [stepArray addObject:dic[@"walkCount"]];
+            }
+            
+            weakSelf.stepView.stepCountLabel.text = [NSString stringWithFormat:@"%d",[stepArray.lastObject intValue]];
+            weakSelf.stepView.stepArray = stepArray;
+        }];
         
         dispatch_group_notify(group, dispatch_get_main_queue(), ^{
             [weakSelf.tableView.mj_header endRefreshing];
