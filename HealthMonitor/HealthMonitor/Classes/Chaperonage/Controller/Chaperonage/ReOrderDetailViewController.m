@@ -137,8 +137,25 @@
                 return;
             }
             
-            [RQProgressHUD rq_showSuccessWithStatus:@"接单成功" completion:^{
-                [weakSelf.navigationController popViewControllerAnimated:YES];
+            [[NetworkTool sharedTool] parentChapBindingSaveWithChapCode:weakSelf.nickname parentCode:weakSelf.model.parentEscort finished:^(id  _Nullable result, NSError * _Nullable error) {
+                if (error) {
+                    NSLog(@"%@",error);
+                    
+                    return;
+                }
+                
+                NSLog(@"%@",result);
+                
+                NSInteger code = [result[@"code"] integerValue];
+                if (code != 200) {
+                    [RQProgressHUD rq_showErrorWithStatus:result[@"msg"]];
+                    
+                    return;
+                }
+                
+                [RQProgressHUD rq_showSuccessWithStatus:@"接单成功" completion:^{
+                    [weakSelf.navigationController popViewControllerAnimated:YES];
+                }];
             }];
         }];
     }];

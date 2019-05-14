@@ -11,6 +11,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface StepView : UIView
+@property(strong,nonatomic) UICollectionView    *histogramView;
+@property(strong,nonatomic) NSMutableArray      *stepArray;
 
 @end
 

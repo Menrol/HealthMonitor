@@ -9,6 +9,9 @@
 #import "OldHomeViewController.h"
 #import "StepView.h"
 #import "TipView.h"
+#import "MainViewController.h"
+#import "ParentModel.h"
+#import "NetworkTool.h"
 #import <MAMapKit/MAMapKit.h>
 #import <AMapFoundationKit/AMapFoundationKit.h>
 #import <AMapSearchKit/AMapSearchKit.h>
@@ -18,6 +21,7 @@
 @property(strong,nonatomic) MAMapView       *mapView;
 @property(strong,nonatomic) UILabel         *addressLabel;
 @property(strong,nonatomic) AMapSearchAPI   *search;
+@property(strong,nonatomic) ParentModel     *model;
 
 @end
 
@@ -27,9 +31,22 @@
     [super viewDidLoad];
     
     [self setupUI];
+    
+    MainViewController *vc = (MainViewController *)self.tabBarController;
+    _model = vc.model;
 }
 
 - (void)mapView:(MAMapView *)mapView didUpdateUserLocation:(MAUserLocation *)userLocation updatingLocation:(BOOL)updatingLocation {
+    NSString *position = [NSString stringWithFormat:@"%lf %lf",userLocation.coordinate.latitude,userLocation.coordinate.longitude];
+    [[NetworkTool sharedTool] parentUpdateWithParamters:@{@"id": @(_model.userID), @"position": position} finished:^(id  _Nullable result, NSError * _Nullable error) {
+        if (error) {
+            NSLog(@"%@",error);
+            
+            return;
+        }
+        
+        NSLog(@"%@",result);
+    }];
     
     AMapReGeocodeSearchRequest *rego = [[AMapReGeocodeSearchRequest alloc] init];
     rego.location = [AMapGeoPoint locationWithLatitude:userLocation.location.coordinate.latitude longitude:userLocation.location.coordinate.longitude];

@@ -15,8 +15,6 @@ NSString *HistogramCollectionViewCellID = @"HistogramCollectionViewCellID";
 
 @interface StepView()<UICollectionViewDataSource>
 @property(strong,nonatomic) UILabel             *stepCountLabel;
-@property(strong,nonatomic) UICollectionView    *histogramView;
-@property(strong,nonatomic) NSMutableArray      *stepArray;
 
 @end
 

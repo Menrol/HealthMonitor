@@ -44,6 +44,8 @@
     MainViewController *vc = (MainViewController *)self.tabBarController;
     _parentModel = vc.model;
     
+    [_tableView.mj_header beginRefreshing];
+    
     __weak typeof(self) weakSelf = self;
     _timer = [NSTimer timerWithTimeInterval:5 * 60 repeats:YES block:^(NSTimer * _Nonnull timer) {
         if (weakSelf.model == nil) {
@@ -96,10 +98,6 @@
     }];
     
     [[NSRunLoop mainRunLoop] addTimer:_timer forMode:NSRunLoopCommonModes];
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    [_tableView.mj_header beginRefreshing];
 }
 
 - (void)dealloc {
@@ -294,12 +292,9 @@
         UITableViewCell *cell = [[UITableViewCell alloc] init];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
-        _upView = [[CurOrderUpView alloc] init];
-        _upView.delegate = self;
-        _upView.hidden = YES;
-        [cell.contentView addSubview:_upView];
+        [cell.contentView addSubview:self.upView];
         
-        [_upView mas_makeConstraints:^(MASConstraintMaker *make) {
+        [self.upView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(cell.contentView.mas_top);
             make.left.equalTo(cell.contentView.mas_left);
             make.right.equalTo(cell.contentView.mas_right);
@@ -313,11 +308,9 @@
         UITableViewCell *cell = [[UITableViewCell alloc] init];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
-        _downView = [CurOrderDownView oldOrderDownView];
-        _downView.hidden = YES;
-        [cell.contentView addSubview:_downView];
+        [cell.contentView addSubview:self.downView];
         
-        [_downView mas_makeConstraints:^(MASConstraintMaker *make) {
+        [self.downView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(cell.contentView.mas_top);
             make.left.equalTo(cell.contentView.mas_left);
             make.right.equalTo(cell.contentView.mas_right);
@@ -328,6 +321,25 @@
         
         return cell;
     }
+}
+
+- (CurOrderUpView *)upView {
+    if (!_upView) {
+        _upView = [[CurOrderUpView alloc] init];
+        _upView.delegate = self;
+        _upView.hidden = YES;
+    }
+    
+    return _upView;
+}
+
+- (CurOrderDownView *)downView {
+    if (!_downView) {
+        _downView = [CurOrderDownView oldOrderDownView];
+        _downView.hidden = YES;
+    }
+    
+    return _downView;
 }
 
 - (void)setupUI {

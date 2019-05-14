@@ -217,6 +217,13 @@
     [self requestWithHTTPMethod:PUT URLString:url parameters:parameters finished:finished];
 }
 
+- (void)chapGetParentMessageWithNickname:(NSString *)nickname finished:(FinishedCallBack)finished {
+    NSString *url = @"escort/batch/parent";
+    NSDictionary *parameters = @{@"nickname": nickname};
+    
+    [self requestWithHTTPMethod:GET URLString:url parameters:parameters finished:finished];
+}
+
 #pragma mark - 订单相关请求
 - (void)sendOrderWithAddress:(NSString *)address desc:(NSString *)desc emergencyStatus:(NSInteger)emergencyStatus escortEnd:(NSInteger)escortEnd escortStart:(NSInteger)escortStart escortType:(NSInteger)escortType healthStatus:(NSInteger)healthStatus parentEscort:(NSString *)parentEscort position:(NSString *)position finished:(FinishedCallBack)finished {
     NSString *url = @"order/save";
@@ -276,6 +283,25 @@
     NSString *url = [NSString stringWithFormat:@"%@?nickname=%@&id=%ld",@"order/update/escort",nickname,orderID];
     
     [self requestWithHTTPMethod:PUT URLString:url parameters:nil finished:finished];
+}
+
+#pragma mark - 陪护老人绑定相关请求
+- (void)parentChapBindingSaveWithChapCode:(NSString *)chapCode parentCode:(NSString *)parentCode finished:(FinishedCallBack)finished {
+    NSString *url = @"parent/escort/save";
+    NSDictionary *parameters = @{@"escort": chapCode,
+                                 @"parent": parentCode,
+                                 @"status": @(1)
+                                 };
+    
+    [self requestWithHTTPMethod:POST URLString:url parameters:parameters finished:finished];
+}
+
+- (void)parentChapBindingDeleteWithChapCode:(NSString *)chapCode parentCode:(NSString *)parentCode finished:(FinishedCallBack)finished {
+    NSString *url = @"parent/escort/delete";
+    NSDictionary *parameters = @{@"escort": chapCode,
+                                 @"parent": parentCode};
+    
+    [self requestWithHTTPMethod:DELETE URLString:url parameters:parameters finished:finished];
 }
 
 #pragma mark - 封装AFN

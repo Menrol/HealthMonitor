@@ -87,6 +87,8 @@ typedef void (^FinishedCallBack) (id _Nullable result, NSError * _Nullable error
 
 - (void)chapUpdateWithParamters:(NSDictionary *)parameters finished:(FinishedCallBack)finished;
 
+- (void)chapGetParentMessageWithNickname:(NSString *)nickname finished:(FinishedCallBack)finished;
+
 - (void)sendOrderWithAddress:(NSString *)address
                         desc:(NSString *)desc
              emergencyStatus:(NSInteger)emergencyStatus
@@ -109,6 +111,10 @@ typedef void (^FinishedCallBack) (id _Nullable result, NSError * _Nullable error
 - (void)updateOrderStatusWithOrderStatus:(NSInteger)orderStatus orderID:(NSInteger)orderID finished:(FinishedCallBack)finished;
 
 - (void)chapReceiveOrderWithNickname:(NSString *)nickname orderID:(NSInteger)orderID finished:(FinishedCallBack)finished;
+
+- (void)parentChapBindingSaveWithChapCode:(NSString *)chapCode parentCode:(NSString *)parentCode finished:(FinishedCallBack)finished;
+
+- (void)parentChapBindingDeleteWithChapCode:(NSString *)chapCode parentCode:(NSString *)parentCode finished:(FinishedCallBack)finished;
 
 @end
 

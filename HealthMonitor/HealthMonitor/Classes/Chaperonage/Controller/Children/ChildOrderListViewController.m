@@ -24,7 +24,7 @@ NSString * const ChildOrderListTableViewCellID = @"ChildOrderListTableViewCellID
     UIButton                       *_preButton;
     NSArray<OrderModel *>          *_dataArray;
 }
-@property(strong,nonatomic) UITableView       *tableView;
+@property(strong,nonatomic) UITableView                      *tableView;
 @property(strong,nonatomic) UILabel                          *noOrderLabel;
 @property(strong,nonatomic) NSMutableArray<OrderModel *>     *orderList;
 @property(strong,nonatomic) NSString                         *parentNickname;
@@ -43,9 +43,21 @@ NSString * const ChildOrderListTableViewCellID = @"ChildOrderListTableViewCellID
     [_tableView.mj_header beginRefreshing];
 }
 
-- (void)loadData {
+- (void)viewDidAppear:(BOOL)animated {
     MainViewController *vc = (MainViewController *)self.tabBarController;
-    _parentNickname = vc.parentNickname;
+    
+    if (![_parentNickname isEqualToString:vc.parentNickname]) {
+        _parentNickname = vc.parentNickname;
+        
+        [_tableView.mj_header beginRefreshing];
+    }
+    
+}
+
+- (void)loadData {
+    _preButton.selected = NO;
+    _preButton.layer.borderColor = [UIColor blackColor].CGColor;
+    _preButton = nil;
     
     __weak typeof(self) weakSelf = self;
     [[NetworkTool sharedTool] getParentOrderWithNickname:_parentNickname finished:^(id  _Nullable result, NSError * _Nullable error) {

@@ -25,6 +25,7 @@ NSString * const ChapOrderListTableViewCellId = @"ChapOrderListTableViewCellId";
     NSArray<OrderModel *>          *_dataArray;
 }
 @property(strong,nonatomic) UITableView                      *tableView;
+@property(strong,nonatomic) UILabel                          *noOrderLabel;
 @property(strong,nonatomic) NSMutableArray<OrderModel *>     *orderList;
 @property(strong,nonatomic) ChapModel                        *model;
 
@@ -46,6 +47,10 @@ NSString * const ChapOrderListTableViewCellId = @"ChapOrderListTableViewCellId";
 }
 
 - (void)loadData {
+    _preButton.selected = NO;
+    _preButton.layer.borderColor = [UIColor blackColor].CGColor;
+    _preButton = nil;
+    
     __weak typeof(self) weakSelf = self;
     [[NetworkTool sharedTool] getOrderListWithFinished:^(id  _Nullable result, NSError * _Nullable error) {
         [weakSelf.tableView.mj_header endRefreshing];
@@ -79,6 +84,12 @@ NSString * const ChapOrderListTableViewCellId = @"ChapOrderListTableViewCellId";
                 OrderModel *model = [OrderModel yy_modelWithDictionary:dic];
                 [weakSelf.orderList addObject:model];
             }
+        }
+        
+        if (weakSelf.orderList.count == 0) {
+            weakSelf.noOrderLabel.hidden = NO;
+        }else {
+            weakSelf.noOrderLabel.hidden = YES;
         }
         
         __strong typeof(self) strongSelf = weakSelf;
@@ -190,6 +201,14 @@ NSString * const ChapOrderListTableViewCellId = @"ChapOrderListTableViewCellId";
     
     _tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadData)];
     
+    _noOrderLabel = [[UILabel alloc] init];
+    _noOrderLabel.text = @"暂无订单";
+    _noOrderLabel.textAlignment = NSTextAlignmentCenter;
+    _noOrderLabel.font = [UIFont boldSystemFontOfSize:25.f];
+    _noOrderLabel.textColor = [UIColor grayColor];
+    _noOrderLabel.hidden = YES;
+    [self.tableView addSubview:_noOrderLabel];
+    
     // 设置布局
     [underwayButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.view.mas_top).offset(15.f);
@@ -210,6 +229,11 @@ NSString * const ChapOrderListTableViewCellId = @"ChapOrderListTableViewCellId";
         make.left.equalTo(self.view.mas_left);
         make.right.equalTo(self.view.mas_right);
         make.bottom.equalTo(self.view.mas_bottom);
+    }];
+    
+    [_noOrderLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.center.equalTo(self.tableView);
+        make.size.mas_equalTo(CGSizeMake(101.33f, 25.f));
     }];
 }
 

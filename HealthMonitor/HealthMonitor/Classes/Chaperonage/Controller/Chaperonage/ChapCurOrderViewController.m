@@ -44,9 +44,7 @@
     
     MainViewController *vc = (MainViewController *)self.tabBarController;
     _chapModel = vc.model;
-}
-
-- (void)viewDidAppear:(BOOL)animated {
+    
     [_tableView.mj_header beginRefreshing];
 }
 
@@ -237,9 +235,32 @@
             return;
         }
         
-        [RQProgressHUD rq_showSuccessWithStatus:@"变更状态成功" completion:^{
-            [weakSelf.tableView.mj_header beginRefreshing];
-        }];
+        if (weakSelf.model.orderStatus + 1 == 3) {
+            [[NetworkTool sharedTool] parentChapBindingDeleteWithChapCode:weakSelf.model.escortName parentCode:weakSelf.model.parentEscort finished:^(id  _Nullable result, NSError * _Nullable error) {
+                if (error) {
+                    NSLog(@"%@",error);
+                    
+                    return;
+                }
+                
+                NSLog(@"%@",result);
+                
+                NSInteger code = [result[@"code"] integerValue];
+                if (code != 200) {
+                    [RQProgressHUD rq_showErrorWithStatus:result[@"msg"]];
+                    
+                    return;
+                }
+                
+                [RQProgressHUD rq_showSuccessWithStatus:@"变更状态成功" completion:^{
+                    [weakSelf.tableView.mj_header beginRefreshing];
+                }];
+            }];
+        }else {
+            [RQProgressHUD rq_showSuccessWithStatus:@"变更状态成功" completion:^{
+                [weakSelf.tableView.mj_header beginRefreshing];
+            }];
+        }
     }];
 }
 
@@ -256,12 +277,9 @@
         UITableViewCell *cell = [[UITableViewCell alloc] init];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
-        _upView = [[ChapOrderUpView alloc] init];
-        _upView.delegate = self;
-        _upView.hidden = YES;
-        [cell.contentView addSubview:_upView];
+        [cell.contentView addSubview:self.upView];
         
-        [_upView mas_makeConstraints:^(MASConstraintMaker *make) {
+        [self.upView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(cell.contentView.mas_top);
             make.left.equalTo(cell.contentView.mas_left);
             make.right.equalTo(cell.contentView.mas_right);
@@ -275,11 +293,9 @@
         UITableViewCell *cell = [[UITableViewCell alloc] init];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
-        _downView = [ChapOrderDownView chapOrderDownView];
-        _downView.hidden = YES;
-        [cell.contentView addSubview:_downView];
+        [cell.contentView addSubview:self.downView];
         
-        [_downView mas_makeConstraints:^(MASConstraintMaker *make) {
+        [self.downView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(cell.contentView.mas_top);
             make.left.equalTo(cell.contentView.mas_left);
             make.right.equalTo(cell.contentView.mas_right);
@@ -315,6 +331,25 @@
     MACoordinateRegion region = MACoordinateRegionMake(center, span);
 
     [_upView.mapView setRegion:region animated:YES];
+}
+
+- (ChapOrderUpView *)upView {
+    if (!_upView) {
+        _upView = [[ChapOrderUpView alloc] init];
+        _upView.delegate = self;
+        _upView.hidden = YES;
+    }
+    
+    return _upView;
+}
+
+- (ChapOrderDownView *)downView {
+    if (!_downView) {
+        _downView = [ChapOrderDownView chapOrderDownView];
+        _downView.hidden = YES;
+    }
+    
+    return _downView;
 }
 
 - (void)setupUI {

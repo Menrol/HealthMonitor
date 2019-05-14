@@ -39,6 +39,8 @@
     
     [self setupUI];
     
+    [_tableView.mj_header beginRefreshing];
+    
     __weak typeof(self) weakSelf = self;
     _timer = [NSTimer timerWithTimeInterval:5 * 60 repeats:YES block:^(NSTimer * _Nonnull timer) {
         if (weakSelf.model == nil) {
@@ -95,14 +97,18 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     MainViewController *vc = (MainViewController *)self.tabBarController;
-    _parentNickname = vc.parentNickname;
     
-    [_tableView.mj_header beginRefreshing];
+    if (![_parentNickname isEqualToString:vc.parentNickname]) {
+        _parentNickname = vc.parentNickname;
+        
+        [_tableView.mj_header beginRefreshing];
+    }
+    
 }
 
 - (void)loadData {
     __weak typeof(self) weakSelf = self;
-    [[NetworkTool sharedTool] getParentOrderWithNickname:weakSelf.parentNickname finished:^(id  _Nullable result, NSError * _Nullable error) {
+    [[NetworkTool sharedTool] getParentOrderWithNickname:_parentNickname finished:^(id  _Nullable result, NSError * _Nullable error) {
         
         if (error) {
             [weakSelf.tableView.mj_header endRefreshing];
@@ -289,10 +295,7 @@
         UITableViewCell *cell = [[UITableViewCell alloc] init];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
-        _upView = [[CurOrderUpView alloc] init];
-        _upView.delegate = self;
-        _upView.hidden = YES;
-        [cell.contentView addSubview:_upView];
+        [cell.contentView addSubview:self.upView];
         
         [_upView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(cell.contentView.mas_top);
@@ -308,11 +311,9 @@
         UITableViewCell *cell = [[UITableViewCell alloc] init];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
-        _downView = [CurOrderDownView oldOrderDownView];
-        _downView.hidden = YES;
-        [cell.contentView addSubview:_downView];
+        [cell.contentView addSubview:self.downView];
         
-        [_downView mas_makeConstraints:^(MASConstraintMaker *make) {
+        [self.downView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(cell.contentView.mas_top);
             make.left.equalTo(cell.contentView.mas_left);
             make.right.equalTo(cell.contentView.mas_right);
@@ -323,6 +324,25 @@
         
         return cell;
     }
+}
+
+- (CurOrderUpView *)upView {
+    if (!_upView) {
+        _upView = [[CurOrderUpView alloc] init];
+        _upView.delegate = self;
+        _upView.hidden = YES;
+    }
+    
+    return _upView;
+}
+
+- (CurOrderDownView *)downView {
+    if (!_downView) {
+        _downView = [CurOrderDownView oldOrderDownView];
+        _downView.hidden = YES;
+    }
+    
+    return _downView;
 }
 
 - (void)setupUI {

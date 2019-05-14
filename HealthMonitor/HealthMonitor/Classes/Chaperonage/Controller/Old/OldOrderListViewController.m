@@ -48,6 +48,10 @@ NSString * const OldOrderListTableViewCellID = @"OldOrderListTableViewCellID";
 }
 
 - (void)loadData {
+    _preButton.selected = NO;
+    _preButton.layer.borderColor = [UIColor blackColor].CGColor;
+    _preButton = nil;
+    
     __weak typeof(self) weakSelf = self;
     [[NetworkTool sharedTool] getParentOrderWithNickname:_model.nickname finished:^(id  _Nullable result, NSError * _Nullable error) {
         [weakSelf.tableView.mj_header endRefreshing];
