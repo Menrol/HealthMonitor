@@ -116,14 +116,68 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             weakSelf.stepView.stepCountLabel.text = [NSString stringWithFormat:@"%d",sum];
             
-            NSInteger date = [[NSDate date] timeIntervalSince1970] * 1000;
+            NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+            formatter.dateFormat = @"yyyy-MM-dd";
+            NSString *dateStr = [formatter stringFromDate:[NSDate date]];
+            NSDate *date = [formatter dateFromString:dateStr];
+            NSInteger dateInteger = [date timeIntervalSince1970] * 1000;
             
-            [[NetworkTool sharedTool] saveParentStepCountWithDate:date nickname:weakSelf.model.nickname walkCount:sum finished:^(id  _Nullable result, NSError * _Nullable error) {
+            [[NetworkTool sharedTool] getParentStepCountWithNickname:weakSelf.model.nickname finished:^(id  _Nullable result, NSError * _Nullable error) {
                 if (error) {
                     NSLog(@"%@",error);
+                    
+                    return;
                 }
                 
                 NSLog(@"%@",result);
+                
+                NSInteger code = [result[@"code"] integerValue];
+                if (code != 200) {
+                    
+                    return;
+                }
+            
+                NSArray *dataArray = result[@"data"];
+                
+                if (dataArray == nil) {
+                    [[NetworkTool sharedTool] saveParentStepCountWithDate:dateInteger nickname:weakSelf.model.nickname walkCount:sum finished:^(id  _Nullable result, NSError * _Nullable error) {
+                        if (error) {
+                            NSLog(@"%@",error);
+                            
+                            return;
+                        }
+                        
+                        NSLog(@"%@",result);
+                    }];
+                    
+                    return;
+                }
+                
+                NSDictionary *stepDic = dataArray.lastObject;
+                NSInteger lastDate = [stepDic[@"date"] integerValue];
+                
+                if (lastDate != dateInteger) {
+                    [[NetworkTool sharedTool] saveParentStepCountWithDate:dateInteger nickname:weakSelf.model.nickname walkCount:sum finished:^(id  _Nullable result, NSError * _Nullable error) {
+                        if (error) {
+                            NSLog(@"%@",error);
+                            
+                            return;
+                        }
+                        
+                        NSLog(@"%@",result);
+                    }];
+                }else {
+                    NSInteger stepID = [stepDic[@"id"] integerValue];
+                    [[NetworkTool sharedTool] updatePatentStepCountWithStepID:stepID walkCount:sum finished:^(id  _Nullable result, NSError * _Nullable error) {
+                        if (error) {
+                            NSLog(@"%@",error);
+                            
+                            return;
+                        }
+                        
+                        NSLog(@"%@",result);
+                    }];
+                }
             }];
         });
     }];

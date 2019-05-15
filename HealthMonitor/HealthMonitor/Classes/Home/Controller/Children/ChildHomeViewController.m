@@ -157,6 +157,20 @@ NSString * const ChildHomeTableViewCellID = @"ChildHomeTableViewCellID";
             [weakSelf.tableView.mj_header endRefreshing];
             NSLog(@"%@",error);
             
+            [weakSelf.parentList removeAllObjects];
+            
+            weakSelf.mapView.hidden = YES;
+            weakSelf.stepView.hidden = YES;
+            weakSelf.healthTipView.hidden = YES;
+            weakSelf.physicalTipView.hidden = YES;
+            weakSelf.noOrderLabel.hidden = NO;
+            weakSelf.tableView.backgroundColor = [UIColor whiteColor];
+            weakSelf.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+            
+            MainViewController *vc = (MainViewController *)self.tabBarController;
+            vc.parentNickname = @"";
+            weakSelf.curParentModel = nil;
+            
             return;
         }
         
@@ -167,13 +181,7 @@ NSString * const ChildHomeTableViewCellID = @"ChildHomeTableViewCellID";
             [weakSelf.tableView.mj_header endRefreshing];
             [RQProgressHUD rq_showErrorWithStatus:result[@"msg"]];
             
-            return;
-        }
-        
-        NSDictionary *dataDic = result[@"data"];
-        
-        if (dataDic == nil) {
-            [weakSelf.tableView.mj_header endRefreshing];
+            [weakSelf.parentList removeAllObjects];
             
             weakSelf.mapView.hidden = YES;
             weakSelf.stepView.hidden = YES;
@@ -183,6 +191,30 @@ NSString * const ChildHomeTableViewCellID = @"ChildHomeTableViewCellID";
             weakSelf.tableView.backgroundColor = [UIColor whiteColor];
             weakSelf.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
             
+            MainViewController *vc = (MainViewController *)self.tabBarController;
+            vc.parentNickname = @"";
+            weakSelf.curParentModel = nil;
+            
+            return;
+        }
+        
+        NSDictionary *dataDic = result[@"data"];
+        
+        if (dataDic == nil) {
+            [weakSelf.tableView.mj_header endRefreshing];
+            
+            [weakSelf.parentList removeAllObjects];
+            
+            weakSelf.mapView.hidden = YES;
+            weakSelf.stepView.hidden = YES;
+            weakSelf.healthTipView.hidden = YES;
+            weakSelf.physicalTipView.hidden = YES;
+            weakSelf.noOrderLabel.hidden = NO;
+            weakSelf.tableView.backgroundColor = [UIColor whiteColor];
+            weakSelf.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+            
+            MainViewController *vc = (MainViewController *)self.tabBarController;
+            vc.parentNickname = @"";
             weakSelf.curParentModel = nil;
             
             return;

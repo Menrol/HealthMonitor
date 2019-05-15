@@ -95,7 +95,7 @@
     [[NSRunLoop mainRunLoop] addTimer:_timer forMode:NSRunLoopCommonModes];
 }
 
-- (void)viewDidAppear:(BOOL)animated {
+- (void)viewWillAppear:(BOOL)animated {
     MainViewController *vc = (MainViewController *)self.tabBarController;
     
     if (![_parentNickname isEqualToString:vc.parentNickname]) {
@@ -103,10 +103,21 @@
         
         [_tableView.mj_header beginRefreshing];
     }
-    
 }
 
 - (void)loadData {
+    if (_parentNickname.length == 0) {
+        [_tableView.mj_header endRefreshing];
+        
+        self.noOrderLabel.hidden = NO;
+        self.upView.hidden = YES;
+        self.downView.hidden = YES;
+        self.tableView.backgroundColor = [UIColor whiteColor];
+        self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        
+        return;
+    }
+    
     __weak typeof(self) weakSelf = self;
     [[NetworkTool sharedTool] getParentOrderWithNickname:_parentNickname finished:^(id  _Nullable result, NSError * _Nullable error) {
         

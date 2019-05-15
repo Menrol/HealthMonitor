@@ -120,6 +120,8 @@ typedef void (^FinishedCallBack) (id _Nullable result, NSError * _Nullable error
 
 - (void)getParentStepCountWithNickname:(NSString *)nickname finished:(FinishedCallBack)finished;
 
+- (void)updatePatentStepCountWithStepID:(NSInteger)stepID walkCount:(NSInteger)walkCount finished:(FinishedCallBack)finished;
+
 @end
 
 NS_ASSUME_NONNULL_END

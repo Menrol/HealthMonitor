@@ -41,9 +41,7 @@ NSString * const OldMyTableViewCellId = @"OldMyTableViewCellId";
     [super viewDidLoad];
     
     [self setupUI];
-}
-
-- (void)viewWillAppear:(BOOL)animated {
+    
     MainViewController *vc = (MainViewController *)self.tabBarController;
     _model = (ParentModel *)vc.model;
     

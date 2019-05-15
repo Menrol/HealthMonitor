@@ -36,9 +36,7 @@ NSString * const ChildMyTableViewCellId = @"ChildMyTableViewCellId";
     [super viewDidLoad];
     
     [self setupUI];
-}
-
-- (void)viewWillAppear:(BOOL)animated {
+    
     MainViewController *vc = (MainViewController *)self.tabBarController;
     _model = vc.model;
     
@@ -90,6 +88,11 @@ NSString * const ChildMyTableViewCellId = @"ChildMyTableViewCellId";
         
         [strongSelf->_parentList removeObject:model];
         [strongSelf.bindingTableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+        
+        MainViewController *vc = (MainViewController *)strongSelf.tabBarController;
+        if ([vc.parentNickname isEqualToString:model.nickname]) {
+            vc.parentNickname = @"";
+        }
     }];
 }
 

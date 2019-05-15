@@ -43,7 +43,7 @@ NSString * const ChildOrderListTableViewCellID = @"ChildOrderListTableViewCellID
     [_tableView.mj_header beginRefreshing];
 }
 
-- (void)viewDidAppear:(BOOL)animated {
+- (void)viewWillAppear:(BOOL)animated {
     MainViewController *vc = (MainViewController *)self.tabBarController;
     
     if (![_parentNickname isEqualToString:vc.parentNickname]) {
@@ -51,13 +51,24 @@ NSString * const ChildOrderListTableViewCellID = @"ChildOrderListTableViewCellID
         
         [_tableView.mj_header beginRefreshing];
     }
-    
 }
 
 - (void)loadData {
     _preButton.selected = NO;
     _preButton.layer.borderColor = [UIColor blackColor].CGColor;
     _preButton = nil;
+    
+    if (_parentNickname.length == 0) {
+        [_tableView.mj_header endRefreshing];
+        
+        self.noOrderLabel.hidden = NO;
+        
+        [_orderList removeAllObjects];
+        _dataArray = _orderList;
+        [_tableView reloadData];
+        
+        return;
+    }
     
     __weak typeof(self) weakSelf = self;
     [[NetworkTool sharedTool] getParentOrderWithNickname:_parentNickname finished:^(id  _Nullable result, NSError * _Nullable error) {

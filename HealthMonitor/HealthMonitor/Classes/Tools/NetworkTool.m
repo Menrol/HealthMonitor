@@ -322,6 +322,15 @@
     [self requestWithHTTPMethod:GET URLString:url parameters:parameters finished:finished];
 }
 
+- (void)updatePatentStepCountWithStepID:(NSInteger)stepID walkCount:(NSInteger)walkCount finished:(FinishedCallBack)finished {
+    NSString *url = @"parent/record/update";
+    NSDictionary *parameters = @{@"id": @(stepID),
+                                 @"walkCount": @(walkCount)
+                                 };
+    
+    [self requestWithHTTPMethod:PUT URLString:url parameters:parameters finished:finished];
+}
+
 #pragma mark - 封装AFN
 - (void)requestWithHTTPMethod:(HTTPMethod)method  URLString:(NSString *)URLString parameters:(nullable id)parameters finished:(FinishedCallBack)finished {
     NSString *methodStr;
