@@ -44,12 +44,11 @@
 }
 
 #pragma mark - 父母子女关联请求
-- (void)parentChildBindingSaveWithChildCode:(NSString *)childCode userID:(NSInteger)userID parentCode:(NSString *)parentCode status:(NSInteger)status finished:(FinishedCallBack)finished {
+- (void)parentChildBindingSaveWithChildCode:(NSString *)childCode parentCode:(NSString *)parentCode finished:(FinishedCallBack)finished {
     NSString *url = @"parent/child/save";
     NSDictionary *parameters = @{@"child": childCode,
-                                 @"id": @(userID),
                                  @"parent": parentCode,
-                                 @"status": @(status)
+                                 @"status": @(1)
                                  };
     
     [self requestWithHTTPMethod:POST URLString:url parameters:parameters finished:finished];

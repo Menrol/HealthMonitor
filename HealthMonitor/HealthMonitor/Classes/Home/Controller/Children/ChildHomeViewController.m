@@ -396,7 +396,7 @@ NSString * const ChildHomeTableViewCellID = @"ChildHomeTableViewCellID";
     self.changeView.hidden = YES;
     
     NSIndexPath *indexPath = [_changeTableView indexPathForCell:cell];
-    _curParentModel = _model.parentList[indexPath.row];
+    _curParentModel = _parentList[indexPath.row];
     
     [self changeParentWithParentModel:_curParentModel];
 }

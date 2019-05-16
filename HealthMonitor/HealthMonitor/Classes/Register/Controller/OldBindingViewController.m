@@ -44,7 +44,7 @@ extern CGFloat OldMessageTitleFont;
     NSLog(@"绑定");
     
     [RQProgressHUD rq_show];
-    [[NetworkTool sharedTool] parentChildBindingSaveWithChildCode:_numberTextField.text userID:_userID parentCode:_parentCode status:1 finished:^(id  _Nullable result, NSError * _Nullable error) {
+    [[NetworkTool sharedTool] parentChildBindingSaveWithChildCode:_numberTextField.text parentCode:_parentCode finished:^(id  _Nullable result, NSError * _Nullable error) {
         [RQProgressHUD dismiss];
         
         if (error) {

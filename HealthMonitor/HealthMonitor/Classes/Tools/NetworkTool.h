@@ -61,11 +61,7 @@ typedef void (^FinishedCallBack) (id _Nullable result, NSError * _Nullable error
 
 - (void)childGetParentWithNickname:(NSString *)nickname finished:(FinishedCallBack)finished;
 
-- (void)parentChildBindingSaveWithChildCode:(NSString *)childCode
-                                     userID:(NSInteger)userID
-                                 parentCode:(NSString *)parentCode
-                                     status:(NSInteger)status
-                                   finished:(FinishedCallBack)finished;
+- (void)parentChildBindingSaveWithChildCode:(NSString *)childCode parentCode:(NSString *)parentCode finished:(FinishedCallBack)finished;
 
 - (void)parentChildBindingDeleteWithChildCode:(NSString *)childCode parentCode:(NSString *)parentCode finished:(FinishedCallBack)finished;
 

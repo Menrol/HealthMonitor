@@ -67,8 +67,12 @@ NSString * const ChildMyTableViewCellId = @"ChildMyTableViewCellId";
     NSIndexPath *indexPath = [_bindingTableView indexPathForCell:cell];
     ParentModel *model = _parentList[indexPath.row];
     
+    [RQProgressHUD rq_show];
+    
     __weak typeof(self) weakSelf = self;
     [[NetworkTool sharedTool] parentChildBindingDeleteWithChildCode:_model.childCode parentCode:model.parentCode finished:^(id  _Nullable result, NSError * _Nullable error) {
+        [RQProgressHUD dismiss];
+        
         if (error) {
             NSLog(@"%@",error);
             
@@ -118,7 +122,7 @@ NSString * const ChildMyTableViewCellId = @"ChildMyTableViewCellId";
         
         [RQProgressHUD show];
        
-        [[NetworkTool sharedTool] parentChildBindingSaveWithChildCode:_model.childCode userID:_model.userID parentCode:text status:1 finished:^(id  _Nullable result, NSError * _Nullable error) {
+        [[NetworkTool sharedTool] parentChildBindingSaveWithChildCode:_model.childCode  parentCode:text finished:^(id  _Nullable result, NSError * _Nullable error) {
             if (error) {
                 [RQProgressHUD dismiss];
                 
